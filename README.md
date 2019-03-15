@@ -1,4 +1,4 @@
-# ChessAI_TiRa
+# ChessAI
 ChessAI in Java for Data Structures and Algorithms project course at University of Helsinki
 
 ## 
