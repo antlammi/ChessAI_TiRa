@@ -3,4 +3,4 @@ ChessAI in Java for Data Structures and Algorithms project course at University 
 
 ## 
 
-[Viikkoraportti 1](https://github.com/antlammi/ChessAI_TiRa/blob/master/documentation/WeekReport1.md)
+[Viikkoraportti 1](https://github.com/antlammi/ChessAI_TiRa/blob/master/documentation/WeekReport_1.md)
