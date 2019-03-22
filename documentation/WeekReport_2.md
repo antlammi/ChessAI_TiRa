@@ -14,5 +14,6 @@ on jos ei helpompi, niin kuitenkin paljon mielekkäämpi ratkaisu ja lähdinkin 
 
 Alunperin tämän viikon tavoitteena oli saada jonkinlainen toimiva versio tekoälystä valmiiksi jo tämän viikon päätteeksi. Tämä
 tavoite nyt ei onnistunut ja siirtyy ensi viikolle. Varaan kuitenkin roimasti enemmän aikaa tulevan viikon aikana projektin
-tekemiseen ja pyrin saamaan myös ainakin perustoteutuksen minimax puulle valmiiksi tänä aikana.
+tekemiseen ja pyrin saamaan myös ainakin perustoteutuksen minimax puulle valmiiksi tänä aikana. Varaudun toisaalta myös siihen, 
+että tämä ei välttämättä ole mahdollista, sillä tekemistä riittää muutenkin.
 
