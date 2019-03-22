@@ -19,7 +19,7 @@ public class main {
         
         Board board = new Board();
         Square[][] state = board.getBoardState();
-        String[] files = { "A", "B", "C", "D", "E", "F", "G", "E" };
+        String[] files = { "A", "B", "C", "D", "E", "F", "G", "H" };
         for (int r=0; r<=7; r++){
             for (int f=0; f<=7; f++){
                 System.out.println(files[f] + (r+1)  + "| " + state[r][f].toString());
