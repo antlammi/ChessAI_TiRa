@@ -1,6 +1,6 @@
 
 # ChessAI
-The application is a chess AI capable of playing vs itself or versus a human player
+The application is a chess engine using XBoard.
 
 ## Methodology 
 The AI will search through a minimax game tree using an Alpha-Beta pruning implementation for optimization.   
