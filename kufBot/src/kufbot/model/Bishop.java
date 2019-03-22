@@ -12,8 +12,9 @@ import java.util.ArrayList;
  * @author antlammi
  */
 class Bishop implements Piece {
-
-    public Bishop() {
+    private final Color color;
+    public Bishop(Color color) {
+        this.color = color;
     }
 
     @Override

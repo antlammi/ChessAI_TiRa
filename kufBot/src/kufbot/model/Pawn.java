@@ -5,10 +5,28 @@
  */
 package kufbot.model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author antlammi
  */
-public class Pawn {
+class Pawn implements Piece {
+    public final Color color;
+    
+
+    public Pawn(Color color) {
+        this.color = color;
+    }
+
+    @Override
+    public ArrayList<Move> getMoves() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<Move> getLegalMoves() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
