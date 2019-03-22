@@ -31,5 +31,8 @@ class King implements Piece {
     public Boolean isInCheck(){
         return false;
     }
-    
+    @Override 
+    public String toString(){
+        return color + " KING"; 
+    }
 }
