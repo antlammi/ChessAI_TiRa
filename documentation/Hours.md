@@ -11,3 +11,5 @@
 |19.3|1h      |Preliminary design research|
 |21.3|4h      |Searching for possible Chess implementations to work with|
 |22.3|1h      |Configuring XBoard, and researching its implementation|
+|22.3|0.3h    |Writing weekly report|
+|22.3|3h      |Writing internal model of Chess for the engine, still in progress|
