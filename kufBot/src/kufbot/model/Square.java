@@ -38,7 +38,7 @@ public class Square {
     @Override 
     public String toString(){
         if (isEmpty()){
-            return "Empty";
+            return "EMPTY";
         } else {
             return piece.toString();
         }

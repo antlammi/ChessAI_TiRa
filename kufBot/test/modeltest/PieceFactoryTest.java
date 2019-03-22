@@ -36,7 +36,10 @@ public class PieceFactoryTest {
     @After
     public void tearDown() {
     }
-
+    @Test
+    public void ToDoLater(){
+        assertEquals(1, 1);
+    }
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //
