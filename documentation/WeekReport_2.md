@@ -8,9 +8,7 @@ ja osassa edes shakin säännöt eivät olleet implementoitu oikein.
 
 Olin rehellisesti hyvin lähellä vaihtaa aihetta kokonaan, mutta onneksi löysin lopulta tuskailun jälkeen, seuraavana päivänä 
 tuorein silmin asiaa tutkittuani, XBoard sovelluksen, jonka pitäisi tuoda selkeä ja toimiva käyttöliittymätoteutus projektille
-ja joka mahdollistaa oman tekoälyn kytkemisen siihen kiinni pienen kikkailun myötä. Tämän myötä shakin säännöt tekoälyn käyttöön
-pitää vielä joko kehittää itse tai etsiä toisaalta sovelluksen käyttöön, mutta tällä hetkellä tuntuu että itse kehittäminen 
-on jos ei helpompi, niin kuitenkin paljon mielekkäämpi ratkaisu ja lähdinkin tätä itse tekemään.    
+ja joka mahdollistaa oman tekoälyn kytkemisen siihen kiinni pienen kikkailun myötä. Tämän myötä shakin säännöt tekoälyn käyttöön täytyy kehittää itse ja lähdinkin tätä toteuttamaan viikon loppuvaiheilla. Prosessi on kuitenkin vielä kesken.   
 
 Alunperin tämän viikon tavoitteena oli saada jonkinlainen toimiva versio tekoälystä valmiiksi jo tämän viikon päätteeksi. Tämä
 tavoite nyt ei onnistunut ja siirtyy ensi viikolle. Varaan kuitenkin roimasti enemmän aikaa tulevan viikon aikana projektin
