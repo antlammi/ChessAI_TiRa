@@ -28,7 +28,7 @@ class King implements Piece {
         return color + " KING"; 
     }
 
-
+    
     @Override
     public Move[] getMoves(Square current, Square[][] boardstate) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

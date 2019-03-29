@@ -14,7 +14,6 @@ import java.util.ArrayList;
 class Queen implements Piece {
 
     public final Color color;
-    private Square current;
 
     public Queen(Color color) {
         this.color = color;

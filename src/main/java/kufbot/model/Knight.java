@@ -13,8 +13,7 @@ import java.util.ArrayList;
  */
 class Knight implements Piece {
     public final Color color;
-    private Square current;
-
+    
     public Knight(Color color) {
         this.color = color;
     }

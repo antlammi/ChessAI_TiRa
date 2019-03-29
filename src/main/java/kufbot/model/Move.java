@@ -26,7 +26,10 @@ public class Move {
         this.destination = destination;
        
     }
- 
+    
+    public void promotePawn(){
+        //later
+    }
     
     public void execute(){
         current.leave();
