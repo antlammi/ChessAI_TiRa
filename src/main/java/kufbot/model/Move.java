@@ -15,6 +15,7 @@ public class Move {
     private Square destination;
     private Square[][] boardstate;
     private String[] files = { "a", "b", "c", "d", "e", "f", "g", "h" };
+    
     public Move(Square[][] boardstate){
          this.boardstate = boardstate;
     }
