@@ -14,23 +14,33 @@ import java.util.ArrayList;
 class Queen implements Piece {
 
     public final Color color;
-    
+    private Square current;
 
     public Queen(Color color) {
         this.color = color;
     }
 
-    @Override
-    public ArrayList<Move> getMoves() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public ArrayList<Move> getLegalMoves() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
     @Override 
     public String toString(){
         return color + " QUEEN"; 
     }
+
+    @Override
+    public Move[] getMoves(Square current, Square[][] boardstate) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Move[] getLegalMoves(Square current, Square[][] boardstate) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Color getColor() {
+        return this.color;
+    }
+
+   
+  
 }

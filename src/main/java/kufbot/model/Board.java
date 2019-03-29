@@ -26,7 +26,7 @@ private PieceFactory pf;
         
         for (int r=0; r<=7; r++){ //r for rank
             for(int f=0; f<=7; f++){ //f for file
-                squares[r][f] = new Square();
+                squares[r][f] = new Square(r+1, f+1);
             }
         }
     }

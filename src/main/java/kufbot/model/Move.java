@@ -9,6 +9,38 @@ package kufbot.model;
  *
  * @author antlammi
  */
-class Move {
+public class Move {
+    private Piece piece;
+    private Square current;
+    private Square destination;
+    private Square[][] boardstate;
+    
+    public Move(Square[][] boardstate){
+         this.boardstate = boardstate;
+    }
+    
+    public void constructMove(Piece piece, Square current, Square destination){
+        this.piece = piece;
+        this.current = current;
+        this.destination = destination;
+       
+    }
+ 
+    
+    public void execute(){
+        current.leave();
+        if (destination.isEmpty()){
+            destination.enter(piece);
+        } else {
+            destination.capture(piece);
+        }
+        
+    }
+    public Square getCurrentSquare(){
+        return current;
+    }
+    public Square getDestinationSquare(){
+        return destination;
+    }
     
 }

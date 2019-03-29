@@ -11,8 +11,12 @@ package kufbot.model;
  */
 public class Square {
     private Piece piece;
-    public Square(){
+    private int rank;
+    private int file;
+    public Square(int rank, int file){
         this.piece = null;
+        this.rank = rank;
+        this.file = file;
     }
     
     public void leave(){
@@ -33,6 +37,14 @@ public class Square {
     //Luultavasti helpottaa koodin luettavuutta muualla.
     public Boolean isEmpty(){
         return this.piece == null;
+    }
+    
+    public Integer getRank(){
+        return this.rank;
+    }
+    
+    public Integer getFile(){
+        return this.file;
     }
     
     @Override 

@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package kufbot.model;
-import kufbot.model.Color;
 import java.util.ArrayList;
 
 /**
@@ -12,7 +11,8 @@ import java.util.ArrayList;
  * @author antlammi
  */
 public interface Piece {
-    public ArrayList<Move> getMoves();
-    public ArrayList<Move> getLegalMoves();
+    public Move[] getMoves(Square current, Square[][] boardstate);
+    public Move[] getLegalMoves(Square current, Square[][] boardstate);
+    public Color getColor();
     
 }
