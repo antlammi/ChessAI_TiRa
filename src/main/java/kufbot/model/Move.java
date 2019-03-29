@@ -14,7 +14,7 @@ public class Move {
     private Square current;
     private Square destination;
     private Square[][] boardstate;
-    
+    private String[] files = { "a", "b", "c", "d", "e", "f", "g", "h" };
     public Move(Square[][] boardstate){
          this.boardstate = boardstate;
     }
@@ -42,5 +42,8 @@ public class Move {
     public Square getDestinationSquare(){
         return destination;
     }
-    
+    @Override
+    public String toString(){
+        return files[this.current.getFile()-1] + this.current.getRank() + files[this.destination.getFile()-1]+ this.destination.getRank();
+    }
 }

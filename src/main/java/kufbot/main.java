@@ -27,22 +27,16 @@ public class main {
         printState(state);
         
         Move[] movesForRookA1 = state[0][0].getPiece().getMoves(state[0][0], state);
-        String[] files = { "A", "B", "C", "D", "E", "F", "G", "H" };
-       /*System.out.println("Possible moves for Rook A1");
+        String[] files = { "a", "b", "c", "d", "e", "f", "g", "h" };
+        System.out.println("Possible moves for Rook A1");
         for (int i=0; i<movesForRookA1.length; i++){
-            System.out.println(files[movesForRookA1[i].getCurrentSquare().getFile()-1]
-                            + ""+ movesForRookA1[i].getCurrentSquare().getRank()
-                            + "|" +  files[movesForRookA1[i].getDestinationSquare().getFile()-1]
-                            + "" + movesForRookA1[i].getDestinationSquare().getRank());
-        }*/
+            System.out.println(movesForRookA1[i]);
+        }
         System.out.println("Legal moves for rook A1");
         Move[] legalMovesForRookA1 = state[0][0].getPiece().getLegalMoves(state[0][0], state);
         for (int i=0; i<legalMovesForRookA1.length; i++){
                 if (legalMovesForRookA1[i] != null){
-                System.out.println(files[legalMovesForRookA1[i].getCurrentSquare().getFile()-1]
-                                + ""+ legalMovesForRookA1[i].getCurrentSquare().getRank()
-                                + "|" +  files[legalMovesForRookA1[i].getDestinationSquare().getFile()-1]
-                                + "" + legalMovesForRookA1[i].getDestinationSquare().getRank());
+                System.out.println(legalMovesForRookA1[i]);
             }
         }
     }
