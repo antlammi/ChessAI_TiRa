@@ -24,4 +24,4 @@
 |29.3|1h      |Tests and bugfixes for Rook movement|
 |29.3|1h      |Starting work on movement implementation for other pieces|
 |29.3|0.3h    |Writing weekly report|
-|29.3|1h      |Basic movement for Pawns with tests (en passant or promotion)|
+|29.3|1h      |Basic movement for Pawns with tests (no en passant or promotion)|
