@@ -27,9 +27,9 @@ public class main {
         firstb.constructMove(state[6][3].getPiece(), state[6][3], state[4][3]);
         firstb.execute();
         
-        Move[] movesForBishop = state[0][5].getPiece().getMoves(state[0][5], state);
-        for (int i=0; i<movesForBishop.length; i++){
-            System.out.println(movesForBishop[i]);
+        Move[] movesForKnight = state[0][6].getPiece().getLegalMoves(state[0][6], state);
+        for (int i=0; i<movesForKnight.length; i++){
+            System.out.println(movesForKnight[i]);
         }
        
     }
