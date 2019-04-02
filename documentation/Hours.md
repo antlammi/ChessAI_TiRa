@@ -25,3 +25,11 @@
 |29.3|1h      |Starting work on movement implementation for other pieces|
 |29.3|0.3h    |Writing weekly report|
 |29.3|1h      |Basic movement for Pawns with tests (no en passant or promotion)|
+
+## Week 4
+
+|Date|Duration|Task|
+|----|--------|----|
+|2.4.|0.5h    |Slight refactor for Rook movement|
+|2.4.|2h      |Movement for Bishop and Knight|
+|2.4.|0.5h    |Tests for Bishop movement|
