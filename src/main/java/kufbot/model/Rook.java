@@ -52,49 +52,49 @@ class Rook implements Piece {
     }
 
     public void findLegalMovesOnSameRank(Square current, Square[][] boardstate, Move[] movesToCheck) {
-        for (int i = 0; i < movesToCheck.length / 2-1; i++) {
+        for (int i = 0; i < movesToCheck.length / 2 - 1; i++) {
             Square destination = movesToCheck[i].getDestinationSquare();
-            if (current.getRank() == destination.getRank()) {     //jos määränpään rivi on sama tutkimme vain sarakkeita
-                int rank = current.getRank() - 1;
-                int cf = current.getFile() - 1;
-                int df = destination.getFile() - 1;
-                if (cf > df) {  //jos alkuruudun sarake on suurempi kuin määränpään
-                    for (int f = cf + 1; f >= df; f--) { //lähestytään määränpäätä
-                        if (!boardstate[rank][f].isEmpty()) { //jos tämänhetkisellä ruudulla on palanen
-                            if (f == df) {  //jos nykyinen sarake on vastaa määränpäätä
-                                if (this.color != destination.getPiece().getColor()) { //jos palaset ovat eri värisiä, voidaan se syödä ja siirtyä ruudulle
-                                    legalMoves[legalcount] = movesToCheck[i];
-                                    legalcount++;
-                                }
-                            } else { //tiellä on jokin palanen, jonka yli ei voida siirtyä
-                                break;
-                            }
-                        } else if (f == df) {  //jos ruutu on tyhjä ja vastaa saraketta, voidaan ruudulle siirtyä
-                            legalMoves[legalcount] = movesToCheck[i];
-                            legalcount++;
-                        }
-                    }
 
-                } else {
-                    for (int f = cf + 1; f <= df; f++) {
-                        if (!boardstate[rank][f].isEmpty()) {
-                            if (f == df) {
-                                if (this.color != destination.getPiece().getColor()) {
-                                    legalMoves[legalcount] = movesToCheck[i];
-                                    legalcount++;
-                                }
-                            } else {
-                                break;
+            int rank = current.getRank() - 1;
+            int cf = current.getFile() - 1;
+            int df = destination.getFile() - 1;
+            if (cf > df) {  //jos alkuruudun sarake on suurempi kuin määränpään
+                for (int f = cf + 1; f >= df; f--) { //lähestytään määränpäätä
+                    if (!boardstate[rank][f].isEmpty()) { //jos tämänhetkisellä ruudulla on palanen
+                        if (f == df) {  //jos nykyinen sarake on vastaa määränpäätä
+                            if (this.color != destination.getPiece().getColor()) { //jos palaset ovat eri värisiä, voidaan se syödä ja siirtyä ruudulle
+                                legalMoves[legalcount] = movesToCheck[i];
+                                legalcount++;
                             }
-                        } else if (f == df) {
-                            legalMoves[legalcount] = movesToCheck[i];
-                            legalcount++;
+                        } else { //tiellä on jokin palanen, jonka yli ei voida siirtyä
+                            break;
                         }
+                    } else if (f == df) {  //jos ruutu on tyhjä ja vastaa saraketta, voidaan ruudulle siirtyä
+                        legalMoves[legalcount] = movesToCheck[i];
+                        legalcount++;
                     }
                 }
 
+            } else {
+                for (int f = cf + 1; f <= df; f++) {
+                    if (!boardstate[rank][f].isEmpty()) {
+                        if (f == df) {
+                            if (this.color != destination.getPiece().getColor()) {
+                                legalMoves[legalcount] = movesToCheck[i];
+                                legalcount++;
+                            }
+                        } else {
+                            break;
+                        }
+                    } else if (f == df) {
+                        legalMoves[legalcount] = movesToCheck[i];
+                        legalcount++;
+                    }
+                }
             }
+
         }
+
     }
 
     public void findLegalMovesOnSameFile(Square current, Square[][] boardstate, Move[] movesToCheck) {

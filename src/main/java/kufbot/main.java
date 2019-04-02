@@ -27,8 +27,10 @@ public class main {
         firstb.constructMove(state[6][3].getPiece(), state[6][3], state[4][3]);
         firstb.execute();
         
-        String[] correctLegalMovesAfterOpening = {"e4d5", "e4e5"};
-        Move[] legalMovesForPawn = state[3][4].getPiece().getLegalMoves(state[3][4], state);
+        Move[] movesForBishop = state[0][5].getPiece().getLegalMoves(state[0][5], state);
+        for (int i=0; i<movesForBishop.length; i++){
+            System.out.println(movesForBishop[i]);
+        }
        
     }
     
