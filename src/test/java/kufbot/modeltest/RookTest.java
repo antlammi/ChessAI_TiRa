@@ -83,6 +83,7 @@ public class RookTest {
         secondb.execute();
         
         Move[] legalMovesForRookA1 = state[0][0].getPiece().getLegalMoves(state[0][0], state);
+        
         assertEquals(legalMovesForRookA1[0].toString(), "a1a2");
         assertEquals(legalMovesForRookA1[1].toString(), "a1a3");
         for (int i=2; i<legalMovesForRookA1.length; i++){
