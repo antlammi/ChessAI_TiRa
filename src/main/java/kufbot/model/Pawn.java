@@ -13,7 +13,6 @@ import java.util.ArrayList;
  */
 class Pawn implements Piece {
     public final Color color;
-
     public Pawn(Color color) {
         this.color = color;
     }
@@ -25,7 +24,6 @@ class Pawn implements Piece {
     }
 
     
-    //Promotions not implemented
     @Override
     public Move[] getMoves(Square current, Square[][] boardstate) { 
         Move[] possibleMoves;
@@ -68,8 +66,10 @@ class Pawn implements Piece {
         }
         if (rank==6){ 
                 possibleMovesBlack[moveCount] = new Move(boardstate);
-                possibleMovesBlack[moveCount].constructMove(this, current, boardstate[rank-3][file-1]);  
+                possibleMovesBlack[moveCount].constructMove(this, current, boardstate[rank-3][file-1]);
+                moveCount++;
         }
+       
         return possibleMovesBlack;
     }
     
@@ -87,7 +87,7 @@ class Pawn implements Piece {
                 Square destination = currentMove.getDestinationSquare();
                 int df = destination.getFile()-1;
                 int dr = destination.getRank()-1;
-
+                
                 if (current.getFile() == destination.getFile()){ //jos siirrytään eteenpäin
                     if (dr-current.getRank()-1 == 2){  //jos aloitussiirto
                         if (current.getRank() == 2){ //jos aloitussiirto valkoisilla

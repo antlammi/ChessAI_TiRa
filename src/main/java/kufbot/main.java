@@ -27,10 +27,19 @@ public class main {
         firstb.constructMove(state[6][3].getPiece(), state[6][3], state[4][3]);
         firstb.execute();
         
-        Move[] movesForKnight = state[0][6].getPiece().getLegalMoves(state[0][6], state);
-        for (int i=0; i<movesForKnight.length; i++){
-            System.out.println(movesForKnight[i]);
+        Move secondw = new Move(state);
+        secondw.constructMove(state[1][3].getPiece(), state[1][3], state[3][3]);
+        secondw.execute();
+        
+        Move secondb = new Move(state);
+        secondb.constructMove(state[4][3].getPiece(), state[4][3], state[3][4]);
+        secondb.execute();
+        
+        Move[] movesForKing = state[0][4].getPiece().getLegalMoves(state[0][4], state);
+        for (int i=0; i<movesForKing.length; i++){
+            System.out.println(movesForKing[i]);
         }
+       
        
     }
     

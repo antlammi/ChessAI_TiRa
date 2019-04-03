@@ -15,9 +15,11 @@ public class Move {
     private Square destination;
     private Square[][] boardstate;
     private String[] files = { "a", "b", "c", "d", "e", "f", "g", "h" };
+    private PieceFactory pf;
     
     public Move(Square[][] boardstate){
          this.boardstate = boardstate;
+         this.pf = new PieceFactory();
     }
     
     public void constructMove(Piece piece, Square current, Square destination){
@@ -27,11 +29,18 @@ public class Move {
        
     }
     
-    public void promotePawn(){
-        //later
+    public void promotePawn(Piece piece, String pieceType){
+        Piece promotedPiece = pf.getPiece(pieceType, piece.getColor());
+        current.leave();
+        current.enter(promotedPiece);
     }
     
     public void execute(){
+        if (current.getPiece().toString() == "WHITE PAWN" && current.getRank() == 7){
+            promotePawn(current.getPiece(), "QUEEN"); //automatically promotes to queen
+        } else if (current.getPiece().toString() =="BLACK PAWN" && current.getRank() == 2){
+            promotePawn(current.getPiece(), "QUEEN");
+        }
         current.leave();
         if (destination.isEmpty()){
             destination.enter(piece);
