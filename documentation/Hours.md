@@ -36,3 +36,5 @@
 |3.4.|0.5h    |Pawn promotion|
 |3.4.|0.5h    |Movement for Queen|
 |3.4.|0.5h    |Movement for King (without implementing method isInCheck())|
+|4.4.|1.5h    |Player class added to provide all available moves|
+|4.4.|0.5h    |Bugfixes for various pieces' movement|
