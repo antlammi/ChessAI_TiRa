@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package kufbot;
+import java.util.Random;
 import kufbot.model.*;
 /**
  *
@@ -16,29 +17,35 @@ public class main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        String[] files = {"a","b","c","d","e","f","g","h"};
         Board board = new Board();
         Square[][] state = board.getBoardState();
-        Move firstw = new Move(state);
-        firstw.constructMove(state[1][4].getPiece(), state[1][4], state[3][4]);
-        firstw.execute();
+        Player playerW = new Player(Color.WHITE, state);
+        Player playerB = new Player(Color.BLACK, state);
+        Random random = new Random();
         
-        Move firstb = new Move(state);
-        firstb.constructMove(state[6][3].getPiece(), state[6][3], state[4][3]);
-        firstb.execute();
-        
-        Move secondw = new Move(state);
-        secondw.constructMove(state[1][3].getPiece(), state[1][3], state[3][3]);
-        secondw.execute();
-        
-        Move secondb = new Move(state);
-        secondb.constructMove(state[4][3].getPiece(), state[4][3], state[3][4]);
-        secondb.execute();
-        
-        Move[] movesForKing = state[0][4].getPiece().getLegalMoves(state[0][4], state);
-        for (int i=0; i<movesForKing.length; i++){
-            System.out.println(movesForKing[i]);
+        for (int i=0; i<10; i++){
+            Move[] movesForWhite = playerW.possibleMoves();
+            
+            Move moveChosenWhite = movesForWhite[random.nextInt(movesForWhite.length)];
+            
+            System.out.println(moveChosenWhite);
+            
+            moveChosenWhite.execute();
+            playerW.updatePlayer(state);
+            playerB.updatePlayer(state);
+            
+            Move[] movesForBlack = playerB.possibleMoves();
+            
+            Move moveChosenBlack = movesForBlack[random.nextInt(movesForBlack.length)];
+            
+            System.out.println(moveChosenBlack);
+            
+            moveChosenBlack.execute();
+            playerW.updatePlayer(state);
+            playerB.updatePlayer(state);
         }
+        
+        printState(state);
        
        
     }

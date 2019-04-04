@@ -14,7 +14,7 @@ import java.util.ArrayList;
 class Bishop implements Piece {
 
     private final Color color;
-
+   
     public Bishop(Color color) {
         this.color = color;
     }
