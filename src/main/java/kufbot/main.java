@@ -23,11 +23,11 @@ public class main {
         Player playerB = new Player(Color.BLACK, state);
         Random random = new Random();
         
-        for (int i=0; i<10; i++){
+        for (int i=0; i<50; i++){
             Move[] movesForWhite = playerW.possibleMoves();
             
             Move moveChosenWhite = movesForWhite[random.nextInt(movesForWhite.length)];
-            
+            System.out.println(i+1 + ": ");
             System.out.println(moveChosenWhite);
             
             moveChosenWhite.execute();

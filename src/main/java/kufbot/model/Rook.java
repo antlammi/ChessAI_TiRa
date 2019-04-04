@@ -16,11 +16,17 @@ class Rook implements Piece {
     public final Color color;
     private int legalcount;
     private Move[] legalMoves;
-
+    private Boolean moved;
     public Rook(Color color) {
         this.color = color;
+        this.moved = false;
     }
-
+    public Boolean getMoved(){
+        return this.moved;
+    }
+    public void wasMoved(){
+        this.moved = true;
+    }
     @Override
     public Move[] getMoves(Square current, Square[][] boardstate) {
         Integer rank = current.getRank();

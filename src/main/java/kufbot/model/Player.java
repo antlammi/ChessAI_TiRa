@@ -13,12 +13,14 @@ public class Player {
     private Square[] occupiedSquares; //which Squares are this players pieces occupying
     private Color color;
     private Piece[] pieces; //remaining pieces for the player
+    private Integer piececount;
     private Square[][] boardstate;
     
     public Player(Color color, Square[][] boardstate){
         this.color = color;
-        this.occupiedSquares = new Square[16];
-        this.pieces = new Piece[16];
+        this.piececount = 16;
+        this.occupiedSquares = new Square[piececount];
+        this.pieces = new Piece[piececount];
         this.boardstate = boardstate;
         if (this.color == Color.WHITE){
             initializeWhitePlayer();
@@ -49,6 +51,8 @@ public class Player {
         }
     }
     public void updatePlayer(Square[][] boardstate){
+        this.occupiedSquares = new Square[piececount];
+        this.pieces = new Piece[piececount];
         int count =0;
         for (int r=0; r<8; r++){
             for (int f=0; f<8; f++){
@@ -59,17 +63,30 @@ public class Player {
                 }
             }
         }
+        if (count != piececount){ //if since last update a piece has been captured update number of pieces and clone arrays to new ones with correct size
+            this.piececount = count; 
+            Square[] occupiedSquaresClone = new Square[piececount];
+            Piece[] piecesClone = new Piece[piececount];
+            for (int i=0; i<piececount; i++){
+                occupiedSquaresClone[i] = this.occupiedSquares[i];
+                piecesClone[i] = this.pieces[i];
+            }
+            this.occupiedSquares = occupiedSquaresClone;
+            this.pieces = piecesClone;
+        }
     }
     public Move[] possibleMoves(){
         Move[][] moves = new Move[16][];
         int totalmoves = 0;
         for (int i=0; i<occupiedSquares.length; i++){
-            moves[i]=occupiedSquares[i].getPiece().getLegalMoves(occupiedSquares[i], boardstate);
-            for(int m=0; m<moves[i].length; m++){
-                if (moves[i][m] == null){
-                    break;
-                } else {
-                    totalmoves++;
+            if (occupiedSquares[i] != null){
+                moves[i]=occupiedSquares[i].getPiece().getLegalMoves(occupiedSquares[i], boardstate);
+                for(int m=0; m<moves[i].length; m++){
+                    if (moves[i][m] == null){
+                        break;
+                    } else {
+                        totalmoves++;
+                    }
                 }
             }
         }

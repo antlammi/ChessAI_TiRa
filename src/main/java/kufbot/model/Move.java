@@ -36,6 +36,14 @@ public class Move {
     }
     
     public void execute(){
+        if (current.getPiece().toString().contains("ROOK")){
+            Rook rook = (Rook) current.getPiece();
+            rook.wasMoved();
+        }
+        if (current.getPiece().toString().contains("KING")){
+            King king = (King) current.getPiece();
+            king.wasMoved();
+        }
         if (current.getPiece().toString() == "WHITE PAWN" && current.getRank() == 7){
             promotePawn(current.getPiece(), "QUEEN"); //automatically promotes to queen
         } else if (current.getPiece().toString() =="BLACK PAWN" && current.getRank() == 2){

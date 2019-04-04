@@ -13,10 +13,11 @@ import java.util.ArrayList;
  */
 class King implements Piece {
     public final Color color;
-    private Square current;
+    private Boolean moved;
     
     public King(Color color) {
         this.color = color;
+        this.moved = false;
     }
 
     
@@ -25,8 +26,13 @@ class King implements Piece {
     public String toString(){
         return color + " KING"; 
     }
-
-     public Boolean isInCheck(Square toCheck, Square[][] boardstate){
+    public Boolean getMoved(){
+        return this.moved;
+    }
+    public void wasMoved(){
+        this.moved = true;
+    }
+    public Boolean isInCheck(Square toCheck, Square[][] boardstate){
         return false;
     }
      
