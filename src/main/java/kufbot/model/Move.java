@@ -30,7 +30,7 @@ public class Move {
     }
     
     public void promotePawn(Piece piece, String pieceType){
-        Piece promotedPiece = pf.getPiece(pieceType, piece.getColor());
+        Piece promotedPiece = pf.getPiece(pieceType, piece.getColor(), this.current, this.boardstate);
         current.leave();
         current.enter(promotedPiece);
         this.piece = promotedPiece;
@@ -56,8 +56,10 @@ public class Move {
         current.leave();
         if (destination.isEmpty()){
             destination.enter(piece);
+            piece.setSquare(destination);
         } else {
             destination.capture(piece);
+            piece.setSquare(destination);
         }
         
     }

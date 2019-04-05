@@ -14,18 +14,24 @@ import java.util.ArrayList;
 class Bishop implements Piece {
 
     private final Color color;
-   
-    public Bishop(Color color) {
+    private Square current;
+    private Square[][] boardstate;
+    public Bishop(Color color, Square initial, Square[][] boardstate) {
         this.color = color;
+        this.current = initial;
+        this.boardstate = boardstate;
     }
 
     @Override
     public String toString() {
         return color + " BISHOP";
     }
-
     @Override
-    public Move[] getMoves(Square current, Square[][] boardstate) {
+    public void setSquare(Square newSquare){
+        this.current = newSquare;
+    }
+    @Override
+    public Move[] getMoves() {
         Integer rank = current.getRank() - 1;
         Integer file = current.getFile() - 1;
         Move[] possibleMoves = new Move[13];
@@ -59,8 +65,8 @@ class Bishop implements Piece {
     }
 
     @Override
-    public Move[] getLegalMoves(Square current, Square[][] boardstate) {
-        Move[] movesToCheck = getMoves(current, boardstate);
+    public Move[] getLegalMoves() {
+        Move[] movesToCheck = getMoves();
         Move[] legalMoves = new Move[movesToCheck.length];
         int legalcount = 0;
 

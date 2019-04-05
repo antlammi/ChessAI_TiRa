@@ -13,9 +13,12 @@ import java.util.ArrayList;
  */
 class Knight implements Piece {
     public final Color color;
-    
-    public Knight(Color color) {
+    private Square current;
+    private Square[][] boardstate;
+    public Knight(Color color, Square initial, Square[][] boardstate) {
         this.color = color;
+        this.current = initial;
+        this.boardstate = boardstate;
     }
 
     
@@ -24,10 +27,13 @@ class Knight implements Piece {
         return color + " KNIGHT"; 
     }
 
-    
+    @Override
+    public void setSquare(Square newSquare){
+        this.current = newSquare;
+    }
 
     @Override
-    public Move[] getMoves(Square current, Square[][] boardstate) {
+    public Move[] getMoves() {
         Integer rank = current.getRank() - 1;
         Integer file = current.getFile() - 1;
         Move[] possibleMoves = new Move[8];
@@ -65,8 +71,8 @@ class Knight implements Piece {
     }
 
     @Override
-    public Move[] getLegalMoves(Square current, Square[][] boardstate) {
-        Move[] movesToCheck = getMoves(current, boardstate);
+    public Move[] getLegalMoves() {
+        Move[] movesToCheck = getMoves();
         Move[] legalMoves = new Move[movesToCheck.length];
         int legalcount = 0;
         for (int i=0; i<movesToCheck.length; i++){

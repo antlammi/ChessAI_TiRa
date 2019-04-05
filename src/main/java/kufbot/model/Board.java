@@ -42,22 +42,20 @@ private PieceFactory pf;
         }
         
         for (int f=0; f<=7; f++){
-            Piece frp = pf.getPiece("PAWN", color); //first rank piece
+            Piece frp = pf.getPiece("PAWN", color, squares[firstrank][f], squares); //first rank piece
             Piece brp; //back rank piece
             if (f==0 ||f==7){
-                brp = pf.getPiece("ROOK", color);
+                brp = pf.getPiece("ROOK", color, squares[backrank][f], squares);
             } else if (f==1||f==6){
-                brp = pf.getPiece("KNIGHT", color);
+                brp = pf.getPiece("KNIGHT", color, squares[backrank][f], squares);
             } else if (f==2||f==5){
-                brp = pf.getPiece("BISHOP", color);
+                brp = pf.getPiece("BISHOP", color, squares[backrank][f], squares);
             } else if (f==3){
-                brp = pf.getPiece("QUEEN", color);
+                brp = pf.getPiece("QUEEN", color, squares[backrank][f], squares);
             } else {
-                brp = pf.getPiece("KING", color);
+                brp = pf.getPiece("KING", color, squares[backrank][f], squares);
             }
             
-            //System.out.println("RF|P:  "+ backrank + f + brp.toString());
-            //System.out.println("RF|P:  "+ firstrank + f + frp.toString());
             squares[firstrank][f].enter(frp);
             squares[backrank][f].enter(brp);       
         }

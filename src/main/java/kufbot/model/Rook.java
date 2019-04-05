@@ -17,8 +17,12 @@ class Rook implements Piece {
     private int legalcount;
     private Move[] legalMoves;
     private Boolean moved;
-    public Rook(Color color) {
+    private Square current; 
+    private Square[][] boardstate;
+    public Rook(Color color, Square initial, Square[][] boardstate) {
         this.color = color;
+        this.current = initial;
+        this.boardstate = boardstate;
         this.moved = false;
     }
     public Boolean getMoved(){
@@ -28,7 +32,11 @@ class Rook implements Piece {
         this.moved = true;
     }
     @Override
-    public Move[] getMoves(Square current, Square[][] boardstate) {
+    public void setSquare(Square newSquare){
+        this.current = newSquare;
+    }
+    @Override
+    public Move[] getMoves() {
         Integer rank = current.getRank();
         Integer file = current.getFile();
         Move[] possibleMoves = new Move[14];
@@ -57,7 +65,7 @@ class Rook implements Piece {
         return color + " ROOK";
     }
 
-    public void findLegalMovesOnSameRank(Square current, Square[][] boardstate, Move[] movesToCheck) {
+    public void findLegalMovesOnSameRank(Move[] movesToCheck) {
         for (int i = 0; i < movesToCheck.length / 2 - 1; i++) {
             Square destination = movesToCheck[i].getDestinationSquare();
 
@@ -103,7 +111,7 @@ class Rook implements Piece {
 
     }
 
-    public void findLegalMovesOnSameFile(Square current, Square[][] boardstate, Move[] movesToCheck) {
+    public void findLegalMovesOnSameFile(Move[] movesToCheck) {
         for (int i = movesToCheck.length / 2; i < movesToCheck.length; i++) {
             Square destination = movesToCheck[i].getDestinationSquare();
             int file = current.getFile() - 1;
@@ -148,12 +156,12 @@ class Rook implements Piece {
     }
 
     @Override
-    public Move[] getLegalMoves(Square currentsquare, Square[][] boardstate) {
-        Move[] movesToCheck = this.getMoves(currentsquare, boardstate);
+    public Move[] getLegalMoves() {
+        Move[] movesToCheck = this.getMoves();
         this.legalMoves = new Move[movesToCheck.length];
         this.legalcount = 0;
-        findLegalMovesOnSameRank(currentsquare, boardstate, movesToCheck);
-        findLegalMovesOnSameFile(currentsquare, boardstate, movesToCheck);
+        findLegalMovesOnSameRank(movesToCheck);
+        findLegalMovesOnSameFile(movesToCheck);
         return legalMoves;
     }
 

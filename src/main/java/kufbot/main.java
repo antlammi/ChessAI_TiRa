@@ -16,6 +16,8 @@ public class main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+        
         // TODO code application logic here
         Board board = new Board();
         Square[][] state = board.getBoardState();
@@ -46,8 +48,7 @@ public class main {
         }
         
         printState(state);
-       
-       
+      
     }
     
     public static void printState(Square[][] state){

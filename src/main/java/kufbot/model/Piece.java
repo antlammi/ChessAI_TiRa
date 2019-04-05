@@ -11,8 +11,9 @@ import java.util.ArrayList;
  * @author antlammi
  */
 public interface Piece {
-    public Move[] getMoves(Square current, Square[][] boardstate);
-    public Move[] getLegalMoves(Square current, Square[][] boardstate);
+    public Move[] getMoves();
+    public Move[] getLegalMoves();
+    public void setSquare(Square square);
     public Color getColor();
     
 }

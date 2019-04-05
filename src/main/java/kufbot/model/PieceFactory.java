@@ -11,20 +11,20 @@ package kufbot.model;
  */
 public class PieceFactory {
 
-    public Piece getPiece(String pieceType, Color color) {
+    public Piece getPiece(String pieceType, Color color, Square current, Square[][] boardstate) {
         switch (pieceType) {
             case "KING":
-                return new King(color);
+                return new King(color, current, boardstate);
             case "QUEEN":
-                return new Queen(color);
+                return new Queen(color, current, boardstate);
             case "ROOK":
-                return new Rook(color);
+                return new Rook(color, current, boardstate);
             case "BISHOP":
-                return new Bishop(color);
+                return new Bishop(color, current, boardstate);
             case "KNIGHT":
-                return new Knight(color);
+                return new Knight(color, current, boardstate);
             case "PAWN":
-                return new Pawn(color);
+                return new Pawn(color, current, boardstate);
             default:
                 return null;
         }

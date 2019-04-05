@@ -80,7 +80,7 @@ public class Player {
         int totalmoves = 0;
         for (int i=0; i<occupiedSquares.length; i++){
             if (occupiedSquares[i] != null){
-                moves[i]=occupiedSquares[i].getPiece().getLegalMoves(occupiedSquares[i], boardstate);
+                moves[i]=occupiedSquares[i].getPiece().getLegalMoves();
                 for(int m=0; m<moves[i].length; m++){
                     if (moves[i][m] == null){
                         break;

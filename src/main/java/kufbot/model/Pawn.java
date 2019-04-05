@@ -13,8 +13,12 @@ import java.util.ArrayList;
  */
 class Pawn implements Piece {
     public final Color color;
-    public Pawn(Color color) {
+    private Square current;
+    private Square[][] boardstate;
+    public Pawn(Color color, Square initial, Square[][] boardstate) {
         this.color = color;
+        this.current = initial;
+        this.boardstate = boardstate;
     }
 
     
@@ -22,20 +26,24 @@ class Pawn implements Piece {
     public String toString(){
         return color + " PAWN"; 
     }
-
     
     @Override
-    public Move[] getMoves(Square current, Square[][] boardstate) { 
+    public void setSquare(Square newSquare){
+        this.current = newSquare;
+    }
+    
+    @Override
+    public Move[] getMoves() { 
         Move[] possibleMoves;
         if (this.color == Color.WHITE){
-            possibleMoves = getMovesWhite(current, boardstate);
+            possibleMoves = getMovesWhite();
         } else {
-            possibleMoves = getMovesBlack(current, boardstate);
+            possibleMoves = getMovesBlack();
         }
         return possibleMoves;
     }
     
-    public Move[] getMovesWhite(Square current, Square[][] boardstate){
+    public Move[] getMovesWhite(){
         Integer rank = current.getRank();
         Integer file = current.getFile();
         Move[] possibleMovesWhite = new Move[4];
@@ -58,7 +66,7 @@ class Pawn implements Piece {
         return possibleMovesWhite;
     }
     
-    public Move[] getMovesBlack(Square current, Square[][] boardstate){
+    public Move[] getMovesBlack(){
         Integer rank = current.getRank();
         Integer file = current.getFile();
         Move[] possibleMovesBlack = new Move[4];
@@ -82,8 +90,8 @@ class Pawn implements Piece {
     }
     
     @Override
-    public Move[] getLegalMoves(Square current, Square[][] boardstate) {
-        Move[] movesToCheck = getMoves(current,  boardstate);
+    public Move[] getLegalMoves() {
+        Move[] movesToCheck = getMoves();
         Move[] legalMoves = new Move[movesToCheck.length];
         
         int legalcount = 0;
@@ -97,7 +105,7 @@ class Pawn implements Piece {
                 int dr = destination.getRank()-1;
                 
                 if (current.getFile() == destination.getFile()){ //jos siirrytään eteenpäin
-                    if (dr-current.getRank()-1 == 2){  //jos aloitussiirto
+                    if (dr-current.getRank()-1 == 0){  //jos aloitussiirto
                         if (current.getRank() == 2){ //jos aloitussiirto valkoisilla
                             if (boardstate[dr][df].isEmpty() && boardstate[dr-1][df].isEmpty()){ //jos välissä oleva ruutu ja määränpää tyhjiä
                                 legalMoves[legalcount] = currentMove;
@@ -110,8 +118,7 @@ class Pawn implements Piece {
                             }
                         }
 
-                    }
-                    if (boardstate[dr][df].isEmpty()){ //jos määränpää tyhjä
+                    } else if (boardstate[dr][df].isEmpty()){ //jos määränpää tyhjä ja ei aloitussiirto
                         legalMoves[legalcount] = currentMove;
                         legalcount++;
                     }

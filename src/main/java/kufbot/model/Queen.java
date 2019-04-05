@@ -16,26 +16,33 @@ class Queen implements Piece {
     public final Color color;
     private Rook rook;
     private Bishop bishop;
-    public Queen(Color color) {
+    private Square current;
+    private Square[][] boardstate;
+    public Queen(Color color, Square initial, Square[][] boardstate) {
         this.color = color;
-        this.rook = new Rook(this.color);
-        this.bishop = new Bishop(this.color);
+        this.current = initial;
+        this.boardstate = boardstate;
+        this.rook = new Rook(this.color, initial, boardstate);
+        this.bishop = new Bishop(this.color, initial, boardstate);
     }
-
+    @Override
+    public void setSquare(Square newSquare){
+        this.current = newSquare;
+    }
     @Override
     public String toString() {
         return color + " QUEEN";
     }
 
     @Override
-    public Move[] getMoves(Square current, Square[][] boardstate) {
+    public Move[] getMoves() {
       
         
         //Kuningattaren mahdolliset siirrot ovat yhdistelmä lähetin ja tornin siirtoja, hyöydynnetään näiden siirtologiikkaa.
         
         Move[] possibleMoves = new Move[27];
-        Move[] rookMoves = rook.getMoves(current, boardstate);
-        Move[] bishopMoves = bishop.getMoves(current, boardstate);
+        Move[] rookMoves = rook.getMoves();
+        Move[] bishopMoves = bishop.getMoves();
 
         for (int i = 0; i < 14; i++) {
             possibleMoves[i] = new Move(boardstate);
@@ -53,10 +60,10 @@ class Queen implements Piece {
     }
 
     @Override
-    public Move[] getLegalMoves(Square current, Square[][] boardstate) {
+    public Move[] getLegalMoves() {
         Move[] legalMoves = new Move[27];
-        Move[] legalRookMoves = rook.getLegalMoves(current, boardstate);
-        Move[] legalBishopMoves = bishop.getLegalMoves(current, boardstate);
+        Move[] legalRookMoves = rook.getLegalMoves();
+        Move[] legalBishopMoves = bishop.getLegalMoves();
         
         Integer rookmovecount = 0;
         

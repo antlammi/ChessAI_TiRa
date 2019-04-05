@@ -14,13 +14,19 @@ import java.util.ArrayList;
 class King implements Piece {
     public final Color color;
     private Boolean moved;
-    
-    public King(Color color) {
+    private Square current;
+    private Square[][] boardstate;
+    public King(Color color, Square initial, Square[][] boardstate) {
         this.color = color;
         this.moved = false;
+        this.current = initial;
+        this.boardstate = boardstate;
     }
 
-    
+    @Override
+    public void setSquare(Square newSquare){
+        this.current = newSquare;
+    }
    
     @Override 
     public String toString(){
@@ -32,12 +38,41 @@ class King implements Piece {
     public void wasMoved(){
         this.moved = true;
     }
-    public Boolean isInCheck(Square toCheck, Square[][] boardstate){
+    public Boolean isInCheck(Square kingLocation){
+        for (int r=0; r<=7; r++){
+            for (int f=0; f<=7; f++){
+                Square current = boardstate[r][f];
+                if (!current.isEmpty()){
+                    if (current.getPiece().getColor() != this.color){
+                        if (current.getPiece().toString().contains("KING")){ //Special case to prevent infinite loop
+                            for (int i=-1; i<=1; i++){
+                                if (kingLocation.getRank()-1 == r+i){
+                                    if (kingLocation.getFile()-1 == f-1 ||kingLocation.getFile()-1 == f 
+                                            ||kingLocation.getFile()-1 == f+1){ //not sure this actually works yet, to be tested
+                                        return true;
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                        Move[] moves = current.getPiece().getLegalMoves();
+                        for (int i=0; i<moves.length; i++){
+                            if (moves[i] == null){
+                                break;
+                            }
+                            if (moves[i].getDestinationSquare() == kingLocation){
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
         return false;
     }
      
     @Override
-    public Move[] getMoves(Square current, Square[][] boardstate) {
+    public Move[] getMoves() {
         Move[] possibleMoves = new Move[8];
         Integer movecount = 0;
         
@@ -59,8 +94,8 @@ class King implements Piece {
     }
 
     @Override
-    public Move[] getLegalMoves(Square current, Square[][] boardstate) {
-        Move[] movesToCheck = getMoves(current, boardstate);
+    public Move[] getLegalMoves() {
+        Move[] movesToCheck = getMoves();
         Move[] legalMoves = new Move[movesToCheck.length];
         Integer legalcount = 0;
         
@@ -72,12 +107,12 @@ class King implements Piece {
             Move currentMove = movesToCheck[i];
             Square destination = currentMove.getDestinationSquare();
             if (destination.isEmpty()){
-                if (!isInCheck(destination, boardstate)){
+                if (!isInCheck(destination)){
                     legalMoves[legalcount] = currentMove;
                     legalcount++;
                 }
             } else if(destination.getPiece().getColor() != this.color){
-                if (!isInCheck(destination, boardstate)){
+                if (!isInCheck(destination)){
                     legalMoves[legalcount] = currentMove;
                     legalcount++;
                 }

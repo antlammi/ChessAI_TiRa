@@ -45,7 +45,7 @@ public class RookTest {
     
     @Test
     public void RookHasCorrectPossibleMovesInitially(){
-        Move[] movesForRookA1 = state[0][0].getPiece().getMoves(state[0][0], state);
+        Move[] movesForRookA1 = state[0][0].getPiece().getMoves();
         String[] correctInitialMoves = {"a1b1", "a1c1", "a1d1", "a1e1", "a1f1", "a1g1", "a1h1",
                                          "a1a2","a1a3", "a1a4", "a1a5", "a1a6", "a1a7", "a1a8"};
         for (int i=0; i<movesForRookA1.length; i++){
@@ -56,7 +56,7 @@ public class RookTest {
     
     @Test
     public void RookHasNoLegalMovesInitially(){
-        Move[] legalMovesForRookA1 = state[0][0].getPiece().getLegalMoves(state[0][0], state);
+        Move[] legalMovesForRookA1 = state[0][0].getPiece().getLegalMoves();
        
         for (int i=0; i<legalMovesForRookA1.length; i++){
             assertEquals(legalMovesForRookA1[i], null);
@@ -82,7 +82,7 @@ public class RookTest {
         secondb.constructMove(state[6][3].getPiece(), state[6][3], state[4][3]);
         secondb.execute();
         
-        Move[] legalMovesForRookA1 = state[0][0].getPiece().getLegalMoves(state[0][0], state);
+        Move[] legalMovesForRookA1 = state[0][0].getPiece().getLegalMoves();
         
         assertEquals(legalMovesForRookA1[0].toString(), "a1a2");
         assertEquals(legalMovesForRookA1[1].toString(), "a1a3");
