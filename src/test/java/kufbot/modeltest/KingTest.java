@@ -59,5 +59,14 @@ public class KingTest {
         King king = (King) state[0][4].getPiece();
         assertFalse(king.getMoved());
     }
-   
+    @Test 
+    public void kingHasCorrectMovesInitially(){
+        King king = (King) state[0][4].getPiece();
+        Move[] kingMoves = king.getMoves();
+        String[] correctInitialMoves = {"e1d1","e1d2","e1e2","e1f1","e1f2"};
+        for (int i=0; i<5; i++){
+            assertEquals(correctInitialMoves[i],kingMoves[i].toString());
+        }
+        
+    }
 }

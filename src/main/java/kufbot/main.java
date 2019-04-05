@@ -24,8 +24,7 @@ public class main {
         Player playerW = new Player(Color.WHITE, state);
         Player playerB = new Player(Color.BLACK, state);
         Random random = new Random();
-       
-       
+      
         for (int i=0; i<100; i++){  //Simuloi 100 random siirtoa peliä, shakkeja ei juuri oteta huomioon (kuningas ei liiku shakkiin, mutta shakista ei tapahdu mitään)
             Move[] movesForWhite = playerW.possibleMoves();
             

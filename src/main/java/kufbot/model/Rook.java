@@ -73,7 +73,7 @@ public class Rook implements Piece {
             int cf = current.getFile() - 1;
             int df = destination.getFile() - 1;
             if (cf > df) {  //jos alkuruudun sarake on suurempi kuin määränpään
-                for (int f = cf; f >= df; f--) { //lähestytään määränpäätä
+                for (int f = cf-1; f >= df; f--) { //lähestytään määränpäätä
                     if (!boardstate[rank][f].isEmpty()) { //jos tämänhetkisellä ruudulla on palanen
                         if (f == df) {  //jos nykyinen sarake on vastaa määränpäätä
                             if (this.color != destination.getPiece().getColor()) { //jos palaset ovat eri värisiä, voidaan se syödä ja siirtyä ruudulle
@@ -118,7 +118,7 @@ public class Rook implements Piece {
             int cr = current.getRank() - 1;
             int dr = destination.getRank() - 1;
             if (cr > dr) {
-                for (int r = cr; r >= dr; r--) {
+                for (int r = cr-1; r >= dr; r--) {
                     if (!boardstate[r][file].isEmpty()) {
                         if (r == dr) {
                             if (this.color != destination.getPiece().getColor()) {
