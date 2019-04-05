@@ -38,3 +38,7 @@
 |3.4.|0.5h    |Movement for King (without implementing method isInCheck())|
 |4.4.|1.5h    |Player class added to provide all available moves|
 |4.4.|1h      |Bugfixes for various pieces' movement and Player class|
+|5.4.|0.5h    |Bugfix for pawn promotion|
+|5.4.|1h      |Code cleanup (moved boardstate and current square to private variables for the pieces)|
+|5.4.|0.5h    |Bugfix for pawn opening move and a test to sure it keeps working|
+|5.4.|1h      |Initial implementation for King isInCheck|
