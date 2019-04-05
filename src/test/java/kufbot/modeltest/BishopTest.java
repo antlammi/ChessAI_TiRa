@@ -45,7 +45,7 @@ public class BishopTest {
     public void tearDown() {
     }
     @Test
-    public void BishopHasCorrectPossibleMovesInitially(){
+    public void bishopHasCorrectPossibleMovesInitially(){
         Move[] movesForBishopF1 = state[0][5].getPiece().getMoves();
         String[] correctInitialMoves = {"f1e2","f1g2","f1d3","f1h3","f1c4","f1b5","f1a6"};
         for (int i=0; i<7; i++){
@@ -59,7 +59,7 @@ public class BishopTest {
     
     
     @Test
-    public void BishopHasNoLegalMovesInitially(){
+    public void bishopHasNoLegalMovesInitially(){
         Move[] legalMovesForBishopF1 = state[0][5].getPiece().getLegalMoves();
         for (int i=0; i<legalMovesForBishopF1.length; i++){
             assertEquals(legalMovesForBishopF1[i], null);
@@ -68,7 +68,7 @@ public class BishopTest {
     }
     
     @Test
-    public void BishopHasCorrectLegalMovesAfterOpeningSequence(){
+    public void bishopHasCorrectLegalMovesAfterOpeningSequence(){
         Move firstw = new Move(this.state);
         firstw.constructMove(state[1][4].getPiece(), state[1][4], state[3][4]);
         firstw.execute();

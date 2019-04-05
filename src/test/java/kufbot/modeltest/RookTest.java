@@ -44,7 +44,7 @@ public class RookTest {
     }
     
     @Test
-    public void RookHasCorrectPossibleMovesInitially(){
+    public void rookHasCorrectPossibleMovesInitially(){
         Move[] movesForRookA1 = state[0][0].getPiece().getMoves();
         String[] correctInitialMoves = {"a1b1", "a1c1", "a1d1", "a1e1", "a1f1", "a1g1", "a1h1",
                                          "a1a2","a1a3", "a1a4", "a1a5", "a1a6", "a1a7", "a1a8"};
@@ -55,7 +55,7 @@ public class RookTest {
     }
     
     @Test
-    public void RookHasNoLegalMovesInitially(){
+    public void rookHasNoLegalMovesInitially(){
         Move[] legalMovesForRookA1 = state[0][0].getPiece().getLegalMoves();
        
         for (int i=0; i<legalMovesForRookA1.length; i++){
@@ -65,7 +65,7 @@ public class RookTest {
     }
     
     @Test
-    public void RookHasCorrectLegalMovesAfterOpeningSequence(){
+    public void rookHasCorrectLegalMovesAfterOpeningSequence(){
         Move firstw = new Move(this.state);
         firstw.constructMove(state[1][4].getPiece(), state[1][4], state[3][4]);
         firstw.execute();
