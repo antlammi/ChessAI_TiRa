@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author antlammi
  */
-class Pawn implements Piece {
+public class Pawn implements Piece {
     public final Color color;
     private Square current;
     private Square[][] boardstate;
@@ -80,7 +80,7 @@ class Pawn implements Piece {
                 }
             }
         }
-        if (rank==6){ 
+        if (rank==7){ 
                 possibleMovesBlack[moveCount] = new Move(boardstate);
                 possibleMovesBlack[moveCount].constructMove(this, current, boardstate[rank-3][file-1]);
                 moveCount++;

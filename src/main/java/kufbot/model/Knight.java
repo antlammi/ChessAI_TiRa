@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author antlammi
  */
-class Knight implements Piece {
+public class Knight implements Piece {
     public final Color color;
     private Square current;
     private Square[][] boardstate;

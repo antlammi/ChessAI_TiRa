@@ -24,8 +24,9 @@ public class main {
         Player playerW = new Player(Color.WHITE, state);
         Player playerB = new Player(Color.BLACK, state);
         Random random = new Random();
-        
-        for (int i=0; i<100; i++){
+       
+       
+        for (int i=0; i<100; i++){  //Simuloi 100 random siirtoa peliä, shakkeja ei juuri oteta huomioon (kuningas ei liiku shakkiin, mutta shakista ei tapahdu mitään)
             Move[] movesForWhite = playerW.possibleMoves();
             
             Move moveChosenWhite = movesForWhite[random.nextInt(movesForWhite.length)];
@@ -48,6 +49,7 @@ public class main {
         }
         
         printState(state);
+        printStateGraphic(state);
       
     }
     
@@ -60,5 +62,26 @@ public class main {
             }
         }
     }
-    
+    public static void printStateGraphic(Square[][] state) {
+
+        String[] files = {"A", "B", "C", "D", "E", "F", "G", "H"};
+        System.out.print("|");
+        for (int i=0; i<files.length; i++){
+            System.out.print(" " + files[i]+ "  |");
+        }
+        System.out.print("\n");
+        for (int r = 7; r >= 0; r--) {
+            System.out.print("|");
+            for (int f = 0; f <= 7; f++) {
+                
+                if (state[r][f].isEmpty()) {
+                    System.out.print("    |");
+                } else {
+                    System.out.print(" " + state[r][f].toString().substring(0,1) + state[r][f].toString().substring(6, 7) + " |");
+                }
+            }
+            System.out.println(" " + (r+1) +"\n");
+
+        }
+    }
 }

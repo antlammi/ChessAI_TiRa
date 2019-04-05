@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author antlammi
  */
-class Rook implements Piece {
+public class Rook implements Piece {
 
     public final Color color;
     private int legalcount;

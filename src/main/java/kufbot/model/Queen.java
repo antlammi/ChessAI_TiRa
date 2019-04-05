@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author antlammi
  */
-class Queen implements Piece {
+public class Queen implements Piece {
 
     public final Color color;
     private Rook rook;

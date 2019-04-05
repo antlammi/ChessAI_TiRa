@@ -5,6 +5,10 @@
  */
 package modeltest;
 
+import kufbot.model.Board;
+import kufbot.model.King;
+import kufbot.model.Move;
+import kufbot.model.Square;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,7 +21,8 @@ import static org.junit.Assert.*;
  * @author antlammi
  */
 public class KingTest {
-    
+    private Board board;
+    private Square[][] state;
     public KingTest() {
     }
     
@@ -31,15 +36,28 @@ public class KingTest {
     
     @Before
     public void setUp() {
+        this.board = new Board();
+        this.state = board.getBoardState();
     }
     
     @After
     public void tearDown() {
     }
-
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    
+    @Test
+    public void kingHasNoLegalMovesInitially(){
+        King king = (King) state[0][4].getPiece();
+        Move[] kingLegalMoves = king.getLegalMoves();
+        
+        for (int i=0; i<kingLegalMoves.length; i++){
+            assertNull(kingLegalMoves[i]);
+        }
+    }
+    
+    @Test
+    public void kingHasNotBeenMovedInitially(){
+        King king = (King) state[0][4].getPiece();
+        assertFalse(king.getMoved());
+    }
+   
 }

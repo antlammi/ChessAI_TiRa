@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author antlammi
  */
-class Bishop implements Piece {
+public class Bishop implements Piece {
 
     private final Color color;
     private Square current;

@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author antlammi
  */
-class King implements Piece {
+public class King implements Piece {
     public final Color color;
     private Boolean moved;
     private Square current;
