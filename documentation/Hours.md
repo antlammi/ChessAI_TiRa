@@ -45,3 +45,4 @@
 |5.4.|1.5h    |New tests for Queen, King, Knight|
 |5.4.|0.5h    |New tests for Pawn|
 |5.4.|1h      |More bugfixing and tests|
+|5.4.|1h      |Documentation stuff|
