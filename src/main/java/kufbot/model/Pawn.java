@@ -43,9 +43,11 @@ class Pawn implements Piece {
         
         for (int f=file-2; f<=file && f<=7; f++){
             if (f >= 0){
-            possibleMovesWhite[moveCount] = new Move(boardstate);
-            possibleMovesWhite[moveCount].constructMove(this, current, boardstate[rank][f]);
-            moveCount++;  
+                if (rank < 8){
+                    possibleMovesWhite[moveCount] = new Move(boardstate);
+                    possibleMovesWhite[moveCount].constructMove(this, current, boardstate[rank][f]);
+                    moveCount++;  
+                }
             }
         }
         if (rank == 2){
@@ -63,9 +65,11 @@ class Pawn implements Piece {
         Integer moveCount = 0;
         for (int f=file-2; f<=file && f<=7; f++){
             if (f >= 0){
+                if ((rank > 1)){
                 possibleMovesBlack[moveCount] = new Move(boardstate);
                 possibleMovesBlack[moveCount].constructMove(this, current, boardstate[rank-2][f]);
                 moveCount++;
+                }
             }
         }
         if (rank==6){ 

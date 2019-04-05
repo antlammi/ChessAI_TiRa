@@ -33,6 +33,7 @@ public class Move {
         Piece promotedPiece = pf.getPiece(pieceType, piece.getColor());
         current.leave();
         current.enter(promotedPiece);
+        this.piece = promotedPiece;
     }
     
     public void execute(){
@@ -40,13 +41,16 @@ public class Move {
             Rook rook = (Rook) current.getPiece();
             rook.wasMoved();
         }
+     
         if (current.getPiece().toString().contains("KING")){
             King king = (King) current.getPiece();
             king.wasMoved();
         }
-        if (current.getPiece().toString() == "WHITE PAWN" && current.getRank() == 7){
+        
+        
+        if (current.getPiece().toString().equals("WHITE PAWN") && current.getRank() == 7){
             promotePawn(current.getPiece(), "QUEEN"); //automatically promotes to queen
-        } else if (current.getPiece().toString() =="BLACK PAWN" && current.getRank() == 2){
+        } else if (current.getPiece().toString().equals("BLACK PAWN") && current.getRank() == 2){
             promotePawn(current.getPiece(), "QUEEN");
         }
         current.leave();

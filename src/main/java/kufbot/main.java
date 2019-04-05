@@ -23,7 +23,7 @@ public class main {
         Player playerB = new Player(Color.BLACK, state);
         Random random = new Random();
         
-        for (int i=0; i<50; i++){
+        for (int i=0; i<100; i++){
             Move[] movesForWhite = playerW.possibleMoves();
             
             Move moveChosenWhite = movesForWhite[random.nextInt(movesForWhite.length)];
