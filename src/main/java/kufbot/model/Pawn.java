@@ -12,122 +12,122 @@ import java.util.ArrayList;
  * @author antlammi
  */
 public class Pawn implements Piece {
+
     public final Color color;
     private Square current;
     private Square[][] boardstate;
+
     public Pawn(Color color, Square initial, Square[][] boardstate) {
         this.color = color;
         this.current = initial;
         this.boardstate = boardstate;
     }
 
-    
-    @Override 
-    public String toString(){
-        return color + " PAWN"; 
-    }
-    
     @Override
-    public void setSquare(Square newSquare){
+    public String toString() {
+        return color + " PAWN";
+    }
+
+    @Override
+    public void setSquare(Square newSquare) {
         this.current = newSquare;
     }
-    
+
     @Override
-    public Move[] getMoves() { 
+    public Move[] getMoves() {
         Move[] possibleMoves;
-        if (this.color == Color.WHITE){
+        if (this.color == Color.WHITE) {
             possibleMoves = getMovesWhite();
         } else {
             possibleMoves = getMovesBlack();
         }
         return possibleMoves;
     }
-    
-    public Move[] getMovesWhite(){
+
+    public Move[] getMovesWhite() {
         Integer rank = current.getRank();
         Integer file = current.getFile();
         Move[] possibleMovesWhite = new Move[4];
         Integer moveCount = 0;
-        
-        for (int f=file-2; f<=file && f<=7; f++){
-            if (f >= 0){
-                if (rank < 8){
+
+        for (int f = file - 2; f <= file && f <= 7; f++) {
+            if (f >= 0) {
+                if (rank < 8) {
                     possibleMovesWhite[moveCount] = new Move(boardstate);
                     possibleMovesWhite[moveCount].constructMove(this, current, boardstate[rank][f]);
-                    moveCount++;  
+                    moveCount++;
                 }
             }
         }
-        if (rank == 2){
+        if (rank == 2) {
             possibleMovesWhite[moveCount] = new Move(boardstate);
-            possibleMovesWhite[moveCount].constructMove(this, current, boardstate[rank+1][file-1]);
+            possibleMovesWhite[moveCount].constructMove(this, current, boardstate[rank + 1][file - 1]);
             moveCount++;
         }
         return possibleMovesWhite;
     }
-    
-    public Move[] getMovesBlack(){
+
+    public Move[] getMovesBlack() {
         Integer rank = current.getRank();
         Integer file = current.getFile();
         Move[] possibleMovesBlack = new Move[4];
         Integer moveCount = 0;
-        for (int f=file-2; f<=file && f<=7; f++){
-            if (f >= 0){
-                if ((rank > 1)){
-                possibleMovesBlack[moveCount] = new Move(boardstate);
-                possibleMovesBlack[moveCount].constructMove(this, current, boardstate[rank-2][f]);
-                moveCount++;
+        for (int f = file - 2; f <= file && f <= 7; f++) {
+            if (f >= 0) {
+                if ((rank > 1)) {
+                    possibleMovesBlack[moveCount] = new Move(boardstate);
+                    possibleMovesBlack[moveCount].constructMove(this, current, boardstate[rank - 2][f]);
+                    moveCount++;
                 }
             }
         }
-        if (rank==7){ 
-                possibleMovesBlack[moveCount] = new Move(boardstate);
-                possibleMovesBlack[moveCount].constructMove(this, current, boardstate[rank-3][file-1]);
-                moveCount++;
+        if (rank == 7) {
+            possibleMovesBlack[moveCount] = new Move(boardstate);
+            possibleMovesBlack[moveCount].constructMove(this, current, boardstate[rank - 3][file - 1]);
+            moveCount++;
         }
-       
+
         return possibleMovesBlack;
     }
-    
+
     @Override
     public Move[] getLegalMoves() {
         Move[] movesToCheck = getMoves();
         Move[] legalMoves = new Move[movesToCheck.length];
-        
+
         int legalcount = 0;
-        
-        for (int i=0; i<movesToCheck.length; i++){
-            
+
+        for (int i = 0; i < movesToCheck.length; i++) {
+
             Move currentMove = movesToCheck[i];
-            if (currentMove != null){
+            if (currentMove != null) {
                 Square destination = currentMove.getDestinationSquare();
-                int df = destination.getFile()-1;
-                int dr = destination.getRank()-1;
-                
-                if (current.getFile() == destination.getFile()){ //jos siirrytään eteenpäin
-                    if (dr-current.getRank()-1 == 0){  //jos aloitussiirto
-                        if (current.getRank() == 2){ //jos aloitussiirto valkoisilla
-                            if (boardstate[dr][df].isEmpty() && boardstate[dr-1][df].isEmpty()){ //jos välissä oleva ruutu ja määränpää tyhjiä
+                int df = destination.getFile() - 1;
+                int dr = destination.getRank() - 1;
+
+                if (current.getFile() == destination.getFile()) { //jos siirrytään eteenpäin
+                    if (dr - current.getRank() - 1 == 0) {  //jos aloitussiirto
+                        if (current.getRank() == 2) { //jos aloitussiirto valkoisilla
+                            if (boardstate[dr][df].isEmpty() && boardstate[dr - 1][df].isEmpty()) { //jos välissä oleva ruutu ja määränpää tyhjiä
                                 legalMoves[legalcount] = currentMove;
                                 legalcount++;
                             }
-                        } else if (current.getRank() == 6){ //jos aloitussiirto mustilla
-                            if (boardstate[dr][df].isEmpty() && boardstate[dr+1][df].isEmpty()){ //jos välissä oleva ruutu ja määränpää tyhjiä
+                        } else if (current.getRank() == 6) { //jos aloitussiirto mustilla
+                            if (boardstate[dr][df].isEmpty() && boardstate[dr + 1][df].isEmpty()) { //jos välissä oleva ruutu ja määränpää tyhjiä
                                 legalMoves[legalcount] = currentMove;
                                 legalcount++;
                             }
                         }
 
-                    } else if (boardstate[dr][df].isEmpty()){ //jos määränpää tyhjä ja ei aloitussiirto
+                    } else if (boardstate[dr][df].isEmpty()) { //jos määränpää tyhjä ja ei aloitussiirto
                         legalMoves[legalcount] = currentMove;
                         legalcount++;
                     }
-                } else { // jos siirrytään vinosuuntaan
-                    if (!boardstate[dr][df].isEmpty()){ //jos määränpää ei ole tyhjä
-                        if (boardstate[dr][df].getPiece().getColor() != this.color){ //ja kyseessä ei ole oma palanen
-                            legalMoves[legalcount] = currentMove;
-                            legalcount++;
-                        }
+                } else // jos siirrytään vinosuuntaan
+                if (!boardstate[dr][df].isEmpty()) { //jos määränpää ei ole tyhjä
+                    if (boardstate[dr][df].getPiece().getColor() != this.color) { //ja kyseessä ei ole oma palanen
+                        legalMoves[legalcount] = currentMove;
+                        legalcount++;
                     }
                 }
 

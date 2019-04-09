@@ -4,25 +4,29 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/local/antlammi/Documents/TiraProjekti/ChessAI_TiRa/src/main/java/kufbot/model/Move.java</file>
-            <file>file:/home/local/antlammi/Documents/TiraProjekti/ChessAI_TiRa/src/main/java/kufbot/model/Color.java</file>
-            <file>file:/home/local/antlammi/Documents/TiraProjekti/ChessAI_TiRa/src/main/java/kufbot/model/Knight.java</file>
             <file>file:/home/local/antlammi/Documents/TiraProjekti/ChessAI_TiRa/src/main/java/kufbot/main.java</file>
             <file>file:/home/local/antlammi/Documents/TiraProjekti/ChessAI_TiRa/src/test/java/kufbot/modeltest/BishopTest.java</file>
             <file>file:/home/local/antlammi/Documents/TiraProjekti/ChessAI_TiRa/src/main/java/kufbot/model/Square.java</file>
             <file>file:/home/local/antlammi/Documents/TiraProjekti/ChessAI_TiRa/src/main/java/kufbot/connection/Output.java</file>
             <file>file:/home/local/antlammi/Documents/TiraProjekti/ChessAI_TiRa/src/test/java/kufbot/modeltest/PawnTest.java</file>
-            <file>file:/home/local/antlammi/Documents/TiraProjekti/ChessAI_TiRa/src/main/java/kufbot/model/PieceFactory.java</file>
             <file>file:/home/local/antlammi/Documents/TiraProjekti/ChessAI_TiRa/src/test/java/kufbot/modeltest/RookTest.java</file>
-            <file>file:/home/local/antlammi/Documents/TiraProjekti/ChessAI_TiRa/src/main/java/kufbot/model/Board.java</file>
             <file>file:/home/local/antlammi/Documents/TiraProjekti/ChessAI_TiRa/src/test/java/kufbot/modeltest/BoardTest.java</file>
             <file>file:/home/local/antlammi/Documents/TiraProjekti/ChessAI_TiRa/src/main/java/kufbot/model/Piece.java</file>
             <file>file:/home/local/antlammi/Documents/TiraProjekti/ChessAI_TiRa/src/main/java/kufbot/model/Rook.java</file>
             <file>file:/home/local/antlammi/Documents/TiraProjekti/ChessAI_TiRa/src/test/java/kufbot/modeltest/PieceFactoryTest.java</file>
             <file>file:/home/local/antlammi/Documents/TiraProjekti/ChessAI_TiRa/src/main/java/kufbot/model/Queen.java</file>
-            <file>file:/home/local/antlammi/Documents/TiraProjekti/ChessAI_TiRa/src/main/java/kufbot/connection/Input.java</file>
+            <file>file:/home/local/antlammi/Documents/TiraProjekti/ChessAI_TiRa/src/main/java/kufbot/model/Player.java</file>
             <file>file:/home/local/antlammi/Documents/TiraProjekti/ChessAI_TiRa/src/main/java/kufbot/engine/Random.java</file>
-            <file>file:/home/local/antlammi/Documents/TiraProjekti/ChessAI_TiRa/src/main/java/kufbot/model/Pawn.java</file>
             <file>file:/home/local/antlammi/Documents/TiraProjekti/ChessAI_TiRa/src/main/java/kufbot/model/Bishop.java</file>
+            <file>file:/home/local/antlammi/Documents/TiraProjekti/ChessAI_TiRa/src/main/java/kufbot/model/Color.java</file>
+            <file>file:/home/local/antlammi/Documents/TiraProjekti/ChessAI_TiRa/src/main/java/kufbot/model/Knight.java</file>
+            <file>file:/home/local/antlammi/Documents/TiraProjekti/ChessAI_TiRa/src/test/java/kufbot/modeltest/KingTest.java</file>
+            <file>file:/home/local/antlammi/Documents/TiraProjekti/ChessAI_TiRa/src/main/java/kufbot/model/PieceFactory.java</file>
+            <file>file:/home/local/antlammi/Documents/TiraProjekti/ChessAI_TiRa/src/main/java/kufbot/model/Board.java</file>
+            <file>file:/home/local/antlammi/Documents/TiraProjekti/ChessAI_TiRa/src/test/java/kufbot/modeltest/QueenTest.java</file>
+            <file>file:/home/local/antlammi/Documents/TiraProjekti/ChessAI_TiRa/src/test/java/kufbot/modeltest/KnightTest.java</file>
+            <file>file:/home/local/antlammi/Documents/TiraProjekti/ChessAI_TiRa/src/main/java/kufbot/connection/Input.java</file>
+            <file>file:/home/local/antlammi/Documents/TiraProjekti/ChessAI_TiRa/src/main/java/kufbot/model/Pawn.java</file>
             <file>file:/home/local/antlammi/Documents/TiraProjekti/ChessAI_TiRa/src/main/java/kufbot/model/King.java</file>
         </group>
     </open-files>

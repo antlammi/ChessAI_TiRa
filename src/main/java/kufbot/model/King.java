@@ -41,10 +41,10 @@ public class King implements Piece {
     public Boolean isInCheck(Square kingLocation){
         for (int r=0; r<=7; r++){
             for (int f=0; f<=7; f++){
-                Square current = boardstate[r][f];
-                if (!current.isEmpty()){
-                    if (current.getPiece().getColor() != this.color){
-                        if (current.getPiece().toString().contains("KING")){ //Special case to prevent infinite loop
+                Square location = boardstate[r][f];
+                if (!location.isEmpty()){
+                    if (location.getPiece().getColor() != this.color){
+                        if (location.getPiece().toString().contains("KING")){ //Special case to prevent infinite loop
                             for (int i=-1; i<=1; i++){
                                 if (kingLocation.getRank()-1 == r+i){
                                     if (kingLocation.getFile()-1 == f-1 ||kingLocation.getFile()-1 == f 
@@ -53,15 +53,16 @@ public class King implements Piece {
                                     }
                                 }
                             }
-                            break;
-                        }
-                        Move[] moves = current.getPiece().getLegalMoves();
-                        for (int i=0; i<moves.length; i++){
-                            if (moves[i] == null){
-                                break;
-                            }
-                            if (moves[i].getDestinationSquare() == kingLocation){
-                                return true;
+                            
+                        } else {
+                            Move[] moves = location.getPiece().getLegalMoves();
+                            for (int i=0; i<moves.length; i++){
+                                if (moves[i] == null){
+                                    break;
+                                }
+                                if (moves[i].getDestinationSquare() == kingLocation){
+                                    return true;
+                                }
                             }
                         }
                     }
