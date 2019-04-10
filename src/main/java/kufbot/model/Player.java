@@ -15,13 +15,16 @@ public class Player {
     private Piece[] pieces; //remaining pieces for the player
     private Integer piececount;
     private Square[][] boardstate;
-    
+    private Integer kingRank;
+    private Integer kingFile;
+    private PieceFactory pf;
     public Player(Color color, Square[][] boardstate){
         this.color = color;
         this.piececount = 16;
         this.occupiedSquares = new Square[piececount];
         this.pieces = new Piece[piececount];
         this.boardstate = boardstate;
+        this.pf = new PieceFactory();
         if (this.color == Color.WHITE){
             initializeWhitePlayer();
         } else {
@@ -35,6 +38,10 @@ public class Player {
             for (int f=0; f<=7; f++){
                 occupiedSquares[count] = this.boardstate[r][f];
                 pieces[count] = this.boardstate[r][f].getPiece();
+                if (this.boardstate[r][f].getPiece().toString().contains("KING")){
+                    this.kingRank = r;
+                    this.kingFile = f;
+                }
                 count++;
             }
         }
@@ -43,10 +50,14 @@ public class Player {
     private void initializeBlackPlayer(){
         int count = 0;
         for (int r=6; r<8; r++){
-            for (int f=0; f<=7; f++){
+            for (int f=0; f<8; f++){
                 occupiedSquares[count] = this.boardstate[r][f];
                 pieces[count] = this.boardstate[r][f].getPiece();
-                count++;
+                if (this.boardstate[r][f].getPiece().toString().contains("KING")){
+                    this.kingRank = r;
+                    this.kingFile = f;
+                }
+                count++;              
             }
         }
     }
@@ -54,11 +65,15 @@ public class Player {
         this.occupiedSquares = new Square[piececount];
         this.pieces = new Piece[piececount];
         int count =0;
-        for (int r=0; r<8; r++){
+        for (int r=0; r<8  && count < piececount; r++){
             for (int f=0; f<8; f++){
                 if (!boardstate[r][f].isEmpty() && this.color == boardstate[r][f].getPiece().getColor()){
                     occupiedSquares[count] = this.boardstate[r][f];
                     pieces[count] = this.boardstate[r][f].getPiece();
+                    if (this.boardstate[r][f].getPiece().toString().contains("KING")){
+                        this.kingRank = r;
+                        this.kingFile = f;
+                    }
                     count++;
                 }
             }
@@ -103,5 +118,66 @@ public class Player {
             }
         }
         return movesToReturn;
-     }
+    }
+    
+    public Move[] legalMoves(){ //checks possible moves for king being in check after
+        Move[] moves = possibleMoves();
+        Move[] legalMoves = new Move[moves.length];
+        Integer legalcount = 0;
+        for (int i=0; i<moves.length; i++){
+            Integer kr = this.kingRank;
+            Integer kf = this.kingFile;
+            Move current = moves[i];
+            if (current.getPiece().toString().contains("KING")){  //if move in question is for king, update location
+                kr = current.getDestinationSquare().getRank()-1;
+                kf = current.getDestinationSquare().getFile()-1;
+            }
+            //All the required variables are copied so the internal state stays in tact.
+            Square[][] stateToCheck = copyBoardstate();
+            
+            Integer cr = current.getCurrentSquare().getRank()-1;
+            Integer cf = current.getCurrentSquare().getFile()-1;
+            Integer dr = current.getDestinationSquare().getRank()-1;
+            Integer df = current.getDestinationSquare().getFile()-1;
+            
+            Move moveToCheck = new Move(stateToCheck);
+            
+            moveToCheck.constructMove(stateToCheck[cr][cf].getPiece(), stateToCheck[cr][cf], stateToCheck[dr][df]);
+            
+            moveToCheck.execute();
+            King king = (King) stateToCheck[kr][kf].getPiece();
+            if (!king.isInCheck(stateToCheck[kr][kf])){
+                legalMoves[legalcount] = moves[i];
+                legalcount++;
+            }
+            
+        }
+        Move[] movesToReturn = new Move[legalcount];
+        for (int i=0; i<legalcount; i++){
+            movesToReturn[i] = legalMoves[i];
+        }
+        return movesToReturn;
+    }
+    private Square[][] copyBoardstate(){
+        Square[][] copy = new Square[8][8];
+        for(int r=0; r<8; r++){
+            for (int f=0; f<8; f++){
+                copy[r][f] = new Square(r+1,f+1);
+                
+            }
+        }
+          for(int r=0; r<8; r++){
+            for (int f=0; f<8; f++){
+                if (!this.boardstate[r][f].isEmpty()){
+                    Piece toClone = this.boardstate[r][f].getPiece();
+                    Piece clone = pf.getPiece(toClone.toString().substring(6), toClone.getColor(), copy[r][f], copy);
+                    copy[r][f].enter(clone);
+                }
+               
+                
+            }
+        }
+        
+        return copy;
+    }
 }

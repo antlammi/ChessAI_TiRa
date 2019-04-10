@@ -36,6 +36,11 @@ public class Move {
         this.piece = promotedPiece;
     }
     
+    public void constructKingSideCastle(Piece piece, Square current, Square destination){
+        
+        
+        
+    }
     public void execute(){
         if (current.getPiece().toString().contains("ROOK")){
             Rook rook = (Rook) current.getPiece();
@@ -62,6 +67,9 @@ public class Move {
             piece.setSquare(destination);
         }
         
+    }
+    public Piece getPiece(){
+        return piece;
     }
     public Square getCurrentSquare(){
         return current;

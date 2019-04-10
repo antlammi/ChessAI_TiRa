@@ -24,10 +24,16 @@ public class main {
         Player playerW = new Player(Color.WHITE, state);
         Player playerB = new Player(Color.BLACK, state);
         Random random = new Random();
-      
-        for (int i=0; i<100; i++){  //Simuloi 100 random siirtoa peliä, shakkeja ei juuri oteta huomioon (kuningas ei liiku shakkiin, mutta shakista ei tapahdu mitään)
-            Move[] movesForWhite = playerW.possibleMoves();
-            
+        String outcome = "";
+        for (int i=0; i<1000; i++){  //Simuloi 100 random siirtoa peliä, shakkeja ei juuri oteta huomioon (kuningas ei liiku shakkiin, mutta shakista ei tapahdu mitään)
+            Move[] movesForWhite = playerW.legalMoves();
+            if (movesForWhite.length == 0){
+                Move[] debug = playerW.possibleMoves();
+                printStateGraphic(state);
+                outcome ="Black wins!";
+                
+                break;
+            }
             Move moveChosenWhite = movesForWhite[random.nextInt(movesForWhite.length)];
             System.out.println(i+1 + ": ");
             System.out.println(moveChosenWhite);
@@ -36,8 +42,13 @@ public class main {
             playerW.updatePlayer(state);
             playerB.updatePlayer(state);
             
-            Move[] movesForBlack = playerB.possibleMoves();
-            
+            Move[] movesForBlack = playerB.legalMoves();
+            if (movesForBlack.length == 0){
+                Move[] debug = playerB.possibleMoves();
+                printStateGraphic(state);
+                outcome = "White wins!";
+                break;
+            }
             Move moveChosenBlack = movesForBlack[random.nextInt(movesForBlack.length)];
             
             System.out.println(moveChosenBlack);
@@ -45,10 +56,14 @@ public class main {
             moveChosenBlack.execute();
             playerW.updatePlayer(state);
             playerB.updatePlayer(state);
+            if (i==999){
+                outcome = "Draw!";
+            }
         }
         
         printState(state);
         printStateGraphic(state);
+        System.out.println(outcome);
       
     }
     
@@ -76,7 +91,11 @@ public class main {
                 if (state[r][f].isEmpty()) {
                     System.out.print("    |");
                 } else {
-                    System.out.print(" " + state[r][f].toString().substring(0,1) + state[r][f].toString().substring(6, 7) + " |");
+                    if (state[r][f].getPiece().toString().contains("KNIGHT")){
+                        System.out.print(" " + state[r][f].toString().substring(0,1) + state[r][f].toString().substring(6, 8) + "|");
+                    } else {
+                        System.out.print(" " + state[r][f].toString().substring(0,1) + state[r][f].toString().substring(6, 7) + " |");
+                    }
                 }
             }
             System.out.println(" " + (r+1) +"\n");

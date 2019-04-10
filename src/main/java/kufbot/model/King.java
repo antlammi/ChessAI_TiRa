@@ -41,9 +41,9 @@ public class King implements Piece {
     public Boolean isInCheck(Square kingLocation){
         for (int r=0; r<=7; r++){
             for (int f=0; f<=7; f++){
-                Square location = boardstate[r][f];
+                Square location = boardstate[r][f]; 
                 if (!location.isEmpty()){
-                    if (location.getPiece().getColor() != this.color){
+                    if (location.getPiece().getColor() != this.color){ //opponent's piece
                         if (location.getPiece().toString().contains("KING")){ //Special case to prevent infinite loop
                             for (int i=-1; i<=1; i++){
                                 if (kingLocation.getRank()-1 == r+i){
@@ -55,12 +55,12 @@ public class King implements Piece {
                             }
                             
                         } else {
-                            Move[] moves = location.getPiece().getLegalMoves();
+                            Move[] moves = location.getPiece().getLegalMoves(); //list of legal moves for the piece
                             for (int i=0; i<moves.length; i++){
                                 if (moves[i] == null){
                                     break;
                                 }
-                                if (moves[i].getDestinationSquare() == kingLocation){
+                                if (moves[i].getDestinationSquare() == kingLocation){ //King is in check if opponent can capture it with a legal move
                                     return true;
                                 }
                             }
@@ -93,7 +93,7 @@ public class King implements Piece {
         }
         return possibleMoves;
     }
-
+    
     @Override
     public Move[] getLegalMoves() {
         Move[] movesToCheck = getMoves();
