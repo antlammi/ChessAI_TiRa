@@ -29,8 +29,17 @@ public class main {
         Integer totalMoves = 0;
         for (int i=0; i<1000; i++){  //Simuloi 100 random siirtoa peliä, shakkeja ei juuri oteta huomioon (kuningas ei liiku shakkiin, mutta shakista ei tapahdu mitään)
             Move[] movesForWhite = playerW.legalMoves();
-            if (movesForWhite.length == 0){              
-                outcome ="Black wins";
+            if (movesForWhite.length == 0){
+                int wkr = playerW.getKingRank();
+                int wkf = playerW.getKingFile();
+                King wKing = (King) state[wkr][wkf].getPiece();
+                if (wKing.isInCheck(state[wkr][wkf])){
+                    outcome ="Black wins";
+                } else {
+                     printStateGraphic(state);
+                    outcome = "Draw by stalemate";
+                }
+                
                 totalMoves = i+1;
                 break;
             }
@@ -44,7 +53,15 @@ public class main {
             
             Move[] movesForBlack = playerB.legalMoves();
             if (movesForBlack.length == 0){
-                outcome = "White wins";
+                int bkr = playerB.getKingRank();
+                int bkf = playerB.getKingFile();
+                King wKing = (King) state[bkr][bkf].getPiece();
+                if (wKing.isInCheck(state[bkr][bkf])){
+                    outcome ="White wins";
+                } else {
+                     printStateGraphic(state);
+                    outcome = "Draw by stalemate";
+                }
                 totalMoves = i+1;
                 break;
             }
