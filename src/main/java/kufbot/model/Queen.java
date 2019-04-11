@@ -14,16 +14,13 @@ import java.util.ArrayList;
 public class Queen implements Piece {
 
     public final Color color;
-    private Rook rook;
-    private Bishop bishop;
     private Square current;
     private Square[][] boardstate;
     public Queen(Color color, Square initial, Square[][] boardstate) {
         this.color = color;
         this.current = initial;
         this.boardstate = boardstate;
-        this.rook = new Rook(this.color, initial, boardstate);
-        this.bishop = new Bishop(this.color, initial, boardstate);
+        
     }
     @Override
     public void setSquare(Square newSquare){
@@ -36,7 +33,8 @@ public class Queen implements Piece {
 
     @Override
     public Move[] getMoves() {
-      
+        Rook rook = new Rook(this.color, current, boardstate);
+        Bishop bishop = new Bishop(this.color, current, boardstate);
         
         //Kuningattaren mahdolliset siirrot ovat yhdistelmä lähetin ja tornin siirtoja, hyöydynnetään näiden siirtologiikkaa.
         
@@ -61,6 +59,9 @@ public class Queen implements Piece {
 
     @Override
     public Move[] getLegalMoves() {
+        Rook rook = new Rook(this.color, current, boardstate);
+        Bishop bishop = new Bishop(this.color, current, boardstate);
+        
         Move[] legalMoves = new Move[27];
         Move[] legalRookMoves = rook.getLegalMoves();
         Move[] legalBishopMoves = bishop.getLegalMoves();

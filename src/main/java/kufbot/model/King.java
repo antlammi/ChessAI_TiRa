@@ -56,12 +56,17 @@ public class King implements Piece {
                             
                         } else {
                             Move[] moves = location.getPiece().getLegalMoves(); //list of legal moves for the piece
+                            
                             for (int i=0; i<moves.length; i++){
                                 if (moves[i] == null){
                                     break;
                                 }
                                 if (moves[i].getDestinationSquare() == kingLocation){ //King is in check if opponent can capture it with a legal move
-                                    return true;
+                                   if (!moves[i].getPiece().toString().contains("PAWN")){ //every other piece can capture with all their legal moves
+                                        return true;
+                                   } else if (moves[i].getPawnCapture()){ //if the piece is a a pawn and the move is a capture return true, otherwise ignore
+                                       return true;
+                                   }
                                 }
                             }
                         }

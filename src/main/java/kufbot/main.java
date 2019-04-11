@@ -21,17 +21,17 @@ public class main {
         // TODO code application logic here
         Board board = new Board();
         Square[][] state = board.getBoardState();
+       
         Player playerW = new Player(Color.WHITE, state);
         Player playerB = new Player(Color.BLACK, state);
         Random random = new Random();
         String outcome = "";
+        Integer totalMoves = 0;
         for (int i=0; i<1000; i++){  //Simuloi 100 random siirtoa peliä, shakkeja ei juuri oteta huomioon (kuningas ei liiku shakkiin, mutta shakista ei tapahdu mitään)
             Move[] movesForWhite = playerW.legalMoves();
-            if (movesForWhite.length == 0){
-                Move[] debug = playerW.possibleMoves();
-                printStateGraphic(state);
-                outcome ="Black wins!";
-                
+            if (movesForWhite.length == 0){              
+                outcome ="Black wins";
+                totalMoves = i+1;
                 break;
             }
             Move moveChosenWhite = movesForWhite[random.nextInt(movesForWhite.length)];
@@ -44,9 +44,8 @@ public class main {
             
             Move[] movesForBlack = playerB.legalMoves();
             if (movesForBlack.length == 0){
-                Move[] debug = playerB.possibleMoves();
-                printStateGraphic(state);
-                outcome = "White wins!";
+                outcome = "White wins";
+                totalMoves = i+1;
                 break;
             }
             Move moveChosenBlack = movesForBlack[random.nextInt(movesForBlack.length)];
@@ -57,13 +56,14 @@ public class main {
             playerW.updatePlayer(state);
             playerB.updatePlayer(state);
             if (i==999){
-                outcome = "Draw!";
+                outcome = "Draw";
+                totalMoves = i+1;
             }
         }
         
         printState(state);
         printStateGraphic(state);
-        System.out.println(outcome);
+        System.out.println(outcome + " in " + totalMoves + " moves.");
       
     }
     

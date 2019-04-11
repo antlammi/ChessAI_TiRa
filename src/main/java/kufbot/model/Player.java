@@ -180,4 +180,10 @@ public class Player {
         
         return copy;
     }
+    public Integer getKingRank(){
+        return this.kingRank;
+    }
+    public Integer getKingFile(){
+        return this.kingFile;
+    }
 }

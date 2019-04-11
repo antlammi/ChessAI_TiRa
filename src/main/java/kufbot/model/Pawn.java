@@ -126,6 +126,7 @@ public class Pawn implements Piece {
                 } else // jos siirrytään vinosuuntaan
                 if (!boardstate[dr][df].isEmpty()) { //jos määränpää ei ole tyhjä
                     if (boardstate[dr][df].getPiece().getColor() != this.color) { //ja kyseessä ei ole oma palanen
+                        currentMove.setPawnCapture();       // pawn erikoiskäyttäytyminen otetaan huomion
                         legalMoves[legalcount] = currentMove;
                         legalcount++;
                     }

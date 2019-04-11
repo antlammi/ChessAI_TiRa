@@ -16,10 +16,11 @@ public class Move {
     private Square[][] boardstate;
     private String[] files = { "a", "b", "c", "d", "e", "f", "g", "h" };
     private PieceFactory pf;
-    
+    private Boolean pawnCapture;
     public Move(Square[][] boardstate){
          this.boardstate = boardstate;
          this.pf = new PieceFactory();
+         this.pawnCapture = false;
     }
     
     public void constructMove(Piece piece, Square current, Square destination){
@@ -27,6 +28,9 @@ public class Move {
         this.current = current;
         this.destination = destination;
        
+    }
+    public void setPawnCapture(){
+        this.pawnCapture = true;
     }
     
     public void promotePawn(Piece piece, String pieceType){
@@ -36,11 +40,12 @@ public class Move {
         this.piece = promotedPiece;
     }
     
-    public void constructKingSideCastle(Piece piece, Square current, Square destination){
-        
-        
-        
+    /*public void constructKingSideCastle(Piece piece, Square current, Square destination){
+   
     }
+    public void constructQueenSideCastle(Piece piece, Square current, Square destination){
+    }
+    */
     public void execute(){
         if (current.getPiece().toString().contains("ROOK")){
             Rook rook = (Rook) current.getPiece();
@@ -76,6 +81,9 @@ public class Move {
     }
     public Square getDestinationSquare(){
         return destination;
+    }
+    public Boolean getPawnCapture(){
+        return this.pawnCapture;
     }
     @Override
     public String toString(){
