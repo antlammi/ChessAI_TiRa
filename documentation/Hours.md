@@ -4,6 +4,7 @@
 |13.3.|2h      |Researching possible topics for the project and their implementations|
 |14.3.|2h      | 〃|
 |14.3.|1h      |Writing weekly report, starting on documentation and setting up git repository|
+|Total|5h      ||
 
 ## Week 2   
 |Date |Duration|Task|
@@ -13,7 +14,7 @@
 |22.3.|1h      |Configuring XBoard, and researching its implementation|
 |22.3.|0.3h    |Writing weekly report|
 |22.3.|3h      |Writing internal model of Chess for the engine, still in progress|
-
+|Total|9.3h     ||
 ## Week 3
 |Date |Duration|Task|
 |-----|--------|----|
@@ -25,7 +26,7 @@
 |29.3.|1h      |Starting work on movement implementation for other pieces|
 |29.3.|0.3h    |Writing weekly report|
 |29.3.|1h      |Basic movement for Pawns with tests (no en passant or promotion)|
-
+|Total|8.3h     ||
 ## Week 4
 
 |Date|Duration|Task|
@@ -46,3 +47,14 @@
 |5.4.|0.5h    |New tests for Pawn|
 |5.4.|1h      |More bugfixing and tests|
 |5.4.|1h      |Documentation stuff|
+|Total|14h    ||
+## Week 5
+
+|Date |Duration|Task|
+|-----|--------|----|
+|9.4. |0.3h    |Minor fix in King isInCheck()|
+|10.4.|3h      |Method legalMoves() for player to make sure moves dont leave king in check|
+|11.4.|2h      |Fixing bugs throughout the project. Moves *should* always be legal now.|
+|11.4.|0.5h    |Additional tests for King as part of bugfixing|
+||||
+|Total|5.8h||
