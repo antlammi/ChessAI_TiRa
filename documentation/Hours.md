@@ -56,5 +56,9 @@
 |10.4.|3h      |Method legalMoves() for player to make sure moves dont leave king in check|
 |11.4.|2h      |Fixing bugs throughout the project. Moves *should* always be legal now.|
 |11.4.|0.5h    |Additional tests for King as part of bugfixing|
+|11.4.|1h      |Planning minmax implementation|
+|12.4.|0.5h    |Prep work for minmax (Pieces given scores)|
+|12.4.|2h      |Program restructuring|
+|12.4.|1.5h    |Locating and fixing hard to find bug|
 ||||
 |Total|5.8h||
