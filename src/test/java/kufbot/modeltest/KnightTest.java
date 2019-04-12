@@ -42,6 +42,7 @@ public class KnightTest {
     
     @After
     public void tearDown() {
+        
     }
 
     @Test

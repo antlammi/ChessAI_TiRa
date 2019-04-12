@@ -7,6 +7,7 @@ package modeltest;
 
 import kufbot.model.Board;
 import kufbot.model.Move;
+import kufbot.model.Pawn;
 import kufbot.model.Square;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -46,7 +47,8 @@ public class PawnTest {
     }
     @Test
     public void whitePawnHasCorrectPossibleMovesInitially(){
-        Move[] movesForPawn = state[1][4].getPiece().getMoves();
+        Pawn pawn = (Pawn) state[1][4].getPiece();
+        Move[] movesForPawn = pawn.getMoves();
         String[] correctInitialMoves = {"e2d3", "e2e3", "e2f3", "e2e4"};
         for (int i=0; i<movesForPawn.length; i++){
             assertEquals(correctInitialMoves[i], movesForPawn[i].toString());
@@ -55,7 +57,8 @@ public class PawnTest {
     }
     @Test
     public void blackPawnHasCorrectPossibleMovesInitially(){
-        Move[] movesForPawn = state[6][4].getPiece().getMoves();
+        Pawn pawn = (Pawn) state[6][4].getPiece();
+        Move[] movesForPawn = pawn.getMoves();
         String[] correctInitialMoves = {"e7d6", "e7e6", "e7f6", "e7e5"};
         for (int i=0; i<movesForPawn.length; i++){
             assertEquals(correctInitialMoves[i], movesForPawn[i].toString());
@@ -63,7 +66,8 @@ public class PawnTest {
     }
     @Test
     public void whitePawnHasCorrectLegalMovesInitially(){
-        Move[] legalMovesForPawn = state[1][4].getPiece().getLegalMoves();
+        Pawn pawn = (Pawn) state[1][4].getPiece();
+        Move[] legalMovesForPawn = pawn.getLegalMoves();
         String[] correctInitialMoves = {"e2e3", "e2e4"};
         assertEquals(correctInitialMoves[0], legalMovesForPawn[0].toString());
         assertEquals(correctInitialMoves[1], legalMovesForPawn[1].toString());
@@ -83,7 +87,8 @@ public class PawnTest {
         firstb.execute();
         
         String[] correctLegalMovesAfterOpening = {"e4d5","e4e5"};
-        Move[] legalMovesForPawn = state[3][4].getPiece().getLegalMoves();
+        Pawn pawn = (Pawn) state[3][4].getPiece();
+        Move[] legalMovesForPawn = pawn.getLegalMoves();
         
         assertEquals(correctLegalMovesAfterOpening[0], legalMovesForPawn[0].toString());
         assertEquals(correctLegalMovesAfterOpening[1], legalMovesForPawn[1].toString());
@@ -106,7 +111,8 @@ public class PawnTest {
         secondW.execute();
         
         String[] correctLegalMovesAfterOpening = {"d5d4","d5e4"};
-        Move[] legalMovesForPawn = state[4][3].getPiece().getLegalMoves();
+        Pawn pawn = (Pawn) state[4][3].getPiece();
+        Move[] legalMovesForPawn = pawn.getLegalMoves();
         
         assertEquals(correctLegalMovesAfterOpening[0], legalMovesForPawn[0].toString());
         assertEquals(correctLegalMovesAfterOpening[1], legalMovesForPawn[1].toString());
@@ -125,15 +131,14 @@ public class PawnTest {
         firstb.constructMove(state[6][3].getPiece(), state[6][3], state[4][3]);
         firstb.execute();
         
-        
-        Move[] legalMovesForPawn = state[1][5].getPiece().getLegalMoves();
+        Pawn pawn = (Pawn) state[1][5].getPiece();
+        Move[] legalMovesForPawn = pawn.getLegalMoves();
         
         for (int i=0; i<legalMovesForPawn.length; i++){
             if (legalMovesForPawn[i] != null){
                 assertTrue(!legalMovesForPawn[i].toString().equals("f2f4"));
             }
         }
-        
         
     }
     
@@ -147,15 +152,17 @@ public class PawnTest {
         firstb.constructMove(state[7][6].getPiece(), state[7][6], state[5][5]);
         firstb.execute();
         
-       Move secondw = new Move(this.state);
-       secondw.constructMove(state[3][4].getPiece(), state[3][4], state[4][4]);
+        Move secondw = new Move(this.state);
+        secondw.constructMove(state[3][4].getPiece(), state[3][4], state[4][4]);
+        secondw.execute();
         
-        
-        Move[] legalMovesForPawn = state[7][5].getPiece().getLegalMoves();
+        Pawn pawn = (Pawn) state[6][5].getPiece();
+        Move[] legalMovesForPawn = pawn.getLegalMoves();
         
         for (int i=0; i<legalMovesForPawn.length; i++){
+            System.out.println(legalMovesForPawn[i]);
             if (legalMovesForPawn[i] != null){
-                assertTrue(!legalMovesForPawn[i].toString().equals("f8f6"));
+                assertTrue(!legalMovesForPawn[i].toString().equals("f7f5"));
             }
         }
         

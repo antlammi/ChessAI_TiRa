@@ -76,7 +76,27 @@ public class QueenTest {
         
        
     }
-    
+    @Test 
+    public void queenHasCorrectMovesWhenAloneInD5(){
+        Queen queen = (Queen) state[0][3].getPiece();
+        for (int r=0; r<8; r++){
+            for (int f=0; f<8; f++){
+                state[r][f].leave();
+            }
+        }
+        
+        state[0][3].enter(queen);
+        Move toD4 = new Move(state);
+        toD4.constructMove(queen, state[0][3], state[3][3]);
+        toD4.execute();
+        
+        Move[] possible = queen.getMoves();
+        Move[] legal = queen.getLegalMoves();
+        
+        for (int i=0; i<possible.length; i++){
+            assertEquals(possible[i].toString(), legal[i].toString());
+        }
+    }
     @Test
     public void queenHasCorrectLegalMovesAfterSetOpening(){
          for (int i=0; i<=3; i++){

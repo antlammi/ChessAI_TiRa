@@ -20,7 +20,6 @@ import static org.junit.Assert.*;
  */
 public class BoardTest {
     private Board board;
-    private String[] files;
     private Square[][] initialState;
     public BoardTest() {
         
@@ -37,7 +36,6 @@ public class BoardTest {
     @Before
     public void setUp() {
         this.board = new Board();
-        this.files = new String[]{ "A", "B", "C", "D", "E", "F", "G", "E" };
         this.initialState = board.getBoardState();
     }
     

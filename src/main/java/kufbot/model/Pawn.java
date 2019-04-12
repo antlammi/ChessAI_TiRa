@@ -109,13 +109,13 @@ public class Pawn implements Piece {
                 int dr = destination.getRank() - 1;
 
                 if (current.getFile() == destination.getFile()) { //jos siirrytään eteenpäin
-                    if (dr - current.getRank() - 1 == 0) {  //jos aloitussiirto
+                    if (dr - current.getRank() - 1 == 0 ||current.getRank()-1 -dr == 2) {  
                         if (current.getRank() == 2) { //jos aloitussiirto valkoisilla
                             if (boardstate[dr][df].isEmpty() && boardstate[dr - 1][df].isEmpty()) { //jos välissä oleva ruutu ja määränpää tyhjiä
                                 legalMoves[legalcount] = currentMove;
                                 legalcount++;
                             }
-                        } else if (current.getRank() == 6) { //jos aloitussiirto mustilla
+                        } else if (current.getRank() == 7) { //jos aloitussiirto mustilla
                             if (boardstate[dr][df].isEmpty() && boardstate[dr + 1][df].isEmpty()) { //jos välissä oleva ruutu ja määränpää tyhjiä
                                 legalMoves[legalcount] = currentMove;
                                 legalcount++;

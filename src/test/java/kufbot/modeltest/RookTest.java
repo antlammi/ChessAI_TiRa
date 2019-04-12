@@ -90,6 +90,7 @@ public class RookTest {
         assertEquals(legalMovesForRookH8[1].toString(), "h8h7");
         
     }
+    
     @Test
     public void whiteRookHasCorrectLegalMovesAfterOpeningSequence(){
         Move firstw = new Move(this.state);

@@ -22,7 +22,6 @@ import static org.junit.Assert.*;
 public class BishopTest {
     private Board board;
     private Square[][] state;
-    private String[] files;
     public BishopTest() {
     }
     
@@ -38,7 +37,6 @@ public class BishopTest {
     public void setUp() {
         this.board = new Board();
         this.state = board.getBoardState();
-        this.files = new String[]{ "a", "b", "c", "d", "e", "f", "g", "h" };
     }
     
     @After

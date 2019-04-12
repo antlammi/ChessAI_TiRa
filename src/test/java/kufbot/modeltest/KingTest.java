@@ -27,7 +27,6 @@ import static org.junit.Assert.*;
 public class KingTest {
     private Board board;
     private Square[][] state;
-    private PieceFactory pf;
     public KingTest() {
     }
     
@@ -43,7 +42,6 @@ public class KingTest {
     public void setUp() {
         this.board = new Board();
         this.state = board.getBoardState();
-        this.pf = new PieceFactory();
     }
     
     @After
