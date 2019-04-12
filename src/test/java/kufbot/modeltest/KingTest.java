@@ -9,6 +9,7 @@ import kufbot.model.Board;
 import kufbot.model.Color;
 import kufbot.model.King;
 import kufbot.model.Move;
+import kufbot.model.Pawn;
 import kufbot.model.PieceFactory;
 import kufbot.model.Queen;
 import kufbot.model.Square;
@@ -113,7 +114,7 @@ public class KingTest {
         
     }
     
-     @Test
+    @Test
     public void kingHasCorrectMovesInSquareG1WithQueenOnH8(){
         King wKing = (King) state[0][4].getPiece();
         Queen bQueen = (Queen) state[7][3].getPiece();
@@ -142,6 +143,48 @@ public class KingTest {
         for (int i=correctMoves.length; i<movesAvailable.length; i++){
             assertNull(movesAvailable[i]);
         }
+        
+    }
+    @Test
+    public void kingIsInCheckScenario1(){
+        King wKing = (King) state[0][4].getPiece();
+        Queen bQueen = (Queen) state[7][3].getPiece();
+        Pawn bPawn = (Pawn) state[6][7].getPiece();
+        King bKing = (King) state[7][4].getPiece();
+        for (int r=0; r<8; r++){
+            for (int f=0; f<8; f++){
+                state[r][f].leave();
+            }
+        }
+       
+        state[0][4].enter(wKing);
+        Move toH3 = new Move(state);
+        toH3.constructMove(wKing, state[0][4], state[2][7]);
+        toH3.execute();
+        
+        state[7][3].enter(bQueen);
+        Move toG3 = new Move(state);
+        toG3.constructMove(bQueen, state[7][3], state[2][6]);
+        toG3.execute();
+        
+        state[6][7].enter(bPawn);
+        Move toH4 = new Move(state);
+        toH4.constructMove(bPawn, state[6][7], state[3][7]);
+        toH4.execute();
+        
+        state[7][4].enter(bKing);
+        Move toG5 = new Move(state);
+        toG5.constructMove(bKing, state[7][4], state[4][6]);
+        toG5.execute();
+                
+        
+        Move[] movesAvailable = wKing.getLegalMoves();
+        for(int i=0; i<movesAvailable.length; i++){
+            assertNull(movesAvailable[i]);
+        }
+        
+        assertEquals(true, wKing.isInCheck(state[2][7]));
+               
         
     }
 }

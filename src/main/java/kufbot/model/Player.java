@@ -90,7 +90,7 @@ public class Player {
             this.pieces = piecesClone;
         }
     }
-    public Move[] possibleMoves(){
+    public Move[] getPossibleMoves(){
         Move[][] moves = new Move[16][];
         int totalmoves = 0;
         for (int i=0; i<occupiedSquares.length; i++){
@@ -120,8 +120,8 @@ public class Player {
         return movesToReturn;
     }
     
-    public Move[] legalMoves(){ //checks possible moves for king being in check after
-        Move[] moves = possibleMoves();
+    public Move[] getLegalMoves(){ //checks possible moves for king being in check after
+        Move[] moves = getPossibleMoves();
         Move[] legalMoves = new Move[moves.length];
         Integer legalcount = 0;
         for (int i=0; i<moves.length; i++){
@@ -133,7 +133,7 @@ public class Player {
                 kf = current.getDestinationSquare().getFile()-1;
             }
             //All the required variables are copied so the internal state stays in tact.
-            Square[][] stateToCheck = copyBoardstate();
+            Square[][] stateToCheck = Board.copyBoardstate(this.boardstate);
             
             Integer cr = current.getCurrentSquare().getRank()-1;
             Integer cf = current.getCurrentSquare().getFile()-1;
@@ -158,28 +158,7 @@ public class Player {
         }
         return movesToReturn;
     }
-    private Square[][] copyBoardstate(){
-        Square[][] copy = new Square[8][8];
-        for(int r=0; r<8; r++){
-            for (int f=0; f<8; f++){
-                copy[r][f] = new Square(r+1,f+1);
-                
-            }
-        }
-          for(int r=0; r<8; r++){
-            for (int f=0; f<8; f++){
-                if (!this.boardstate[r][f].isEmpty()){
-                    Piece toClone = this.boardstate[r][f].getPiece();
-                    Piece clone = pf.getPiece(toClone.toString().substring(6), toClone.getColor(), copy[r][f], copy);
-                    copy[r][f].enter(clone);
-                }
-               
-                
-            }
-        }
-        
-        return copy;
-    }
+    
     public Integer getKingRank(){
         return this.kingRank;
     }

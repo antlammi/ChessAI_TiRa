@@ -64,7 +64,29 @@ private PieceFactory pf;
     public Square[][] getBoardState(){
         return this.squares;
     }
-    
+    public static Square[][] copyBoardstate(Square[][] currentstate){ //moved from Player. Required to prevent fringe case bug in King.
+        PieceFactory copyFactory = new PieceFactory();
+        Square[][] copy = new Square[8][8];
+        for(int r=0; r<8; r++){
+            for (int f=0; f<8; f++){
+                copy[r][f] = new Square(r+1,f+1);
+                
+            }
+        }
+          for(int r=0; r<8; r++){
+            for (int f=0; f<8; f++){
+                if (!currentstate[r][f].isEmpty()){
+                    Piece toClone = currentstate[r][f].getPiece();
+                    Piece clone = copyFactory.getPiece(toClone.toString().substring(6), toClone.getColor(), copy[r][f], copy);
+                    copy[r][f].enter(clone);
+                }
+               
+                
+            }
+        }
+        
+        return copy;
+    }
     
 
 }

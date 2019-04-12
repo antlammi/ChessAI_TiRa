@@ -16,11 +16,15 @@ public class King implements Piece {
     private Boolean moved;
     private Square current;
     private Square[][] boardstate;
+    private Integer baseValue;
+    private Double value;
     public King(Color color, Square initial, Square[][] boardstate) {
         this.color = color;
         this.moved = false;
         this.current = initial;
         this.boardstate = boardstate;
+        this.baseValue = Integer.MAX_VALUE;
+        this.value = 1.0*baseValue;
     }
 
     @Override
@@ -38,10 +42,21 @@ public class King implements Piece {
     public void wasMoved(){
         this.moved = true;
     }
-    public Boolean isInCheck(Square kingLocation){
+    public Boolean isInCheck(Square toCheck){ //Split into two to allow other classes to use it but fixing a 
+        Square[][] copystate = Board.copyBoardstate(boardstate);
+        Move copymove = new Move(copystate);
+        
+        Square curSQCopy = copystate[current.getRank()-1][current.getFile()-1];
+        
+        Square desSQ = toCheck;
+        Square desSQCopy = copystate[desSQ.getRank()-1][desSQ.getFile()-1];
+        copymove.constructMove(curSQCopy.getPiece(), curSQCopy, desSQCopy);
+        copymove.execute();
+        
+        Square kingLocation = desSQCopy;
         for (int r=0; r<=7; r++){
             for (int f=0; f<=7; f++){
-                Square location = boardstate[r][f]; 
+                Square location = copystate[r][f]; 
                 if (!location.isEmpty()){
                     if (location.getPiece().getColor() != this.color){ //opponent's piece
                         if (location.getPiece().toString().contains("KING")){ //Special case to prevent infinite loop
@@ -61,6 +76,7 @@ public class King implements Piece {
                                 if (moves[i] == null){
                                     break;
                                 }
+                                
                                 if (moves[i].getDestinationSquare() == kingLocation){ //King is in check if opponent can capture it with a legal move
                                    if (!moves[i].getPiece().toString().contains("PAWN")){ //every other piece can capture with all their legal moves
                                         return true;
@@ -76,7 +92,8 @@ public class King implements Piece {
         }
         return false;
     }
-     
+    
+   
     @Override
     public Move[] getMoves() {
         Move[] possibleMoves = new Move[8];
@@ -132,5 +149,8 @@ public class King implements Piece {
         return this.color;
     }
 
-   
+    @Override
+    public Double getValue() {
+        return this.value;
+    }
 }

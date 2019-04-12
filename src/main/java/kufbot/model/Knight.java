@@ -15,10 +15,14 @@ public class Knight implements Piece {
     public final Color color;
     private Square current;
     private Square[][] boardstate;
+    private final Double baseValue;
+    private Double value;
     public Knight(Color color, Square initial, Square[][] boardstate) {
         this.color = color;
         this.current = initial;
         this.boardstate = boardstate;
+        this.baseValue = 3.0;
+        this.value = baseValue;
     }
 
     
@@ -92,11 +96,17 @@ public class Knight implements Piece {
         }
         return legalMoves;
     }
-
+    public void setValue(Integer moves){
+        this.value = this.baseValue + (moves/100);
+    }
+    
     @Override
     public Color getColor() {
         return this.color;
     }
 
-   
+    @Override
+    public Double getValue() {
+        return this.value;
+    }
 }

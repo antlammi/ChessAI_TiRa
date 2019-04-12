@@ -17,6 +17,7 @@ public class Move {
     private String[] files = { "a", "b", "c", "d", "e", "f", "g", "h" };
     private PieceFactory pf;
     private Boolean pawnCapture;
+    
     public Move(Square[][] boardstate){
          this.boardstate = boardstate;
          this.pf = new PieceFactory();

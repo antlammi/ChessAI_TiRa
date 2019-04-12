@@ -16,11 +16,14 @@ public class Pawn implements Piece {
     public final Color color;
     private Square current;
     private Square[][] boardstate;
-
+    private final Double baseValue;
+    private Double value;
     public Pawn(Color color, Square initial, Square[][] boardstate) {
         this.color = color;
         this.current = initial;
         this.boardstate = boardstate;
+        this.baseValue = 1.0;
+        this.value = baseValue;
     }
 
     @Override
@@ -136,10 +139,17 @@ public class Pawn implements Piece {
         }
         return legalMoves;
     }
-
+    public void setValue(Integer rank){
+        this.value = this.baseValue + (rank/25);
+    }
+    
     @Override
     public Color getColor() {
         return this.color;
     }
-
+    
+    @Override
+    public Double getValue() {
+        return this.value;
+    }
 }

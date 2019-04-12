@@ -19,11 +19,16 @@ public class Rook implements Piece {
     private Boolean moved;
     private Square current; 
     private Square[][] boardstate;
+    private final Double baseValue;
+    private Double value;
+    
     public Rook(Color color, Square initial, Square[][] boardstate) {
         this.color = color;
         this.current = initial;
         this.boardstate = boardstate;
         this.moved = false;
+        this.baseValue = 5.0;
+        this.value = baseValue;
     }
     public Boolean getMoved(){
         return this.moved;
@@ -66,12 +71,14 @@ public class Rook implements Piece {
     }
 
     public void findLegalMovesOnSameRank(Move[] movesToCheck) {
-        for (int i = 0; i < movesToCheck.length / 2 - 1; i++) {
+        int whentostop = movesToCheck.length/2;
+        for (int i = 0; i < movesToCheck.length / 2 ; i++) {
             Square destination = movesToCheck[i].getDestinationSquare();
 
             int rank = current.getRank() - 1;
             int cf = current.getFile() - 1;
             int df = destination.getFile() - 1;
+           
             if (cf > df) {  //jos alkuruudun sarake on suurempi kuin määränpään
                 for (int f = cf-1; f >= df; f--) { //lähestytään määränpäätä
                     if (!boardstate[rank][f].isEmpty()) { //jos tämänhetkisellä ruudulla on palanen
@@ -112,6 +119,7 @@ public class Rook implements Piece {
     }
 
     public void findLegalMovesOnSameFile(Move[] movesToCheck) {
+        
         for (int i = movesToCheck.length / 2; i < movesToCheck.length; i++) {
             Square destination = movesToCheck[i].getDestinationSquare();
             int file = current.getFile() - 1;
@@ -164,10 +172,16 @@ public class Rook implements Piece {
         findLegalMovesOnSameFile(movesToCheck);
         return legalMoves;
     }
-
+    public void setValue(Integer moves){    
+        this.value = baseValue+(moves/100);
+    }
     @Override
     public Color getColor() {
         return this.color;
     }
-
+    
+    @Override
+    public Double getValue() {
+        return this.value;
+    }
 }

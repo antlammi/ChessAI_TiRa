@@ -16,10 +16,14 @@ public class Queen implements Piece {
     public final Color color;
     private Square current;
     private Square[][] boardstate;
+    private Double value;
+    private final Double baseValue;
     public Queen(Color color, Square initial, Square[][] boardstate) {
         this.color = color;
         this.current = initial;
         this.boardstate = boardstate;
+        this.baseValue = 9.0;
+        this.value = baseValue;
         
     }
     @Override
@@ -81,17 +85,25 @@ public class Queen implements Piece {
             if (legalBishopMoves[i] == null){
                 break;
             }
+            
             legalMoves[i+rookmovecount] = new Move(boardstate);     
             legalMoves[i+rookmovecount].constructMove(this, current, legalBishopMoves[i].getDestinationSquare());
             
         }
-        
+       
         return legalMoves;
     }
-
+    public void setValue(Integer moves){
+        this.value = baseValue+(moves/100);
+    }
+    
     @Override
     public Color getColor() {
         return this.color;
     }
-
+    
+    @Override
+    public Double getValue() {
+        return this.value;
+    }
 }

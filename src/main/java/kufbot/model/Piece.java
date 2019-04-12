@@ -15,5 +15,6 @@ public interface Piece {
     public Move[] getLegalMoves();
     public void setSquare(Square square);
     public Color getColor();
+    public Double getValue();
     
 }

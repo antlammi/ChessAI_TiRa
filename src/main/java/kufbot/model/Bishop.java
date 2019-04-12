@@ -16,10 +16,15 @@ public class Bishop implements Piece {
     private final Color color;
     private Square current;
     private Square[][] boardstate;
+    private final Double baseValue;
+    private Double value;
+    
     public Bishop(Color color, Square initial, Square[][] boardstate) {
         this.color = color;
         this.current = initial;
         this.boardstate = boardstate;
+        this.baseValue = 3.0;
+        this.value = baseValue; 
     }
 
     @Override
@@ -63,7 +68,7 @@ public class Bishop implements Piece {
         }
         return possibleMoves;
     }
-
+   
     @Override
     public Move[] getLegalMoves() {
         Move[] movesToCheck = getMoves();
@@ -182,10 +187,17 @@ public class Bishop implements Piece {
         }
         return false;
     }
-
+    public void setValue(Integer moves){//palasen arvoa hienosäädetään, jotta hyvin sijoittuneita palasia pidetään arvokkaampina vaikka välitöntä materiaalivoittoa ei löydy
+        this.value = this.baseValue + (moves/100);
+    }
     @Override
     public Color getColor() {
         return this.color;
+    }
+   
+    @Override
+    public Double getValue() {
+        return this.value;
     }
 
 }
