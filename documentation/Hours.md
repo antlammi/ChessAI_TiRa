@@ -60,5 +60,6 @@
 |12.4.|0.5h    |Prep work for minmax (Pieces given scores)|
 |12.4.|2h      |Program restructuring|
 |12.4.|1.5h    |Locating and fixing hard to find bug|
-||||
-|Total|5.8h||
+|12.4.|1h      |Tests for Player class, fixing test in Pawn and a bug in pawn class itself|
+|12.4.|xh      |Documentation stuff|
+|Total|11.8+xh||
