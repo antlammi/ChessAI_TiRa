@@ -29,7 +29,7 @@ public class BoardTest {
     public static void setUpClass() {
     }
     
-    @AfterClass
+    @AfterClass 
     public static void tearDownClass() {
     }
     
