@@ -9,6 +9,7 @@ XBoard Chess Engine in Java for Data Structures and Algorithms project course at
 [Viikkoraportti 1](https://github.com/antlammi/ChessAI_TiRa/blob/master/documentation/WeekReport_1.md)    
 [Viikkoraportti 2](https://github.com/antlammi/ChessAI_TiRa/blob/master/documentation/WeekReport_2.md)  
 [Viikkoraportti 3](https://github.com/antlammi/ChessAI_TiRa/blob/master/documentation/WeekReport_3.md)  
-[Viikkoraportti 4](https://github.com/antlammi/ChessAI_TiRa/blob/master/documentation/WeekReport_4.md)
-       
+[Viikkoraportti 4](https://github.com/antlammi/ChessAI_TiRa/blob/master/documentation/WeekReport_4.md)          
+[Viikkoraportti 5](https://github.com/antlammi/ChessAI_TiRa/blob/master/documentation/WeekReport_5.md)          
+
 [Hours](https://github.com/antlammi/ChessAI_TiRa/blob/master/documentation/Hours.md)    
