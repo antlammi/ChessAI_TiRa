@@ -8,6 +8,7 @@ package kufbot.model;
 import kufbot.engine.Random;
 import java.util.concurrent.TimeUnit;
 import kufbot.engine.Engine;
+import kufbot.engine.HighestScore;
 
 /**
  *
@@ -27,10 +28,14 @@ public class Game {
         Player w = new Player(Color.WHITE, state);
         Player b = new Player(Color.BLACK, state);
         if (engineTypeW == "Random") {
-            this.playerW = (Random) new Random(w);
+            this.playerW = new Random(w, state);
+        } else if (engineTypeW =="HighestScore"){
+            this.playerW = new HighestScore(w, b, state);
         }
         if (engineTypeB == "Random") {
-            this.playerB = (Random) new Random(b);
+            this.playerB =  new Random(b, state);
+        } else if (engineTypeB == "HighestScore"){
+            this.playerB = new HighestScore(b, w, state);
         }
         this.fastSim = fastSim;
 
@@ -65,9 +70,9 @@ public class Game {
                 printStateGraphic(state);
                 TimeUnit.MILLISECONDS.sleep(250);
             }
-            playerW.update(state);
-            playerB.update(state);
-
+            playerW.update();
+            playerB.update();
+            
             Player black = playerB.getPlayer();
 
             if (black.getLegalMoves().length == 0) {
@@ -92,8 +97,8 @@ public class Game {
                 printStateGraphic(state);
                 TimeUnit.MILLISECONDS.sleep(250);
             }
-            playerW.update(state);
-            playerB.update(state);
+            playerW.update();
+            playerB.update();
 
             
             if (i == 499) {

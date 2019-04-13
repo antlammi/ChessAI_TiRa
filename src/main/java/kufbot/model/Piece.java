@@ -16,5 +16,5 @@ public interface Piece {
     public void setSquare(Square square);
     public Color getColor();
     public Double getValue();
-    
+    public void setValue(Integer moves);
 }

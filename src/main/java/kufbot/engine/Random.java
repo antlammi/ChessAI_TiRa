@@ -16,9 +16,11 @@ import kufbot.model.Square;
 public class Random implements Engine {
     private java.util.Random random;
     private Player player;
-    public Random(Player player){
+    private Square[][] state;
+    public Random(Player player, Square[][] state){
         this.random = new java.util.Random();
         this.player = player;
+        this.state = state;
     }
 
     @Override
@@ -28,7 +30,7 @@ public class Random implements Engine {
         
     }
     
-    public void update(Square[][] state){
+    public void update(){
         player.updatePlayer(state);
     }
     

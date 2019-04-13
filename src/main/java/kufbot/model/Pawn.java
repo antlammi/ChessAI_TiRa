@@ -18,6 +18,7 @@ public class Pawn implements Piece {
     private Square[][] boardstate;
     private final Double baseValue;
     private Double value;
+
     public Pawn(Color color, Square initial, Square[][] boardstate) {
         this.color = color;
         this.current = initial;
@@ -109,7 +110,7 @@ public class Pawn implements Piece {
                 int dr = destination.getRank() - 1;
 
                 if (current.getFile() == destination.getFile()) { //jos siirrytään eteenpäin
-                    if (dr - current.getRank() - 1 == 0 ||current.getRank()-1 -dr == 2) {  
+                    if (dr - current.getRank() - 1 == 0 || current.getRank() - 1 - dr == 2) {
                         if (current.getRank() == 2) { //jos aloitussiirto valkoisilla
                             if (boardstate[dr][df].isEmpty() && boardstate[dr - 1][df].isEmpty()) { //jos välissä oleva ruutu ja määränpää tyhjiä
                                 legalMoves[legalcount] = currentMove;
@@ -127,11 +128,13 @@ public class Pawn implements Piece {
                         legalcount++;
                     }
                 } else // jos siirrytään vinosuuntaan
-                if (!boardstate[dr][df].isEmpty()) { //jos määränpää ei ole tyhjä
-                    if (boardstate[dr][df].getPiece().getColor() != this.color) { //ja kyseessä ei ole oma palanen
-                        currentMove.setPawnCapture();       // pawn erikoiskäyttäytyminen otetaan huomion
-                        legalMoves[legalcount] = currentMove;
-                        legalcount++;
+                {
+                    if (!boardstate[dr][df].isEmpty()) { //jos määränpää ei ole tyhjä
+                        if (boardstate[dr][df].getPiece().getColor() != this.color) { //ja kyseessä ei ole oma palanen
+                            currentMove.setPawnCapture();       // pawn erikoiskäyttäytyminen otetaan huomion
+                            legalMoves[legalcount] = currentMove;
+                            legalcount++;
+                        }
                     }
                 }
 
@@ -139,15 +142,25 @@ public class Pawn implements Piece {
         }
         return legalMoves;
     }
-    public void setValue(Integer rank){
-        this.value = this.baseValue + (rank/25);
+
+    @Override   //finetuning later
+    public void setValue(Integer rank) {
+        Double rankValue;
+        if (this.color == Color.WHITE) {
+            rankValue = 1.0*current.getRank() - 2;
+            this.value = (rankValue / 7) + this.baseValue;
+        } else {
+            rankValue = -1.0*(current.getRank() - 1 - 6);
+            this.value = (rankValue / 7) + this.baseValue;
+        }
+        
     }
-    
+
     @Override
     public Color getColor() {
         return this.color;
     }
-    
+
     @Override
     public Double getValue() {
         return this.value;

@@ -71,7 +71,6 @@ public class Rook implements Piece {
     }
 
     public void findLegalMovesOnSameRank(Move[] movesToCheck) {
-        int whentostop = movesToCheck.length/2;
         for (int i = 0; i < movesToCheck.length / 2 ; i++) {
             Square destination = movesToCheck[i].getDestinationSquare();
 
@@ -172,8 +171,10 @@ public class Rook implements Piece {
         findLegalMovesOnSameFile(movesToCheck);
         return legalMoves;
     }
+    @Override
     public void setValue(Integer moves){    
-        this.value = baseValue+(moves/100);
+        this.value = (baseValue+(1.0*moves/100));
+       
     }
     @Override
     public Color getColor() {

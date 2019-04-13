@@ -14,9 +14,10 @@ import kufbot.model.Square;
  * @author antlammi
  */
 public interface Engine {
+    
     public Move getMove();
 
-    public void update(Square[][] state);
+    public void update();
 
     public Player getPlayer();
 }

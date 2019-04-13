@@ -16,15 +16,15 @@ public class King implements Piece {
     private Boolean moved;
     private Square current;
     private Square[][] boardstate;
-    private Integer baseValue;
+    private Double baseValue;
     private Double value;
     public King(Color color, Square initial, Square[][] boardstate) {
         this.color = color;
         this.moved = false;
         this.current = initial;
         this.boardstate = boardstate;
-        this.baseValue = Integer.MAX_VALUE;
-        this.value = 1.0*baseValue;
+        this.baseValue = 50.0; //High base value to make it not be disregarded
+        this.value = baseValue;
     }
 
     @Override
@@ -143,7 +143,10 @@ public class King implements Piece {
         }
         return legalMoves;
     }
-
+    @Override
+    public void setValue(Integer moves){
+        this.value = (baseValue+(1.0*moves/100));
+    }
     @Override
     public Color getColor() {
         return this.color;

@@ -52,10 +52,11 @@ public class Move {
             Rook rook = (Rook) current.getPiece();
             rook.wasMoved();
         }
-     
+        Boolean isKing = false;
         if (current.getPiece().toString().contains("KING")){
             King king = (King) current.getPiece();
             king.wasMoved();
+            isKing = true;
         }
         
         
@@ -68,11 +69,38 @@ public class Move {
         if (destination.isEmpty()){
             destination.enter(piece);
             piece.setSquare(destination);
+            
         } else {
             destination.capture(piece);
             piece.setSquare(destination);
         }
+        if (!isKing){
+            finetunePieceValue();
+        }
+    }
+    
+    private void finetunePieceValue(){
+        if (this.piece.toString().contains("PAWN")){
+            this.piece.setValue(destination.getRank());
+        } else {
+            Integer movecount = 0;
+            Move[] moves = this.piece.getLegalMoves();
+            for (int i=0; i<moves.length; i++){
+                if (moves[i] != null){
+                    movecount++;
+                }
+            }
+            this.piece.setValue(movecount);
+        }
+    }
+    //Tämä koodinpätkä alkoi esiintyä monessa paikkaa, tämä tuntui loogiselta paikalta sille.
+    public Move cloneMove(Square[][] boardstatecopy){
+        Move clone = new Move(boardstatecopy);
+        Square curSQCopy= boardstatecopy[current.getRank()-1][current.getFile()-1];
+        Square desSQCopy = boardstatecopy[destination.getRank()-1][destination.getFile()-1];
+        clone.constructMove(curSQCopy.getPiece(), curSQCopy, desSQCopy);
         
+        return clone;
     }
     public Piece getPiece(){
         return piece;

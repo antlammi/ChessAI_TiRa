@@ -187,8 +187,9 @@ public class Bishop implements Piece {
         }
         return false;
     }
+    @Override
     public void setValue(Integer moves){//palasen arvoa hienosäädetään, jotta hyvin sijoittuneita palasia pidetään arvokkaampina vaikka välitöntä materiaalivoittoa ei löydy
-        this.value = this.baseValue + (moves/100);
+        this.value = this.baseValue + (1.0*moves/100);
     }
     @Override
     public Color getColor() {
