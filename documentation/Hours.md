@@ -63,3 +63,9 @@
 |12.4.|1h      |Tests for Player class, fixing test in Pawn and a bug in pawn class itself|
 |12.4.|0.6h    |Documentation stuff|
 |Total|12.4h||
+
+## Week 6
+|Date |Duration|Task|
+|-----|--------|----|
+|13.4.|2.5h    |Building and testing HighestScore (basically just checks own moves and opponents followup)|
+
