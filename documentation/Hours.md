@@ -67,5 +67,5 @@
 ## Week 6
 |Date |Duration|Task|
 |-----|--------|----|
-|13.4.|2.5h    |Building and testing HighestScore (basically just checks own moves and opponents followup)|
+|13.4.|4.5h      |Building and testing HighestScore (basically just checks own moves and opponents followup)|
 
