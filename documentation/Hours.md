@@ -69,4 +69,4 @@
 |-----|--------|----|
 |13.4.|4.5h    |Building and testing HighestScore (basically just checks own moves and opponents followup)|
 |13.4.|2h      |Initial implementation for minmax|
-|14.4.|4h      |Bug hunting and tests for minmax|
+|14.4.|4h      |Bug hunting and tests, mostly for minmax|
