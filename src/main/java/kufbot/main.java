@@ -7,7 +7,7 @@ package kufbot;
 
 
 import kufbot.engine.Engine;
-import kufbot.engine.HighestScore;
+import kufbot.engine.Minmax;
 import kufbot.model.*;
 
 /**
@@ -21,7 +21,7 @@ public class main {
      */
     public static void main(String[] args) throws InterruptedException {
         
-        Game game = new Game("HighestScore", "HighestScore", false);
+        Game game = new Game("Minmax", "Random", false);
         game.run();
     }
 }

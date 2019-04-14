@@ -23,7 +23,7 @@ public class King implements Piece {
         this.moved = false;
         this.current = initial;
         this.boardstate = boardstate;
-        this.baseValue = 50.0; //High base value to make it not be disregarded
+        this.baseValue = 15.0; //High base value to make it not be disregarded
         this.value = baseValue;
     }
 

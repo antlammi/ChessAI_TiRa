@@ -25,6 +25,7 @@ public class HighestScore implements Engine {
     //Looks at own best move with 1 followup move from opponent considered.
     //When playing vs itself leads to a lot of games where middle is locked up and neither side actually plays.
     //Code is very messy for now, will be fixed if this is actually included in final project
+    
     public HighestScore(Player player, Player opponent, Square[][] state) {
         this.player = player;
         this.opponent = opponent;
@@ -62,8 +63,8 @@ public class HighestScore implements Engine {
                 Move oMove = opponentMove(opponentClone, playerClone, copy).cloneMove(copy); //opponentMove would make the move on a copy of the boardstate
                                                                                              //this way it is actually made where it matters
                 oMove.execute();
-                playerClone.updatePlayer(copy);
-                opponentClone.updatePlayer(copy);
+                playerClone.updatePlayer();
+                opponentClone.updatePlayer();
                 moveScore = playerClone.getScore() - opponentClone.getScore();
             } else {
                 moveScore = 0.0;
@@ -141,7 +142,7 @@ public class HighestScore implements Engine {
     }
 
     public void update() {
-        player.updatePlayer(this.state);
+        player.updatePlayer();
     }
 
     public Player getPlayer() {

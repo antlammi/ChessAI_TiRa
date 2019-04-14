@@ -6,6 +6,7 @@
 package modeltest;
 
 import kufbot.model.Board;
+import kufbot.model.King;
 import kufbot.model.Move;
 import kufbot.model.Pawn;
 import kufbot.model.Square;
@@ -172,4 +173,33 @@ public class PawnTest {
         }
 
     }
+
+    @Test
+    public void whitePawnCannotCaptureKingOnSameFileScenario1() {
+        Pawn wp = (Pawn) state[1][4].getPiece();
+        King bKing = (King) state[7][4].getPiece();
+
+        for (int r = 0; r < 8; r++) {
+            for (int f = 0; f < 8; f++) {
+                state[r][f].leave();
+            }
+        }
+
+        state[4][4].enter(wp);
+        wp.setSquare(state[4][4]);
+
+        state[5][4].enter(bKing);
+        bKing.setSquare(state[5][4]);
+       
+        Move[] moves = wp.getLegalMoves();
+
+        for (int i = 0; i < moves.length; i++) {
+            if (moves[i] != null) {
+                assertNotEquals("e4e5", moves[i].toString());
+            }
+        }
+    }
+
+    
+
 }

@@ -7,9 +7,11 @@ package enginetest;
 
 import kufbot.engine.Engine;
 import kufbot.engine.HighestScore;
+import kufbot.engine.Random;
 import kufbot.model.Bishop;
 import kufbot.model.Board;
 import kufbot.model.Color;
+import kufbot.model.Game;
 import kufbot.model.King;
 import kufbot.model.Move;
 import kufbot.model.Pawn;
@@ -60,7 +62,21 @@ public class HighestScoreTest {
     @After
     public void tearDown() {
     }
+    @Test
+    public void winsVsRandomMovesAsWhite() throws InterruptedException{
+        Game game = new Game("HighestScore", "Random", true);
+        game.run();
+        
+        assertEquals(game.outcome, "White wins");
+    }
     
+    @Test
+    public void winsVsRandomMovesAsBlack() throws InterruptedException{
+        Game game = new Game("Random", "HighestScore", true);
+        game.run();
+        
+        assertEquals(game.outcome, "Black wins");
+    }
     @Test
     public void whiteAdvancesPawnToAdvancePosition(){
         King bKing = (King) state[7][4].getPiece();
@@ -124,7 +140,7 @@ public class HighestScoreTest {
     }
     
     @Test
-    public void whiteDoesNoHangRookInEndgame(){
+    public void whiteDoesNotHangRookInEndgame(){
         Rook wRook = (Rook) state[0][0].getPiece();
         King bKing = (King) state[7][4].getPiece();
         King wKing = (King) state[0][4].getPiece();

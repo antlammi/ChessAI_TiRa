@@ -148,10 +148,10 @@ public class Pawn implements Piece {
         Double rankValue;
         if (this.color == Color.WHITE) {
             rankValue = 1.0*current.getRank() - 2;
-            this.value = (rankValue / 7) + this.baseValue;
+            this.value = (rankValue / 11) + this.baseValue;
         } else {
             rankValue = -1.0*(current.getRank() - 1 - 6);
-            this.value = (rankValue / 7) + this.baseValue;
+            this.value = (rankValue / 11) + this.baseValue;
         }
         
     }

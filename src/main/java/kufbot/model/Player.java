@@ -27,10 +27,10 @@ public class Player {
         this.pieces = new Piece[piececount];
         this.boardstate = boardstate;
         this.score = 0.0;
-        updatePlayer(this.boardstate);
+        updatePlayer();
     }
 
-    public void updatePlayer(Square[][] boardstate) {
+    public void updatePlayer() {
         this.occupiedSquares = new Square[piececount];
         this.pieces = new Piece[piececount];
         int count = 0;
@@ -38,15 +38,15 @@ public class Player {
         for (int r = 0; r < 8 && count < piececount; r++) {
             for (int f = 0; f < 8; f++) {
                 if (!boardstate[r][f].isEmpty() && this.color == boardstate[r][f].getPiece().getColor()) {
-                    occupiedSquares[count] = this.boardstate[r][f];
-                    pieces[count] = this.boardstate[r][f].getPiece();
+                    occupiedSquares[count] = boardstate[r][f];
+                    pieces[count] = boardstate[r][f].getPiece();
 
-                    if (this.boardstate[r][f].getPiece().toString().contains("KING")) {
+                    if (boardstate[r][f].getPiece().toString().contains("KING")) {
                         this.kingRank = r;
                         this.kingFile = f;
                     }
                     this.score += pieces[count].getValue();
-
+                   
                     count++;
                 }
             }
@@ -121,8 +121,13 @@ public class Player {
             moveToCheck.execute();
             King king = (King) stateToCheck[kr][kf].getPiece();
             if (!king.isInCheck(stateToCheck[kr][kf])) {
-                legalMoves[legalcount] = moves[i];
-                legalcount++;
+                if (current.getDestinationSquare().isEmpty()) {
+                    legalMoves[legalcount] = moves[i];
+                    legalcount++;
+                } else if (!current.getDestinationSquare().getPiece().toString().contains("KING")){ //Kings are never captured in a game of chess.
+                    legalMoves[legalcount] = moves[i];
+                    legalcount++;
+                } 
             }
 
         }
@@ -141,8 +146,16 @@ public class Player {
         return this.score;
     }
 
+    public Color getColor() {
+        return this.color;
+    }
+
     public void setScore(Double score) { //intended to be used only in case of mates
         this.score = score;
+    }
+
+    public Integer getPieceCount() {
+        return this.piececount;
     }
 
     public Integer getKingRank() {

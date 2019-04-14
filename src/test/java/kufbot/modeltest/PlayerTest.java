@@ -10,6 +10,7 @@ import kufbot.model.Board;
 import kufbot.model.Color;
 import kufbot.model.King;
 import kufbot.model.Move;
+import kufbot.model.Pawn;
 import kufbot.model.Player;
 import kufbot.model.Rook;
 import kufbot.model.Square;
@@ -111,7 +112,7 @@ public class PlayerTest {
         toF8.constructMove(bKing, state[7][6], state[7][5]);
         toF8.execute();
 
-        white.updatePlayer(state);
+        white.updatePlayer();
         Move[] legalMoves = white.getLegalMoves();
         Move[] possibleMoves = white.getPossibleMoves();
         Boolean moveContained = false;
@@ -160,7 +161,7 @@ public class PlayerTest {
         Move toE8 = new Move(state);
         toE8.constructMove(bKing, state[7][3], state[7][4]);
         toE8.execute();
-        black.updatePlayer(state);
+        black.updatePlayer();
         Move[] legalMoves = black.getLegalMoves();
         Move[] possibleMoves = black.getPossibleMoves();
         Boolean moveContained = false;
@@ -175,5 +176,60 @@ public class PlayerTest {
             assertNotEquals(move, legalMoves[i]);
         }
     }
+    @Test
+    public void whitePawnCannotCaptureKingOnSameFileThroughPlayerClassScenario1() {
+        Pawn wp = (Pawn) state[1][4].getPiece();
+        King bKing = (King) state[7][4].getPiece();
 
+        for (int r = 0; r < 8; r++) {
+            for (int f = 0; f < 8; f++) {
+                state[r][f].leave();
+            }
+        }
+
+        state[4][4].enter(wp);
+        wp.setSquare(state[4][4]);
+
+        state[5][4].enter(bKing);
+        bKing.setSquare(state[5][4]);
+        Player black = new Player(Color.BLACK, state);
+        
+        Move[] moves = black.getLegalMoves();
+
+        for (int i = 0; i < moves.length; i++) {
+            if (moves[i] != null) {
+                assertNotEquals("e4e5", moves[i].toString());
+            }
+        }
+    }
+    @Test
+    public void whitePawnCannotCaptureKingOnSameFileThroughPlayerClassScenario2() {
+        Pawn wp = (Pawn) state[1][4].getPiece();
+        King bKing = (King) state[7][4].getPiece();
+        King wKing = (King) state[0][4].getPiece();
+        for (int r = 0; r < 8; r++) {
+            for (int f = 0; f < 8; f++) {
+                state[r][f].leave();
+            }
+        }
+
+        state[4][4].enter(wp);
+        wp.setSquare(state[4][4]);
+
+        state[5][4].enter(bKing);
+        bKing.setSquare(state[5][4]);
+        
+        state[2][5].enter(wKing);
+        wKing.setSquare(state[5][4]);
+        
+        Player black = new Player(Color.BLACK, state);
+        
+        Move[] moves = black.getLegalMoves();
+
+        for (int i = 0; i < moves.length; i++) {
+            if (moves[i] != null) {
+                assertNotEquals("e4e5", moves[i].toString());
+            }
+        }
+    }
 }
