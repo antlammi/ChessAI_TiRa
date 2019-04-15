@@ -65,7 +65,7 @@ public class HighestScore implements Engine {
                 oMove.execute();
                 playerClone.updatePlayer();
                 opponentClone.updatePlayer();
-                moveScore = playerClone.getScore() - opponentClone.getScore();
+                moveScore = playerClone.getScore();
             } else {
                 moveScore = 0.0;
             }
@@ -104,7 +104,7 @@ public class HighestScore implements Engine {
             cloneMove.execute();
             Player playerClone = pClone.clonePlayer(copy);
             Player opponentClone = opponent.clonePlayer(copy);
-            double moveScore = playerClone.getScore() - opponentClone.getScore();
+            double moveScore = playerClone.getScore();
 
             if (opponentClone.getPossibleMoves().length == 0) {
                 if (checkForMate(opponentClone, copy)) {

@@ -55,11 +55,12 @@ public class Minmax implements Engine {
         }
         Player currentClone = currentPlayer.clonePlayer(copyState);
         if (depth == maxdepth) {
-            /*System.out.println("Maximizing: " + currentPlayer.getScore());
-            System.out.println("Minimizing: " + latestMove.getPlayer().getScore());
-            System.out.println("Depth " + depth + " : " );
-            printStateGraphic(copyState);*/
-            return latestMove;
+            currentClone.updatePlayer();
+            last.setPlayer(latestMove.getPlayer().clonePlayer(copyState));
+            //System.out.println(last.getPlayer().getScore());
+
+            //printStateGraphic(copyState);
+            return last;
         }
 
         if (currentClone.getLegalMoves().length == 0) {
@@ -81,24 +82,23 @@ public class Minmax implements Engine {
                 Player minimizing = opponent.clonePlayer(copyState);
                 Move currentMove = moves[i].cloneMove(copyState);
                 currentMove.setPlayer(currentClone);
-                Double maximizingScore = currentClone.getScore();
+                Double moveScore;
                 Move oMove = minimax(copyState, depth + 1, minimizing, currentMove);
 
-                Double minimizingScore;
-                if (oMove.getPlayer() == minimizing) {
-                    minimizingScore = oMove.getPlayer().getScore();
-                } else if (oMove.getPlayer() == currentClone) {
+                if (oMove.getPlayer().getColor() == minimizing.getColor()) {
 
-                    copyState = oMove.getState();
+                    moveScore = oMove.getPlayer().getScore();
 
-                    Player min = opponent.clonePlayer(copyState);
-                    minimizingScore = min.getScore();
+                } else if (oMove.getPlayer().getColor() == currentClone.getColor()) {
+
+                    moveScore = oMove.getPlayer().getScore();
+                    oMove.rollback();
                 } else {
-                    minimizingScore = null;
+                    moveScore = null;
+                    System.out.println("SOMETHINGS WONG");
                 }
-                Double moveScore = maximizingScore - minimizingScore;
                 if (moveScore > maxScore) {
-                    //System.out.println(currentMove.toString() + ": " + moveScore);
+
                     maxScore = moveScore;
                     bmcount = 0;
                     bestMoves = new Move[moves.length];
@@ -109,12 +109,13 @@ public class Minmax implements Engine {
                 }
             }
             if (bmcount == 0) {
-
-                //System.out.println("Maximizing, depth " + depth + ": " + bestMoves[0]);
+                bestMoves[0].getPlayer().setScore(maxScore);
                 return bestMoves[0];
             } else {
                 //System.out.println("Maximizing, depth " + depth + ":" + bestMoves[random.nextInt(bmcount)]);
-                return bestMoves[random.nextInt(bmcount)];
+                Move best = bestMoves[random.nextInt(bmcount)];
+                best.getPlayer().setScore(maxScore);
+                return best;
             }
         } else {
             double minScore = Double.MAX_VALUE;
@@ -122,10 +123,23 @@ public class Minmax implements Engine {
                 Player maximizing = maxplayer.clonePlayer(copyState);
                 Move currentMove = moves[i].cloneMove(copyState);
                 currentMove.setPlayer(currentPlayer);
-                Double minimizingScore = currentPlayer.getScore();
-                Double maximizingScore = minimax(copyState, depth + 1, maximizing, currentMove).getPlayer().getScore();
+                Move oMove = minimax(copyState, depth + 1, maximizing, currentMove);
+                Double moveScore;
+                if (oMove.getPlayer().getColor() == maximizing.getColor()) {
+                    oMove.execute();
+                    moveScore = oMove.getPlayer().getScore();
+                    oMove.rollback();
 
-                Double moveScore = minimizingScore - maximizingScore;
+                } else if (oMove.getPlayer().getColor() == currentClone.getColor()) {
+
+                    moveScore = -oMove.getPlayer().getScore();
+                    oMove.rollback();
+
+                } else {
+                    moveScore = null;
+                    System.out.println("SOMETHINGS WONG");
+                }
+
                 if (moveScore < minScore) {
                     minScore = moveScore;
                     bmcount = 0;
@@ -139,10 +153,13 @@ public class Minmax implements Engine {
             }
             if (bmcount == 0) {
                 //System.out.println("Minimizing, depth " + depth +": " + bestMoves[0]);
+                bestMoves[0].getPlayer().setScore(minScore);
                 return bestMoves[0];
             } else {
                 //System.out.println("Minimizing, depth " + depth + ": " + bestMoves[random.nextInt(bmcount)]);
-                return bestMoves[random.nextInt(bmcount)];
+                Move best = bestMoves[random.nextInt(bmcount)];
+                best.getPlayer().setScore(minScore);
+                return best;
             }
 
         }

@@ -29,28 +29,37 @@ public class Player {
         this.score = 0.0;
         updatePlayer();
     }
-
+    public Square[][] getState(){
+        return this.boardstate;
+    }
     public void updatePlayer() {
         this.occupiedSquares = new Square[piececount];
         this.pieces = new Piece[piececount];
         int count = 0;
         this.score = 0.0;
-        for (int r = 0; r < 8 && count < piececount; r++) {
+        double opponentScore = 0.0;
+        for (int r = 0; r < 8; r++) {
             for (int f = 0; f < 8; f++) {
-                if (!boardstate[r][f].isEmpty() && this.color == boardstate[r][f].getPiece().getColor()) {
-                    occupiedSquares[count] = boardstate[r][f];
-                    pieces[count] = boardstate[r][f].getPiece();
+                if (!boardstate[r][f].isEmpty()) {
+                    if (this.color == boardstate[r][f].getPiece().getColor()) {
+                        occupiedSquares[count] = boardstate[r][f];
 
-                    if (boardstate[r][f].getPiece().toString().contains("KING")) {
-                        this.kingRank = r;
-                        this.kingFile = f;
+                        pieces[count] = boardstate[r][f].getPiece();
+
+                        if (boardstate[r][f].getPiece().toString().contains("KING")) {
+                            this.kingRank = r;
+                            this.kingFile = f;
+                        }
+                        this.score += pieces[count].getValue();
+
+                        count++;
+                    } else {
+                        opponentScore += boardstate[r][f].getPiece().getValue();
                     }
-                    this.score += pieces[count].getValue();
-                   
-                    count++;
                 }
             }
         }
+        this.score = this.score - opponentScore;
         if (count != piececount) { //if since last update a piece has been captured update number of pieces and clone arrays to new ones with correct size
             this.piececount = count;
             Square[] occupiedSquaresClone = new Square[piececount];
@@ -124,10 +133,10 @@ public class Player {
                 if (current.getDestinationSquare().isEmpty()) {
                     legalMoves[legalcount] = moves[i];
                     legalcount++;
-                } else if (!current.getDestinationSquare().getPiece().toString().contains("KING")){ //Kings are never captured in a game of chess.
+                } else if (!current.getDestinationSquare().getPiece().toString().contains("KING")) { //Kings are never captured in a game of chess.
                     legalMoves[legalcount] = moves[i];
                     legalcount++;
-                } 
+                }
             }
 
         }

@@ -19,6 +19,7 @@ import kufbot.model.Square;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -50,6 +51,9 @@ public class MinmaxTest {
         Player b = new Player(Color.BLACK, state);
         this.playerW = new Minmax(w,b, state);
         this.playerB = new Minmax(b,w,state);
+        
+        playerW.setMaxDepth(2);
+        playerB.setMaxDepth(2);
     }
     
     @After
@@ -110,7 +114,7 @@ public class MinmaxTest {
     }
     
     @Test
-    public void doesNotHangQueenScenario1(){
+    public void doesNotHangQueenScenario1Depth2(){ //Sees that by capturing pawn on a5 it will get captured by the rook
         Piece one = state[1][0].getPiece();
         state[1][0].leave();
         state[3][0].enter(one);
@@ -147,11 +151,11 @@ public class MinmaxTest {
         
         Minmax min = new Minmax(w,b,state);
         min.printStateGraphic(state);
-        min.setMaxDepth(3);
+        min.setMaxDepth(2);
         
-        String[] incorrectMoves = {"d2b4", "d2b5", "d2h6"};
+        String[] incorrectMoves = {"d2a5", "d2b4", "d2b5", "d2h6"};
         Boolean incorrectMoveMade = false;
-        for (int i=0; i<50; i++){
+        for (int i=0; i<1; i++){
             Move move = min.getMove();
             System.out.println(move);
             for (int j=0; j<incorrectMoves.length; j++){
@@ -163,5 +167,85 @@ public class MinmaxTest {
             
         }
         assertFalse(incorrectMoveMade);
+    }
+    
+     
+    @Test
+    public void hangsQueenScenario1Depth1(){    //Only sees material gain by capturing pawn so it is considered best move
+        Piece one = state[1][0].getPiece();
+        state[1][0].leave();
+        state[3][0].enter(one);
+        one.setSquare(state[3][0]);
+        
+        Piece two = state[6][0].getPiece();
+        state[6][0].leave();
+        state[4][0].enter(two);
+        two.setSquare(state[4][0]);
+        
+        Piece three = state[1][3].getPiece();
+        state[1][3].leave();
+        state[3][3].enter(three);
+        three.setSquare(state[3][3]);
+        
+    
+        Piece four = state[6][3].getPiece();
+        state[6][3].leave();
+        state[4][3].enter(four);
+        four.setSquare(state[4][3]);
+        
+        Piece five = state[0][3].getPiece();
+        state[0][3].leave();
+        state[1][3].enter(five);
+        five.setSquare(state[1][3]);
+        
+        Piece six = state[6][5].getPiece();
+        state[6][5].leave();
+        state[4][5].enter(six);
+        six.setSquare(state[4][5]);
+        
+        Player w = new Player(Color.WHITE, state);
+        Player b = new Player(Color.BLACK, state);
+        
+        Minmax min = new Minmax(w,b,state);
+        min.printStateGraphic(state);
+        min.setMaxDepth(1);
+        
+        String[] incorrectMoves = {"d2a5", "d2b4", "d2b5", "d2h6"};
+        Boolean incorrectMoveMade = false;
+        for (int i=0; i<1; i++){
+            Move move = min.getMove();
+            for (int j=0; j<incorrectMoves.length; j++){
+                if (move.toString().equals(incorrectMoves[j])){
+                    incorrectMoveMade = true;
+                    break;
+                }
+            }
+            
+        }
+        assertTrue(incorrectMoveMade);
+    }
+    @Test
+    public void doesNotThrowArrayIndexOutOfBoundsException(){
+        assert(false);
+        /*
+        39: 
+b1b5
+| A  | B  | C  | D  | E  | F  | G  | H  |
+| WQ |    |    |    |    |    | BKN|    | 8
+
+|    |    |    |    |    |    |    |    | 7
+
+|    |    |    |    |    |    | BP |    | 6
+
+|    | WR | BK |    | WB |    |    | BR | 5
+
+|    |    |    |    |    |    | BP |    | 4
+
+| WKN|    |    |    | WP |    |    |    | 3
+
+| WP |    | WK | WP |    |    |    |    | 2
+
+|    |    |    |    |    |    |    |    | 1
+        */
     }
 }
