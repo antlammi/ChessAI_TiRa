@@ -179,7 +179,6 @@ public class KingTest {
         Move toG5 = new Move(state);
         toG5.constructMove(bKing, state[7][4], state[4][6]);
         toG5.execute();
-
         Move[] movesAvailable = wKing.getLegalMoves();
         for (int i = 0; i < movesAvailable.length; i++) {
             assertNull(movesAvailable[i]);
@@ -188,4 +187,5 @@ public class KingTest {
         assertEquals(true, wKing.isInCheck(state[2][7]));
 
     }
+
 }

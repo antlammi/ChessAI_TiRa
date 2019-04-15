@@ -31,7 +31,7 @@ public class Random implements Engine {
     }
     
     public void update(){
-        player.updatePlayer(state);
+        player.updatePlayer();
     }
     
     public Player getPlayer(){

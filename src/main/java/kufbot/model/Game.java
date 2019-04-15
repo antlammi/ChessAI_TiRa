@@ -9,6 +9,7 @@ import kufbot.engine.Random;
 import java.util.concurrent.TimeUnit;
 import kufbot.engine.Engine;
 import kufbot.engine.HighestScore;
+import kufbot.engine.Minmax;
 
 /**
  *
@@ -20,7 +21,7 @@ public class Game {
     private Engine playerB;
     private Square[][] state;
     private Boolean fastSim;
-
+    public String outcome;
     public Game(String engineTypeW, String engineTypeB, Boolean fastSim) {
         Board board = new Board();
         this.state = board.getBoardState();
@@ -31,19 +32,26 @@ public class Game {
             this.playerW = new Random(w, state);
         } else if (engineTypeW =="HighestScore"){
             this.playerW = new HighestScore(w, b, state);
+        } else if (engineTypeW == "Minmax"){
+            this.playerW = new Minmax(w,b,state);
         }
+        
+        
         if (engineTypeB == "Random") {
             this.playerB =  new Random(b, state);
         } else if (engineTypeB == "HighestScore"){
             this.playerB = new HighestScore(b, w, state);
+        } else if (engineTypeW == "Minmax"){
+            this.playerB = new Minmax(b,w,state);
         }
+        
         this.fastSim = fastSim;
 
     }
 
     public void run() throws InterruptedException {
 
-        String outcome = "";
+        outcome = "";
         Integer totalMoves = 0;
         for (int i = 0; i < 500; i++) {  //Simuloi shakkiottelun satunnaisilla siirroilla. Ei ota huomioon 50-siirron sääntöä tai liian vähäistä materiaalia matitukseen.
             Player white = playerW.getPlayer();
@@ -68,7 +76,7 @@ public class Game {
                 System.out.println(i + 1 + ": ");
                 System.out.println(moveChosenWhite);
                 printStateGraphic(state);
-                TimeUnit.MILLISECONDS.sleep(250);
+                TimeUnit.MILLISECONDS.sleep(1000);
             }
             playerW.update();
             playerB.update();
@@ -95,7 +103,7 @@ public class Game {
                 System.out.println(i + 1 + ": ");
                 System.out.println(moveChosenBlack);
                 printStateGraphic(state);
-                TimeUnit.MILLISECONDS.sleep(250);
+                TimeUnit.MILLISECONDS.sleep(1000);
             }
             playerW.update();
             playerB.update();

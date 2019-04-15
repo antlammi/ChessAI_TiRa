@@ -7,7 +7,7 @@ package kufbot;
 
 
 import kufbot.engine.Engine;
-import kufbot.engine.HighestScore;
+import kufbot.engine.Minmax;
 import kufbot.model.*;
 
 /**
@@ -19,9 +19,8 @@ public class main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws InterruptedException {
-        
-        Game game = new Game("HighestScore", "HighestScore", false);
+    public static void main(String[] args) throws InterruptedException {      
+        Game game = new Game("Minmax", "Minmax", false);
         game.run();
     }
 }
