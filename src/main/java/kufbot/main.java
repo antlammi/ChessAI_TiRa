@@ -19,8 +19,10 @@ public class main {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws InterruptedException {      
-        Game game = new Game("Minmax", "Minmax", false);
+    public static void main(String[] args) throws InterruptedException {
+
+        
+        Game game = new Game("Minmax", "HighestScore", 4, false);
         game.run();
     }
 }

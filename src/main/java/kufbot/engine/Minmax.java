@@ -22,14 +22,15 @@ public class Minmax implements Engine {
     private Square[][] state;
     private Integer maxdepth;
     private java.util.Random random;
+    private Boolean dynamicdepth;
 
-    public Minmax(Player player, Player opponent, Square[][] state) { //Refactor project and fix, currently problem in players scores
+    public Minmax(Player player, Player opponent, Square[][] state, Integer initialdepth, Boolean dynamicdepth) {
         this.state = state;
         this.maxplayer = player;
         this.opponent = opponent;
-        this.maxdepth = 3;
+        this.maxdepth = initialdepth;
         this.random = new java.util.Random();
-
+        this.dynamicdepth = dynamicdepth;
     }
 
     public void setMaxDepth(Integer depth) {
@@ -38,7 +39,23 @@ public class Minmax implements Engine {
 
     @Override
     public Move getMove() {
+        long initialTime = System.currentTimeMillis();
+        
         Move move = minimax(this.state, 0, this.maxplayer, null).cloneMove(state);
+        
+        long finalTime = System.currentTimeMillis();
+        long timeTaken = finalTime - initialTime;
+        System.out.println("Finding the move took " + timeTaken + " milliseconds.");
+        if (dynamicdepth == true) {
+            if (timeTaken > 20000 && maxdepth < 7) {      //arbitrary cap
+                System.out.println("Decreasing maximum depth for " + maxplayer.getColor() + "...");
+                this.maxdepth--;
+            } else if (timeTaken < 1000 && maxdepth > 1) {
+                System.out.println("Increasing maximum depth for " + maxplayer.getColor() + "...");
+                this.maxdepth++;
+            }
+        }
+
         return move;
     }
 
@@ -47,7 +64,6 @@ public class Minmax implements Engine {
 
         Move last;
         if (latestMove != null) {
-
             last = latestMove.cloneMove(copyState);
             last.execute();
         } else {
@@ -57,15 +73,13 @@ public class Minmax implements Engine {
         if (depth == maxdepth) {
             currentClone.updatePlayer();
             last.setPlayer(latestMove.getPlayer().clonePlayer(copyState));
-            //System.out.println(last.getPlayer().getScore());
 
-            //printStateGraphic(copyState);
             return last;
         }
 
         if (currentClone.getLegalMoves().length == 0) {
             if (checkForMate(currentClone, copyState)) { //mate
-                latestMove.getPlayer().setScore(Double.MAX_VALUE);
+                latestMove.getPlayer().setScore(1000000.0); //Changed from max value to one million to ensure loop works properly, still far larger than any game state could otherwise produce.
             } else { //Stalemate
                 latestMove.getPlayer().setScore(0.0);
                 currentPlayer.setScore(0.0);
@@ -86,19 +100,12 @@ public class Minmax implements Engine {
                 Move oMove = minimax(copyState, depth + 1, minimizing, currentMove);
 
                 if (oMove.getPlayer().getColor() == minimizing.getColor()) {
-
                     moveScore = oMove.getPlayer().getScore();
-
-                } else if (oMove.getPlayer().getColor() == currentClone.getColor()) {
-
+                } else {
                     moveScore = oMove.getPlayer().getScore();
                     oMove.rollback();
-                } else {
-                    moveScore = null;
-                    System.out.println("SOMETHINGS WONG");
                 }
                 if (moveScore > maxScore) {
-
                     maxScore = moveScore;
                     bmcount = 0;
                     bestMoves = new Move[moves.length];
@@ -112,7 +119,6 @@ public class Minmax implements Engine {
                 bestMoves[0].getPlayer().setScore(maxScore);
                 return bestMoves[0];
             } else {
-                //System.out.println("Maximizing, depth " + depth + ":" + bestMoves[random.nextInt(bmcount)]);
                 Move best = bestMoves[random.nextInt(bmcount)];
                 best.getPlayer().setScore(maxScore);
                 return best;
@@ -130,14 +136,9 @@ public class Minmax implements Engine {
                     moveScore = oMove.getPlayer().getScore();
                     oMove.rollback();
 
-                } else if (oMove.getPlayer().getColor() == currentClone.getColor()) {
-
+                } else {
                     moveScore = -oMove.getPlayer().getScore();
                     oMove.rollback();
-
-                } else {
-                    moveScore = null;
-                    System.out.println("SOMETHINGS WONG");
                 }
 
                 if (moveScore < minScore) {
@@ -152,11 +153,9 @@ public class Minmax implements Engine {
 
             }
             if (bmcount == 0) {
-                //System.out.println("Minimizing, depth " + depth +": " + bestMoves[0]);
                 bestMoves[0].getPlayer().setScore(minScore);
                 return bestMoves[0];
             } else {
-                //System.out.println("Minimizing, depth " + depth + ": " + bestMoves[random.nextInt(bmcount)]);
                 Move best = bestMoves[random.nextInt(bmcount)];
                 best.getPlayer().setScore(minScore);
                 return best;
@@ -166,12 +165,6 @@ public class Minmax implements Engine {
     }
 
     private Boolean checkForMate(Player clone, Square[][] copy) {
-        /* System.out.println("checkForMate: ");
-        System.out.println(depth + ": ");
-        System.out.println("latestMove: " + latestMove);
-        printStateGraphic(copy);
-         */
-
         Square kingLocation = copy[clone.getKingRank()][clone.getKingFile()];
         King king = (King) kingLocation.getPiece();
         if (king.isInCheck(kingLocation)) {
@@ -183,6 +176,7 @@ public class Minmax implements Engine {
     @Override
     public void update() {
         this.maxplayer.updatePlayer();
+
     }
 
     @Override

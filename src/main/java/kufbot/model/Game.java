@@ -22,7 +22,7 @@ public class Game {
     private Square[][] state;
     private Boolean fastSim;
     public String outcome;
-    public Game(String engineTypeW, String engineTypeB, Boolean fastSim) {
+    public Game(String engineTypeW, String engineTypeB, Integer initialdepth, Boolean fastSim) {
         Board board = new Board();
         this.state = board.getBoardState();
 
@@ -33,7 +33,7 @@ public class Game {
         } else if (engineTypeW =="HighestScore"){
             this.playerW = new HighestScore(w, b, state);
         } else if (engineTypeW == "Minmax"){
-            this.playerW = new Minmax(w,b,state);
+            this.playerW = new Minmax(w,b,state, initialdepth, true);
         }
         
         
@@ -42,7 +42,7 @@ public class Game {
         } else if (engineTypeB == "HighestScore"){
             this.playerB = new HighestScore(b, w, state);
         } else if (engineTypeW == "Minmax"){
-            this.playerB = new Minmax(b,w,state);
+            this.playerB = new Minmax(b,w,state, initialdepth, true);
         }
         
         this.fastSim = fastSim;
@@ -53,7 +53,7 @@ public class Game {
 
         outcome = "";
         Integer totalMoves = 0;
-        for (int i = 0; i < 500; i++) {  //Simuloi shakkiottelun satunnaisilla siirroilla. Ei ota huomioon 50-siirron sääntöä tai liian vähäistä materiaalia matitukseen.
+        for (int i = 0; i < 150; i++) {  //Chess game for 150 moves. No repetition draws, 50 move rule or insufficient material checks
             Player white = playerW.getPlayer();
             if (white.getLegalMoves().length == 0) {
                 int wkr = white.getKingRank();
@@ -107,9 +107,8 @@ public class Game {
             }
             playerW.update();
             playerB.update();
-
             
-            if (i == 499) {
+            if (i == 149) {
                 outcome = "Draw";
                 totalMoves = i + 1;
             }
