@@ -71,3 +71,5 @@
 |13.4.|2h      |Initial implementation for minmax|
 |14.4.|4h      |Bug hunting and tests, mostly for minmax|
 |15.4.|3h      |More bug hunting for Minmax|
+|16.4.|2.5h    |Bug hunting and testing Minmax, adding possibility of dynamically changing maximum depth|
+
