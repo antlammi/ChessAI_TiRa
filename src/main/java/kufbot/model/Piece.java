@@ -16,5 +16,6 @@ public interface Piece {
     public void setSquare(Square square);
     public Color getColor();
     public Double getValue();
-    public void setValue(Integer moves);
+    public void updateValue(Integer moves); //generates a new value based on a move that was made
+    public void setValue(Double value);    //just enters a flat value, used when cloning pieces
 }

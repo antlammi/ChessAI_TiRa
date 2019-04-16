@@ -188,7 +188,7 @@ public class Bishop implements Piece {
         return false;
     }
     @Override
-    public void setValue(Integer moves){//palasen arvoa hienosäädetään, jotta hyvin sijoittuneita palasia pidetään arvokkaampina vaikka välitöntä materiaalivoittoa ei löydy
+    public void updateValue(Integer moves){//palasen arvoa hienosäädetään, jotta hyvin sijoittuneita palasia pidetään arvokkaampina vaikka välitöntä materiaalivoittoa ei löydy
         this.value = this.baseValue + (1.0*moves/100);
     }
     @Override
@@ -199,6 +199,11 @@ public class Bishop implements Piece {
     @Override
     public Double getValue() {
         return this.value;
+    }
+
+    @Override
+    public void setValue(Double value) {
+        this.value = value;
     }
 
 }

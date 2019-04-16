@@ -144,7 +144,7 @@ public class Pawn implements Piece {
     }
 
     @Override   //finetuning later
-    public void setValue(Integer rank) {
+    public void updateValue(Integer rank) {
         Double rankValue;
         if (this.color == Color.WHITE) {
             rankValue = 1.0*current.getRank() - 2;
@@ -164,5 +164,10 @@ public class Pawn implements Piece {
     @Override
     public Double getValue() {
         return this.value;
+    }
+
+    @Override
+    public void setValue(Double value) {
+        this.value = value;
     }
 }

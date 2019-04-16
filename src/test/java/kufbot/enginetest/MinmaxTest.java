@@ -21,6 +21,7 @@ import kufbot.model.Rook;
 import kufbot.model.Square;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -151,7 +152,7 @@ public class MinmaxTest {
         Player b = new Player(Color.BLACK, state);
 
         Minmax min = new Minmax(w, b, state, 2, false);
-        min.printStateGraphic(state);
+        Board.printStateGraphic(state);
 
         String[] incorrectMoves = {"d2a5", "d2b4", "d2b5", "d2h6"};
         Boolean incorrectMoveMade = false;
@@ -168,7 +169,7 @@ public class MinmaxTest {
         }
         assertFalse(incorrectMoveMade);
     }
-
+    
     @Test
     public void hangsQueenScenario1Depth1() {    //Only sees material gain by capturing pawn so it is considered best move
         Piece one = state[1][0].getPiece();
@@ -205,7 +206,7 @@ public class MinmaxTest {
         Player b = new Player(Color.BLACK, state);
 
         Minmax min = new Minmax(w, b, state, 1, false);
-        min.printStateGraphic(state);
+        Board.printStateGraphic(state);
 
         String[] incorrectMoves = {"d2a5", "d2b4", "d2b5", "d2h6"};
         Boolean incorrectMoveMade = false;
@@ -288,5 +289,156 @@ public class MinmaxTest {
         assert (true); //if reached, no exception was thrown
 
     }
+    @Test
+    public void findsMateInOne(){
+        /*
+        24: 
+e8f8
+| A  | B  | C  | D  | E  | F  | G  | H  |
+|    |    | WR | BKN|    | BK |    | WB | 8
 
+|    |    |    |    | WR |    |    |    | 7
+
+|    |    |    |    |    | WP |    |    | 6
+
+|    | BP | BP | BP |    |    |    |    | 5
+
+|    |    |    |    |    |    |    |    | 4
+
+|    |    | WP | BP | WP |    | BP |    | 3
+
+|    |    |    | WP |    |    |    |    | 2
+
+|    | WKN|    |    | WK |    | WKN|    | 1
+
+Finding the move took 4701 milliseconds.
+25: 
+g1e2
+| A  | B  | C  | D  | E  | F  | G  | H  |
+|    |    | WR | BKN|    | BK |    | WB | 8
+
+|    |    |    |    | WR |    |    |    | 7
+
+|    |    |    |    |    | WP |    |    | 6
+
+|    | BP | BP | BP |    |    |    |    | 5
+
+|    |    |    |    |    |    |    |    | 4
+
+|    |    | WP | BP | WP |    | BP |    | 3
+
+|    |    |    | WP | WKN|    |    |    | 2
+
+|    | WKN|    |    | WK |    |    |    | 1
+
+Finding the move took 29272 milliseconds.
+        */
+    }
+    @Test
+    public void findsCastlingMoveScenario1() { //Move with castling is mate in one so if the engine is capable of finding it, it will.
+        
+      
+        Bishop wb1 = (Bishop) state[0][2].getPiece();
+        King wk = (King) state[0][4].getPiece();
+        Rook wr = (Rook) state[0][7].getPiece();
+        Knight wkn = (Knight) state[0][1].getPiece();
+        Pawn wp = (Pawn) state[1][6].getPiece();
+        Bishop bb = (Bishop) state[7][2].getPiece();
+        Pawn bp1 = (Pawn) state[6][4].getPiece();
+        Pawn bp2 = (Pawn) state[6][7].getPiece();
+        Pawn bp3 = (Pawn) state[6][6].getPiece();
+        Pawn bp4 = (Pawn) state[6][5].getPiece();
+        King bk = (King) state[7][4].getPiece();
+        for (int r = 0; r < 8; r++) {
+            for (int f = 0; f < 8; f++) {
+                state[r][f].leave();
+            }
+        }
+
+        state[3][0].enter(wb1);
+        wb1.setSquare(state[3][0]);
+
+        state[3][3].enter(wkn);
+        wkn.setSquare(state[3][3]);
+
+        state[0][4].enter(wk);
+        wk.setSquare(state[0][4]);
+
+        state[0][7].enter(wr);
+        wr.setSquare(state[0][7]);
+
+        state[1][6].enter(wp);
+        wp.setSquare(state[1][6]);
+
+        state[6][4].enter(bp1);
+        bp1.setSquare(state[6][4]);
+
+        state[6][7].enter(bp2);
+        bp2.setSquare(state[6][7]);
+
+        state[5][6].enter(bp3);
+        bp3.setSquare(state[5][6]);
+        
+        state[6][6].enter(bp4);
+        bp4.setSquare(state[6][6]);
+        
+        state[7][6].enter(bb);
+        bb.setSquare(state[7][6]);
+        
+        state[6][5].enter(bk);
+        bk.setSquare(state[6][5]);
+        Board.printStateGraphic(state);
+
+       
+        playerW.update();
+        Move move = playerW.getMove();
+        assertEquals("e1h1", move.toString());
+
+    }
+    @Test
+    public void findsCastlingMoveScenario2(){
+        Pawn wp1 = (Pawn) state[1][5].getPiece();
+        Pawn wp2 = (Pawn) state[1][6].getPiece();
+        Pawn wp3 = (Pawn) state[1][7].getPiece();
+        Rook wr = (Rook) state[0][7].getPiece();
+        King wk = (King) state[0][4].getPiece();
+        King bk = (King) state[7][4].getPiece();
+        Bishop bb = (Bishop) state[7][2].getPiece();
+        
+        for (int r=0; r<8; r++){
+            for (int f=0;  f<8; f++){
+                state[r][f].leave();
+            }
+        }
+        
+        state[1][5].enter(wp1);
+        wp1.setSquare(state[1][5]);
+        
+        state[2][6].enter(wp2);
+        wp2.setSquare(state[2][6]);
+        
+        state[1][7].enter(wp3);
+        wp3.setSquare(state[1][7]);
+        
+        state[0][7].enter(wr);
+        wr.setSquare(state[0][7]);
+        
+        state[0][4].enter(wk);
+        wk.setSquare(state[0][4]);
+        
+        state[0][7].enter(wr);
+        wp1.setSquare(state[0][7]);
+        
+        state[2][5].enter(bb);
+        bb.setSquare(state[2][5]);
+        
+        state[7][4].enter(bk);
+        bk.setSquare(state[7][4]);
+        
+        Board.printStateGraphic(state);
+        playerW.update();
+        Move move = playerW.getMove();
+        assertEquals("e1h1",  move.toString());
+
+    }
 }

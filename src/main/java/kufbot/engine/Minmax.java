@@ -40,9 +40,9 @@ public class Minmax implements Engine {
     @Override
     public Move getMove() {
         long initialTime = System.currentTimeMillis();
-        
+
         Move move = minimax(this.state, 0, this.maxplayer, null).cloneMove(state);
-        
+
         long finalTime = System.currentTimeMillis();
         long timeTaken = finalTime - initialTime;
         System.out.println("Finding the move took " + timeTaken + " milliseconds.");
@@ -64,20 +64,16 @@ public class Minmax implements Engine {
 
         Move last;
         if (latestMove != null) {
+           
             last = latestMove.cloneMove(copyState);
             last.execute();
         } else {
             last = null;
         }
+
         Player currentClone = currentPlayer.clonePlayer(copyState);
-        if (depth == maxdepth) {
-            currentClone.updatePlayer();
-            last.setPlayer(latestMove.getPlayer().clonePlayer(copyState));
-
-            return last;
-        }
-
-        if (currentClone.getLegalMoves().length == 0) {
+        Move[] moves = currentClone.getLegalMoves();
+        if (moves.length == 0) {
             if (checkForMate(currentClone, copyState)) { //mate
                 latestMove.getPlayer().setScore(1000000.0); //Changed from max value to one million to ensure loop works properly, still far larger than any game state could otherwise produce.
             } else { //Stalemate
@@ -86,8 +82,14 @@ public class Minmax implements Engine {
             }
             return latestMove;
         }
+        if (depth == maxdepth) {
+            currentClone.updatePlayer();
+            last.setPlayer(latestMove.getPlayer().clonePlayer(copyState));
 
-        Move[] moves = currentClone.getLegalMoves();
+            return last;
+        }
+
+        
         Move[] bestMoves = new Move[moves.length];
         Integer bmcount = 0;
         if (currentPlayer.getColor() == maxplayer.getColor()) {
@@ -95,6 +97,7 @@ public class Minmax implements Engine {
             for (int i = 0; i < moves.length; i++) {
                 Player minimizing = opponent.clonePlayer(copyState);
                 Move currentMove = moves[i].cloneMove(copyState);
+               
                 currentMove.setPlayer(currentClone);
                 Double moveScore;
                 Move oMove = minimax(copyState, depth + 1, minimizing, currentMove);
@@ -103,7 +106,7 @@ public class Minmax implements Engine {
                     moveScore = oMove.getPlayer().getScore();
                 } else {
                     moveScore = oMove.getPlayer().getScore();
-                    oMove.rollback();
+                    
                 }
                 if (moveScore > maxScore) {
                     maxScore = moveScore;
@@ -182,31 +185,6 @@ public class Minmax implements Engine {
     @Override
     public Player getPlayer() {
         return this.maxplayer;
-    }
-
-    public void printStateGraphic(Square[][] state) {
-
-        String[] files = {"A", "B", "C", "D", "E", "F", "G", "H"};
-        System.out.print("|");
-        for (int i = 0; i < files.length; i++) {
-            System.out.print(" " + files[i] + "  |");
-        }
-        System.out.print("\n");
-        for (int r = 7; r >= 0; r--) {
-            System.out.print("|");
-            for (int f = 0; f <= 7; f++) {
-
-                if (state[r][f].isEmpty()) {
-                    System.out.print("    |");
-                } else if (state[r][f].getPiece().toString().contains("KNIGHT")) {
-                    System.out.print(" " + state[r][f].toString().substring(0, 1) + state[r][f].toString().substring(6, 8) + "|");
-                } else {
-                    System.out.print(" " + state[r][f].toString().substring(0, 1) + state[r][f].toString().substring(6, 7) + " |");
-                }
-            }
-            System.out.println(" " + (r + 1) + "\n");
-
-        }
     }
 
 }

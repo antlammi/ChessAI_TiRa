@@ -97,7 +97,7 @@ public class Knight implements Piece {
         return legalMoves;
     }
     @Override
-    public void setValue(Integer moves){
+    public void updateValue(Integer moves){
         this.value = this.baseValue + (1.0*moves/100);
     }
     
@@ -109,5 +109,10 @@ public class Knight implements Piece {
     @Override
     public Double getValue() {
         return this.value;
+    }
+
+    @Override
+    public void setValue(Double value) {
+        this.value = value;
     }
 }

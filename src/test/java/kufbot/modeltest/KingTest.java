@@ -12,6 +12,7 @@ import kufbot.model.Move;
 import kufbot.model.Pawn;
 import kufbot.model.PieceFactory;
 import kufbot.model.Queen;
+import kufbot.model.Rook;
 import kufbot.model.Square;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -188,4 +189,61 @@ public class KingTest {
 
     }
 
+    @Test
+    public void kingCanCastleKingside() {
+        King wKing = (King) state[0][4].getPiece();
+        Rook rookH1 = (Rook) state[0][7].getPiece();
+
+        for (int r = 0; r < 8; r++) {
+            for (int f = 0; f < 8; f++) {
+                state[r][f].leave();
+            }
+        }
+
+        state[0][4].enter(wKing);
+        state[0][7].enter(rookH1);
+
+        Boolean containsCastle = false;
+        Move[] kingmoves = wKing.getLegalMoves();
+        
+        for (int i = 0; i < kingmoves.length; i++) {
+            if (kingmoves[i] == null) {
+                break;
+            }
+            if (kingmoves[i].toString().equals("e1h1")) {
+                containsCastle = true;
+            }
+        }
+        assert (containsCastle);
+    }
+
+    @Test
+    public void kingCanCastleQueenside() {
+        King wKing = (King) state[0][4].getPiece();
+        Rook rookA1 = (Rook) state[0][0].getPiece();
+
+        for (int r = 0; r < 8; r++) {
+            for (int f = 0; f < 8; f++) {
+                state[r][f].leave();
+            }
+        }
+
+        state[0][4].enter(wKing);
+        state[0][0].enter(rookA1);
+
+        Boolean containsCastle = false;
+        Board.printStateGraphic(state);
+        Move[] kingmoves = wKing.getLegalMoves();
+
+        for (int i = 0; i < kingmoves.length; i++) {
+            System.out.println(kingmoves[i]);
+            if (kingmoves[i] == null) {
+                break;
+            }
+            if (kingmoves[i].toString().equals("e1a1")) {
+                containsCastle = true;
+            }
+        }
+        assert (containsCastle);
+    }
 }

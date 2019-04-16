@@ -64,7 +64,7 @@ public class HighestScoreTest {
     }
     @Test
     public void winsVsRandomMovesAsWhite() throws InterruptedException{
-        Game game = new Game("HighestScore", "Random", null, true);
+        Game game = new Game("HighestScore", "Random", null, true, false);
         game.run();
         
         assertEquals(game.outcome, "White wins");
@@ -72,7 +72,7 @@ public class HighestScoreTest {
     
     @Test
     public void winsVsRandomMovesAsBlack() throws InterruptedException{
-        Game game = new Game("Random", "HighestScore", null, true);
+        Game game = new Game("Random", "HighestScore", null, true, false);
         game.run();
         
         assertEquals(game.outcome, "Black wins");

@@ -29,9 +29,11 @@ public class Player {
         this.score = 0.0;
         updatePlayer();
     }
-    public Square[][] getState(){
+
+    public Square[][] getState() {
         return this.boardstate;
     }
+
     public void updatePlayer() {
         this.occupiedSquares = new Square[piececount];
         this.pieces = new Piece[piececount];
@@ -112,8 +114,17 @@ public class Player {
             Integer kf = this.kingFile;
             Move current = moves[i];
             if (current.getPiece().toString().contains("KING")) {  //if move in question is for king, update location
-                kr = current.getDestinationSquare().getRank() - 1;
-                kf = current.getDestinationSquare().getFile() - 1;
+                kr = current.getDestinationSquare().getRank() - 1;  //rank always is the same as move destination
+                if (current.getCastle()) {  //if move is a castling move, king doesnt move to the destination file
+                    if (current.getDestinationSquare().getFile() - 1 == 7) {
+                        kf = 6;
+                    } else {
+                        kf = 2;
+                    }
+                } else {
+
+                    kf = current.getDestinationSquare().getFile() - 1;
+                }
             }
             //All the required variables are copied so the internal state stays in tact.
             Square[][] stateToCheck = Board.copyBoardstate(this.boardstate);
@@ -123,11 +134,10 @@ public class Player {
             Integer dr = current.getDestinationSquare().getRank() - 1;
             Integer df = current.getDestinationSquare().getFile() - 1;
 
-            Move moveToCheck = new Move(stateToCheck);
-
-            moveToCheck.constructMove(stateToCheck[cr][cf].getPiece(), stateToCheck[cr][cf], stateToCheck[dr][df]);
+            Move moveToCheck = current.cloneMove(stateToCheck);
 
             moveToCheck.execute();
+
             King king = (King) stateToCheck[kr][kf].getPiece();
             if (!king.isInCheck(stateToCheck[kr][kf])) {
                 if (current.getDestinationSquare().isEmpty()) {

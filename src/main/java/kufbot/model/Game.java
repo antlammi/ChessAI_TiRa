@@ -22,7 +22,8 @@ public class Game {
     private Square[][] state;
     private Boolean fastSim;
     public String outcome;
-    public Game(String engineTypeW, String engineTypeB, Integer initialdepth, Boolean fastSim) {
+
+    public Game(String engineTypeW, String engineTypeB, Integer initialdepth, Boolean fastSim, Boolean dynamicdepth) {
         Board board = new Board();
         this.state = board.getBoardState();
 
@@ -30,21 +31,20 @@ public class Game {
         Player b = new Player(Color.BLACK, state);
         if (engineTypeW == "Random") {
             this.playerW = new Random(w, state);
-        } else if (engineTypeW =="HighestScore"){
+        } else if (engineTypeW == "HighestScore") {
             this.playerW = new HighestScore(w, b, state);
-        } else if (engineTypeW == "Minmax"){
-            this.playerW = new Minmax(w,b,state, initialdepth, true);
+        } else if (engineTypeW == "Minmax") {
+            this.playerW = new Minmax(w, b, state, initialdepth, dynamicdepth);
         }
-        
-        
+
         if (engineTypeB == "Random") {
-            this.playerB =  new Random(b, state);
-        } else if (engineTypeB == "HighestScore"){
+            this.playerB = new Random(b, state);
+        } else if (engineTypeB == "HighestScore") {
             this.playerB = new HighestScore(b, w, state);
-        } else if (engineTypeW == "Minmax"){
-            this.playerB = new Minmax(b,w,state, initialdepth, true);
+        } else if (engineTypeW == "Minmax") {
+            this.playerB = new Minmax(b, w, state, initialdepth, dynamicdepth);
         }
-        
+
         this.fastSim = fastSim;
 
     }
@@ -62,7 +62,7 @@ public class Game {
                 if (wKing.isInCheck(state[wkr][wkf])) {
                     outcome = "Black wins";
                 } else {
-                    printStateGraphic(state);
+                    Board.printStateGraphic(state);
                     outcome = "White to move, draw by stalemate";
                 }
 
@@ -75,12 +75,12 @@ public class Game {
             if (!fastSim) {
                 System.out.println(i + 1 + ": ");
                 System.out.println(moveChosenWhite);
-                printStateGraphic(state);
+                Board.printStateGraphic(state);
                 TimeUnit.MILLISECONDS.sleep(1000);
             }
             playerW.update();
             playerB.update();
-            
+
             Player black = playerB.getPlayer();
 
             if (black.getLegalMoves().length == 0) {
@@ -90,66 +90,31 @@ public class Game {
                 if (bKing.isInCheck(state[bkr][bkf])) {
                     outcome = "White wins";
                 } else {
-                    printStateGraphic(state);
+                    Board.printStateGraphic(state);
                     outcome = "Black to move, draw by stalemate";
                 }
                 totalMoves = i + 1;
                 break;
             }
-            Move moveChosenBlack = playerB.getMove();  
+            Move moveChosenBlack = playerB.getMove();
             moveChosenBlack.execute();
-            
-            if (!fastSim){
+
+            if (!fastSim) {
                 System.out.println(i + 1 + ": ");
                 System.out.println(moveChosenBlack);
-                printStateGraphic(state);
+                Board.printStateGraphic(state);
                 TimeUnit.MILLISECONDS.sleep(1000);
             }
             playerW.update();
             playerB.update();
-            
+
             if (i == 149) {
                 outcome = "Draw";
                 totalMoves = i + 1;
             }
         }
 
-        printStateGraphic(state);
+        Board.printStateGraphic(state);
         System.out.println(outcome + " in " + totalMoves + " moves.");
-    }
-
-    public void printState(Square[][] state) {
-
-        String[] files = {"A", "B", "C", "D", "E", "F", "G", "H"};
-        for (int r = 0; r <= 7; r++) {
-            for (int f = 0; f <= 7; f++) {
-                System.out.println(files[f] + (r + 1) + "| " + state[r][f].toString());
-            }
-        }
-    }
-
-    public void printStateGraphic(Square[][] state) {
-
-        String[] files = {"A", "B", "C", "D", "E", "F", "G", "H"};
-        System.out.print("|");
-        for (int i = 0; i < files.length; i++) {
-            System.out.print(" " + files[i] + "  |");
-        }
-        System.out.print("\n");
-        for (int r = 7; r >= 0; r--) {
-            System.out.print("|");
-            for (int f = 0; f <= 7; f++) {
-
-                if (state[r][f].isEmpty()) {
-                    System.out.print("    |");
-                } else if (state[r][f].getPiece().toString().contains("KNIGHT")) {
-                    System.out.print(" " + state[r][f].toString().substring(0, 1) + state[r][f].toString().substring(6, 8) + "|");
-                } else {
-                    System.out.print(" " + state[r][f].toString().substring(0, 1) + state[r][f].toString().substring(6, 7) + " |");
-                }
-            }
-            System.out.println(" " + (r + 1) + "\n");
-
-        }
     }
 }

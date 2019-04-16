@@ -19,7 +19,7 @@ public class Rook implements Piece {
     private Boolean moved;
     private Square current; 
     private Square[][] boardstate;
-    private final Double baseValue;
+    private Double baseValue;
     private Double value;
     
     public Rook(Color color, Square initial, Square[][] boardstate) {
@@ -33,8 +33,8 @@ public class Rook implements Piece {
     public Boolean getMoved(){
         return this.moved;
     }
-    public void wasMoved(){
-        this.moved = true;
+    public void setMoved(Boolean moved){
+        this.moved = moved;
     }
     @Override
     public void setSquare(Square newSquare){
@@ -161,7 +161,7 @@ public class Rook implements Piece {
             }
         }
     }
-
+  
     @Override
     public Move[] getLegalMoves() {
         Move[] movesToCheck = this.getMoves();
@@ -172,7 +172,7 @@ public class Rook implements Piece {
         return legalMoves;
     }
     @Override
-    public void setValue(Integer moves){    
+    public void updateValue(Integer moves){    
         this.value = (baseValue+(1.0*moves/100));
        
     }
@@ -184,5 +184,10 @@ public class Rook implements Piece {
     @Override
     public Double getValue() {
         return this.value;
+    }
+
+    @Override
+    public void setValue(Double value) {
+        this.value = value;
     }
 }
