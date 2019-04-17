@@ -47,7 +47,7 @@ public class Game {
         } else if (engineTypeB == "Minmax") {
             this.playerB = new Minmax(b, w, state, initialdepth, dynamicdepth);
         } else if (engineTypeB == "MinmaxAB"){
-            this.playerB = new MinmaxAB(w,b,state,initialdepth,dynamicdepth);
+            this.playerB = new MinmaxAB(b,w,state,initialdepth,dynamicdepth);
         }
 
         this.fastSim = fastSim;
