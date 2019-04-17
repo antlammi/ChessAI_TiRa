@@ -42,7 +42,7 @@ public class Knight implements Piece {
         Integer file = current.getFile() - 1;
         Move[] possibleMoves = new Move[8];
         Integer moveCount = 0;
-        for (int f = file -2; f<file+2; f++){
+        for (int f = file -2; f<file+3; f++){
             if (f>=0 && f<=7){
                 if (file-f == 2 ||f-file ==2){
                     if (rank-1 >= 0){

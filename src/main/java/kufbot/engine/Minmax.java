@@ -36,13 +36,20 @@ public class Minmax implements Engine {
     public void setMaxDepth(Integer depth) {
         this.maxdepth = depth;
     }
-
+    public Integer getMaxDepth(){
+        return this.maxdepth;
+    }
     @Override
     public Move getMove() {
         long initialTime = System.currentTimeMillis();
 
-        Move move = minimax(this.state, 0, this.maxplayer, null).cloneMove(state);
-
+        Move move = minimax(this.state, 0, this.maxplayer, null);
+        Move finalmove;
+        if (move != null) {
+            finalmove = move.cloneMove(this.state);
+        } else {
+            finalmove = null;
+        }
         long finalTime = System.currentTimeMillis();
         long timeTaken = finalTime - initialTime;
         System.out.println("Finding the move took " + timeTaken + " milliseconds.");
@@ -56,7 +63,7 @@ public class Minmax implements Engine {
             }
         }
 
-        return move;
+        return finalmove;
     }
 
     public Move minimax(Square[][] nodestate, Integer depth, Player currentPlayer, Move latestMove) {
@@ -82,6 +89,9 @@ public class Minmax implements Engine {
         Move[] moves = currentClone.getLegalMoves();
         //Technically I believe this should be before maxdepth to find mates or stalemates at the final depth but in practice it slows down the algo massively and means reduced depth being used
         if (moves.length == 0) {
+            if (latestMove == null) {
+                return null;
+            }
             if (checkForMate(currentClone, copyState)) { //mate
                 latestMove.getPlayer().setScore(1000000.0); //Changed from max value to one million to ensure loop works properly, still far larger than any game state could otherwise produce.
             } else { //Stalemate

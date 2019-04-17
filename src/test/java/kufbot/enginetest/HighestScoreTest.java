@@ -54,29 +54,70 @@ public class HighestScoreTest {
         this.state = board.getBoardState();
         Player w = new Player(Color.WHITE, state);
         Player b = new Player(Color.BLACK, state);
-        this.playerW = new HighestScore(w,b, state);
-        this.playerB = new HighestScore(b,w,state);
-        
+        this.playerW = new HighestScore(w, b, state);
+        this.playerB = new HighestScore(b, w, state);
+
     }
 
     @After
     public void tearDown() {
     }
+
     @Test
-    public void winsVsRandomMovesAsWhite() throws InterruptedException{
+    public void winsVsRandomMovesAsWhite() throws InterruptedException {
         Game game = new Game("HighestScore", "Random", null, true, false);
         game.run();
-        
-        assertEquals(game.outcome, "White wins");
+
+        assertEquals("White wins", game.outcome);
     }
-    
+
     @Test
-    public void winsVsRandomMovesAsBlack() throws InterruptedException{
+    public void winsVsRandomMovesAsBlack() throws InterruptedException {
         Game game = new Game("Random", "HighestScore", null, true, false);
         game.run();
-        
-        assertEquals(game.outcome, "Black wins");
-    }/* No longer is desired behaviour as required piece evaluations make other AI types worse
+
+        assertEquals("Black wins", game.outcome);
+    }
+
+    @Test
+    public void whiteDoesNotHangRookInEndgame() {
+        Rook wRook = (Rook) state[0][0].getPiece();
+        King bKing = (King) state[7][4].getPiece();
+        King wKing = (King) state[0][4].getPiece();
+
+        for (int r = 0; r < 8; r++) {
+            for (int f = 0; f < 8; f++) {
+                state[r][f].leave();
+            }
+        }
+
+        state[1][1].enter(wRook);
+        Move toA2 = new Move(state);
+        toA2.constructMove(wRook, state[1][1], state[1][0]);
+        toA2.execute();
+
+        state[0][3].enter(bKing);
+        Move toB2 = new Move(state);
+        toB2.constructMove(bKing, state[0][3], state[0][2]);
+        toB2.execute();
+
+        state[3][5].enter(wKing);
+        Move toE4 = new Move(state);
+        toE4.constructMove(wKing, state[3][5], state[3][4]);
+        toE4.execute();
+
+        playerW.update();
+        playerB.update();
+
+        for (int i = 0; i < 100; i++) {
+            Move move = playerW.getMove();
+            assertNotEquals("a2b2", move.toString());
+            assertNotEquals("a2c2", move.toString());
+            assertNotEquals("a2d2", move.toString());
+        }
+
+    }
+    /* No longer is desired behaviour as required piece evaluations make other AI types worse
     @Test
     public void whiteAdvancesPawnToAdvancePosition(){
         King bKing = (King) state[7][4].getPiece();
@@ -137,45 +178,6 @@ public class HighestScoreTest {
            }
        }
         assertTrue(pawnMoveFound);
-    }*/ 
-    
-    @Test
-    public void whiteDoesNotHangRookInEndgame(){
-        Rook wRook = (Rook) state[0][0].getPiece();
-        King bKing = (King) state[7][4].getPiece();
-        King wKing = (King) state[0][4].getPiece();
-        
-        
-        for (int r=0; r<8; r++){
-            for (int f=0 ;f<8; f++){
-                state[r][f].leave();
-            }
-        }
-        
-        state[1][1].enter(wRook);
-        Move toA2 = new Move(state);
-        toA2.constructMove(wRook, state[1][1], state[1][0]);
-        toA2.execute();
-        
-        state[0][3].enter(bKing);
-        Move toB2 = new Move(state);
-        toB2.constructMove(bKing, state[0][3], state[0][2]);
-        toB2.execute();
-        
-        state[3][5].enter(wKing);
-        Move toE4 = new Move(state);
-        toE4.constructMove(wKing, state[3][5], state[3][4]);
-        toE4.execute();
-        
-        playerW.update();
-        playerB.update();
-        
-        for(int i=0; i<100; i++){
-            Move move = playerW.getMove();
-            assertNotEquals("a2b2", move.toString());
-            assertNotEquals("a2c2", move.toString());
-            assertNotEquals("a2d2", move.toString());
-        }
-        
-    }
+    }*/
+
 }

@@ -232,6 +232,8 @@ public class PlayerTest {
             }
         }
     }
+
+
     @Test
     public void doesNotThrowNullPointerExceptionFollowingCastling(){
         Rook wr = (Rook) state[0][7].getPiece();

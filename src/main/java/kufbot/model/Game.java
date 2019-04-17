@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 import kufbot.engine.Engine;
 import kufbot.engine.HighestScore;
 import kufbot.engine.Minmax;
+import kufbot.engine.MinmaxAB;
 
 /**
  *
@@ -35,14 +36,18 @@ public class Game {
             this.playerW = new HighestScore(w, b, state);
         } else if (engineTypeW == "Minmax") {
             this.playerW = new Minmax(w, b, state, initialdepth, dynamicdepth);
+        } else if (engineTypeW == "MinmaxAB"){
+            this.playerW = new MinmaxAB(w,b,state,initialdepth,dynamicdepth);
         }
 
         if (engineTypeB == "Random") {
             this.playerB = new Random(b, state);
         } else if (engineTypeB == "HighestScore") {
             this.playerB = new HighestScore(b, w, state);
-        } else if (engineTypeW == "Minmax") {
+        } else if (engineTypeB == "Minmax") {
             this.playerB = new Minmax(b, w, state, initialdepth, dynamicdepth);
+        } else if (engineTypeB == "MinmaxAB"){
+            this.playerB = new MinmaxAB(w,b,state,initialdepth,dynamicdepth);
         }
 
         this.fastSim = fastSim;
