@@ -36,9 +36,11 @@ public class Minmax implements Engine {
     public void setMaxDepth(Integer depth) {
         this.maxdepth = depth;
     }
-    public Integer getMaxDepth(){
+
+    public Integer getMaxDepth() {
         return this.maxdepth;
     }
+
     @Override
     public Move getMove() {
         long initialTime = System.currentTimeMillis();
@@ -79,15 +81,7 @@ public class Minmax implements Engine {
         }
 
         Player currentClone = currentPlayer.clonePlayer(copyState);
-
-        if (depth == maxdepth) {
-            currentClone.updatePlayer();
-            last.setPlayer(latestMove.getPlayer().clonePlayer(copyState));
-
-            return last;
-        }
         Move[] moves = currentClone.getLegalMoves();
-        //Technically I believe this should be before maxdepth to find mates or stalemates at the final depth but in practice it slows down the algo massively and means reduced depth being used
         if (moves.length == 0) {
             if (latestMove == null) {
                 return null;
@@ -99,6 +93,13 @@ public class Minmax implements Engine {
                 currentPlayer.setScore(0.0);
             }
             return latestMove;
+        }
+
+        if (depth == maxdepth) {
+            currentClone.updatePlayer();
+            last.setPlayer(latestMove.getPlayer().clonePlayer(copyState));
+
+            return last;
         }
 
         Move[] bestMoves = new Move[moves.length];

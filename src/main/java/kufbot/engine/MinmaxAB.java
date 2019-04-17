@@ -79,15 +79,7 @@ public class MinmaxAB implements Engine {
         }
 
         Player currentClone = currentPlayer.clonePlayer(copyState);
-
-        if (depth == maxdepth) {
-            currentClone.updatePlayer();
-            last.setPlayer(latestMove.getPlayer().clonePlayer(copyState));
-
-            return last;
-        }
-        Move[] moves = currentClone.getLegalMoves();
-        //Technically I believe this should be before maxdepth to find mates or stalemates at the final depth but in practice it slows down the algo massively and means reduced depth being used
+        Move[] moves = currentClone.getLegalMoves(); 
         if (moves.length == 0) {
             if (latestMove == null){
                 return null;
@@ -101,6 +93,13 @@ public class MinmaxAB implements Engine {
             return latestMove;
         }
 
+        if (depth == maxdepth) {
+            currentClone.updatePlayer();
+            last.setPlayer(latestMove.getPlayer().clonePlayer(copyState));
+
+            return last;
+        }
+       
         Move[] bestMoves = new Move[moves.length];
         Integer bmcount = 0;
         if (currentPlayer.getColor() == maxplayer.getColor()) {
@@ -116,15 +115,16 @@ public class MinmaxAB implements Engine {
                 if (oMove.getPlayer().getColor() == minimizing.getColor()) {
                     moveScore = oMove.getPlayer().getScore();
                 } else {
-                    moveScore = oMove.getPlayer().getScore();
-                    
+                    moveScore = oMove.getPlayer().getScore();  
                 }
-                if (moveScore > maxScore) {
+                Double scoreDifferential = moveScore - maxScore;
+                
+                if (moveScore > maxScore && scoreDifferential > 0.0025) {  //if the move is better by more than 0.01
                     maxScore = moveScore;
                     bmcount = 0;
                     bestMoves = new Move[moves.length];
                     bestMoves[bmcount] = currentMove;
-                } else if (moveScore == maxScore) {
+                } else if (scoreDifferential <= 0.0025 && scoreDifferential >= -0.0025) {//if the moves are practically equal
                     bmcount++;
                     bestMoves[bmcount] = currentMove;
                 }
@@ -160,13 +160,13 @@ public class MinmaxAB implements Engine {
                     moveScore = -oMove.getPlayer().getScore();
                     oMove.rollback();
                 }
-
-                if (moveScore < minScore) {
+                Double scoreDifferential = moveScore-minScore;
+                if (moveScore < minScore && scoreDifferential < -0.0025) { //if the move is better by more than 0.001
                     minScore = moveScore;
                     bmcount = 0;
                     bestMoves = new Move[moves.length];
                     bestMoves[bmcount] = currentMove;
-                } else if (moveScore == minScore) {
+                } else if (scoreDifferential >= -0.0025 && scoreDifferential <= 0.0025) {
                     bmcount++;
                     bestMoves[bmcount] = currentMove;
                 }

@@ -173,7 +173,7 @@ public class Rook implements Piece {
     }
     @Override
     public void updateValue(Integer moves){    
-        this.value = (baseValue+(1.0*moves/600));
+        this.value = (baseValue+(1.0*moves/500));
        
     }
     @Override

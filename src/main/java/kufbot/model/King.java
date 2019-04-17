@@ -57,7 +57,7 @@ public class King implements Piece {
         this.castled = castled;
         
         if (castled) {
-            this.baseValue = 19.0; //probably too high but if it is too low the engine will almost never castle
+            this.baseValue = 16.0; //probably too high but if it is too low the engine will almost never castle
             updateValue(0);
         } else {
             this.baseValue = 15.0;
@@ -205,7 +205,9 @@ public class King implements Piece {
         }
         return legalMoves;
     }
-
+    public Boolean getCastled(){
+        return this.castled;
+    }
     @Override
     public void updateValue(Integer moves) {
         this.value = (baseValue + (1.0 * moves / 100));

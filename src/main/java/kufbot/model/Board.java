@@ -119,7 +119,25 @@ public class Board {
                     Piece toClone = currentstate[r][f].getPiece();
                     Piece clone = copyFactory.getPiece(toClone.toString().substring(6), toClone.getColor(), copy[r][f], copy);
                     clone.setValue(toClone.getValue());
-                    copy[r][f].enter(clone);
+                    if (clone.toString().contains("KING")) {
+                        King king = (King) toClone;
+
+                        King kingClone = (King) clone;
+                        kingClone.setCastled(king.getCastled());
+
+                        kingClone.setMoved(king.getMoved());
+
+                        copy[r][f].enter(kingClone);
+                    } else if (clone.toString().contains("ROOK")) {
+                        Rook rook = (Rook) toClone;
+
+                        Rook rookClone = (Rook) clone;
+                        rookClone.setMoved(rook.getMoved());
+
+                        copy[r][f].enter(rookClone);
+                    } else {
+                        copy[r][f].enter(clone);
+                    }
                 }
 
             }

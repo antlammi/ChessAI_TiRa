@@ -8,6 +8,7 @@ package modeltest;
 import kufbot.model.Board;
 import kufbot.model.Color;
 import kufbot.model.King;
+import kufbot.model.Knight;
 import kufbot.model.Move;
 import kufbot.model.Pawn;
 import kufbot.model.PieceFactory;
@@ -150,6 +151,42 @@ public class KingTest {
     }
 
     @Test
+    public void kingCanCapturePawnOnH4WhileInCheck() {
+        King wk = (King) state[0][4].getPiece();
+        Knight bkn = (Knight) state[7][1].getPiece();
+        Pawn bp = (Pawn) state[6][7].getPiece();
+        King bk = (King) state[7][4].getPiece();
+        for (int r=0; r<8; r++){
+            for (int f=0; f<8; f++){
+                state[r][f].leave();
+            }
+        }
+        state[3][6].enter(wk);
+        wk.setSquare(state[3][6]);
+        
+        state[5][5].enter(bkn);
+        bkn.setSquare(state[5][5]);
+        
+        state[3][7].enter(bp);
+        bp.setSquare(state[3][7]);
+        
+        state[1][3].enter(bk);
+        bk.setSquare(state[1][3]);
+        
+        Move[] kingmoves = wk.getLegalMoves();
+        Boolean moveAvailable = false;
+        for (int i=0; i<kingmoves.length; i++){
+            if (kingmoves[i] == null){
+                break;
+            }
+            if (kingmoves[i].toString().equals("g4h4")){
+                moveAvailable = true;
+            }
+        }
+        assertTrue(moveAvailable);
+    }
+
+    @Test
     public void kingIsInCheckScenario1() {
         King wKing = (King) state[0][4].getPiece();
         Queen bQueen = (Queen) state[7][3].getPiece();
@@ -205,7 +242,7 @@ public class KingTest {
 
         Boolean containsCastle = false;
         Move[] kingmoves = wKing.getLegalMoves();
-        
+
         for (int i = 0; i < kingmoves.length; i++) {
             if (kingmoves[i] == null) {
                 break;
