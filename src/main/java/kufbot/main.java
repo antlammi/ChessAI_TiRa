@@ -5,7 +5,6 @@
  */
 package kufbot;
 
-import kufbot.engine.Minmax;
 import kufbot.model.*;
 
 /**
@@ -18,8 +17,8 @@ public class main {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws InterruptedException {
-       
-        Game game = new Game("MinmaxAB", "Minmax", 3, false, true); //enginetypes, depth, fastsim(prints for every move or only outcome),
+
+        Game game = new Game("MinmaxAB", "Minmax", 3, false, true); //enginetypes, depth, fastsim(prints for every move or only outcome), dynamicdepth (varies based on speed)
         game.run();
     }
 

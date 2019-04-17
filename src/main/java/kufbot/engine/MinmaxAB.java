@@ -36,16 +36,18 @@ public class MinmaxAB implements Engine {
     public void setMaxDepth(Integer depth) {
         this.maxdepth = depth;
     }
-    public Integer getMaxDepth(){
+
+    public Integer getMaxDepth() {
         return this.maxdepth;
     }
+
     @Override
     public Move getMove() {
         long initialTime = System.currentTimeMillis();
 
         Move move = minimaxAB(this.state, 0, this.maxplayer, null, -Double.MAX_VALUE, Double.MAX_VALUE);
         Move finalmove;
-        if (move != null){
+        if (move != null) {
             finalmove = move.cloneMove(this.state);
         } else {
             finalmove = null;
@@ -68,7 +70,7 @@ public class MinmaxAB implements Engine {
 
     public Move minimaxAB(Square[][] nodestate, Integer depth, Player currentPlayer, Move latestMove, Double alpha, Double beta) {
         Square[][] copyState = Board.copyBoardstate(nodestate);
-
+       
         Move last;
         if (latestMove != null) {
 
@@ -79,9 +81,9 @@ public class MinmaxAB implements Engine {
         }
 
         Player currentClone = currentPlayer.clonePlayer(copyState);
-        Move[] moves = currentClone.getLegalMoves(); 
+        Move[] moves = currentClone.getLegalMoves();
         if (moves.length == 0) {
-            if (latestMove == null){
+            if (latestMove == null) {
                 return null;
             }
             if (checkForMate(currentClone, copyState)) { //mate
@@ -99,7 +101,7 @@ public class MinmaxAB implements Engine {
 
             return last;
         }
-       
+
         Move[] bestMoves = new Move[moves.length];
         Integer bmcount = 0;
         if (currentPlayer.getColor() == maxplayer.getColor()) {
@@ -107,7 +109,7 @@ public class MinmaxAB implements Engine {
             for (int i = 0; i < moves.length; i++) {
                 Player minimizing = opponent.clonePlayer(copyState);
                 Move currentMove = moves[i].cloneMove(copyState);
-
+              
                 currentMove.setPlayer(currentClone);
                 Double moveScore;
                 Move oMove = minimaxAB(copyState, depth + 1, minimizing, currentMove, alpha, beta);
@@ -115,11 +117,11 @@ public class MinmaxAB implements Engine {
                 if (oMove.getPlayer().getColor() == minimizing.getColor()) {
                     moveScore = oMove.getPlayer().getScore();
                 } else {
-                    moveScore = oMove.getPlayer().getScore();  
+                    moveScore = oMove.getPlayer().getScore();
                 }
                 Double scoreDifferential = moveScore - maxScore;
-                
-                if (moveScore > maxScore && scoreDifferential > 0.0025) {  //if the move is better by more than 0.01
+
+                if (moveScore > maxScore && scoreDifferential > 0.0025) {  //if the move is better by more than 0.0025
                     maxScore = moveScore;
                     bmcount = 0;
                     bestMoves = new Move[moves.length];
@@ -128,10 +130,10 @@ public class MinmaxAB implements Engine {
                     bmcount++;
                     bestMoves[bmcount] = currentMove;
                 }
-                if (maxScore > alpha){
+                if (maxScore > alpha) {
                     alpha = maxScore;
                 }
-                if (alpha > beta){
+                if (alpha > beta) {
                     break;
                 }
             }
@@ -160,8 +162,8 @@ public class MinmaxAB implements Engine {
                     moveScore = -oMove.getPlayer().getScore();
                     oMove.rollback();
                 }
-                Double scoreDifferential = moveScore-minScore;
-                if (moveScore < minScore && scoreDifferential < -0.0025) { //if the move is better by more than 0.001
+                Double scoreDifferential = moveScore - minScore;
+                if (moveScore < minScore && scoreDifferential < -0.0025) { //if the move is better by more than 0.0025
                     minScore = moveScore;
                     bmcount = 0;
                     bestMoves = new Move[moves.length];
@@ -170,10 +172,10 @@ public class MinmaxAB implements Engine {
                     bmcount++;
                     bestMoves[bmcount] = currentMove;
                 }
-                if (minScore < beta){
+                if (minScore < beta) {
                     beta = minScore;
                 }
-                if (alpha > beta){
+                if (alpha > beta) {
                     break;
                 }
 
