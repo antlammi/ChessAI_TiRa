@@ -63,7 +63,7 @@ public class MinmaxAB implements Engine {
             }
         }
 
-        return move;
+        return finalmove;
     }
 
     public Move minimaxAB(Square[][] nodestate, Integer depth, Player currentPlayer, Move latestMove, Double alpha, Double beta) {

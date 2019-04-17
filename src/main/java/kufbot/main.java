@@ -19,7 +19,7 @@ public class main {
      */
     public static void main(String[] args) throws InterruptedException {
        
-        Game game = new Game("MinmaxAB", "Minmax", 3, false, true); //enginetypes, depth, fastsim(prints for every move or only outcome),
+        Game game = new Game("MinmaxAB", "MinmaxAB", 4, false, true); //enginetypes, depth, fastsim(prints for every move or only outcome),
         game.run();
     }
 
