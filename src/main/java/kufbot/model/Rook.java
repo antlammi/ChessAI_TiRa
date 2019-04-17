@@ -173,9 +173,8 @@ public class Rook implements Piece {
     }
     @Override
     public void updateValue(Integer moves){    
-        /* Rooks are moved too aggressively early on if this exists
-        this.value = (baseValue+(1.0*moves/100));
-       */ 
+        this.value = (baseValue+(1.0*moves/600));
+       
     }
     @Override
     public Color getColor() {

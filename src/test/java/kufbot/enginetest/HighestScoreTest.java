@@ -76,7 +76,7 @@ public class HighestScoreTest {
         game.run();
         
         assertEquals(game.outcome, "Black wins");
-    }
+    }/* No longer is desired behaviour as required piece evaluations make other AI types worse
     @Test
     public void whiteAdvancesPawnToAdvancePosition(){
         King bKing = (King) state[7][4].getPiece();
@@ -137,7 +137,7 @@ public class HighestScoreTest {
            }
        }
         assertTrue(pawnMoveFound);
-    }
+    }*/ 
     
     @Test
     public void whiteDoesNotHangRookInEndgame(){

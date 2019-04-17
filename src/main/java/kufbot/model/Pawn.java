@@ -148,7 +148,7 @@ public class Pawn implements Piece {
         Double rankValue;
         Integer filefactor;
         if (f == 3 | f == 4) {
-            filefactor = 40;
+            filefactor = 40; //makes the engine prefer pushing pawns in the middle, especially early on. Leads to better openings at least.
             if (this.color == Color.WHITE) {
 
                 rankValue = 1.0 * current.getRank() - 2;

@@ -257,7 +257,7 @@ public class PlayerTest {
         Move move = new Move(state);
         move.constructCastle(wk, wr, state[0][4], state[0][7]);
         move.execute();
-        
+        white.updatePlayer();
         white.getLegalMoves();
         
         assert(true);   //if reached, exception was not thrown

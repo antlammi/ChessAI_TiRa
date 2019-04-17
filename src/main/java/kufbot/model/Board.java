@@ -91,6 +91,19 @@ public class Board {
         }
     }
 
+    public static Boolean compareStates(Square[][] state1, Square[][] state2) {
+        Boolean equals = true;
+        for (int r = 0; r < 8; r++) {
+            for (int f = 0; f < 8; f++) {
+                if (!state1[r][f].toString().equals(state2[r][f].toString())) {
+                    equals = false;
+                    break;
+                }
+            }
+        }
+        return equals;
+    }
+
     public static Square[][] copyBoardstate(Square[][] currentstate) { //moved from Player. Required to prevent fringe case bug in King.
         PieceFactory copyFactory = new PieceFactory();
         Square[][] copy = new Square[8][8];
