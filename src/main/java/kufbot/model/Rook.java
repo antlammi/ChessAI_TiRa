@@ -34,7 +34,7 @@ public class Rook implements Piece {
         return this.moved;
     }
     public void setMoved(Boolean moved){
-        this.moved = moved;
+          this.moved = moved;
     }
     @Override
     public void setSquare(Square newSquare){
@@ -173,8 +173,9 @@ public class Rook implements Piece {
     }
     @Override
     public void updateValue(Integer moves){    
+        /* Rooks are moved too aggressively early on if this exists
         this.value = (baseValue+(1.0*moves/100));
-       
+       */ 
     }
     @Override
     public Color getColor() {

@@ -26,7 +26,7 @@ public class King implements Piece {
         this.moved = false;
         this.current = initial;
         this.boardstate = boardstate;
-        this.baseValue = 15.0; //High base value to make it not be disregarded
+        this.baseValue = 15.0; 
         this.value = baseValue;
         this.castled = false;
     }
@@ -47,7 +47,7 @@ public class King implements Piece {
 
     public void setMoved(Boolean moved) {
         if (!this.castled) {
-            this.baseValue = 14.6;
+            this.baseValue = 14.5;
             updateValue(0);
         }
         this.moved = moved;
@@ -55,8 +55,9 @@ public class King implements Piece {
 
     public void setCastled(Boolean castled) {
         this.castled = castled;
+        
         if (castled) {
-            this.baseValue = 15.4;
+            this.baseValue = 19.0; //probably too high but if it is too low the engine will almost never castle
             updateValue(0);
         } else {
             this.baseValue = 15.0;

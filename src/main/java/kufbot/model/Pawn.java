@@ -128,15 +128,13 @@ public class Pawn implements Piece {
                         legalcount++;
                     }
                 } else // jos siirrytään vinosuuntaan
-                {
-                    if (!boardstate[dr][df].isEmpty()) { //jos määränpää ei ole tyhjä
+                 if (!boardstate[dr][df].isEmpty()) { //jos määränpää ei ole tyhjä
                         if (boardstate[dr][df].getPiece().getColor() != this.color) { //ja kyseessä ei ole oma palanen
                             currentMove.setPawnCapture();       // pawn erikoiskäyttäytyminen otetaan huomion
                             legalMoves[legalcount] = currentMove;
                             legalcount++;
                         }
                     }
-                }
 
             }
         }
@@ -145,29 +143,46 @@ public class Pawn implements Piece {
 
     @Override   //finetuning later
     public void updateValue(Integer rank) {
+
+        Integer f = current.getFile() - 1;
         Double rankValue;
-        if (this.color == Color.WHITE) {
-            rankValue = 1.0*current.getRank() - 2;
-            this.value = (rankValue / 11) + this.baseValue;
+        Integer filefactor;
+        if (f == 3 | f == 4) {
+            filefactor = 40;
+            if (this.color == Color.WHITE) {
+
+                rankValue = 1.0 * current.getRank() - 2;
+                this.value = (rankValue / filefactor) + this.baseValue;
+            } else {
+                rankValue = -1.0 * (current.getRank() - 1 - 6);
+                this.value = (rankValue / filefactor) + this.baseValue;
+            }
         } else {
-            rankValue = -1.0*(current.getRank() - 1 - 6);
-            this.value = (rankValue / 11) + this.baseValue;
-        }
-        
+            filefactor=80;
+            if (this.color == Color.WHITE) {
+
+                rankValue = 1.0 * current.getRank() - 2;
+                this.value = (rankValue / filefactor) + this.baseValue;
+            } else {
+                rankValue = -1.0 * (current.getRank() - 1 - 6);
+                this.value = (rankValue / filefactor) + this.baseValue;
+            }
     }
 
-    @Override
-    public Color getColor() {
+}
+
+@Override
+        public Color getColor() {
         return this.color;
     }
 
     @Override
-    public Double getValue() {
+        public Double getValue() {
         return this.value;
     }
 
     @Override
-    public void setValue(Double value) {
+        public void setValue(Double value) {
         this.value = value;
     }
 }

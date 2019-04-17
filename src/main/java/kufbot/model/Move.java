@@ -83,7 +83,7 @@ public class Move {
             boardstate[r][6].enter(piece);
             piece.setSquare(boardstate[r][6]);
             boardstate[r][5].enter(rook);
-            rook.setSquare(boardstate[r][3]);
+            rook.setSquare(boardstate[r][5]);
         }
         king.setCastled(true);
 

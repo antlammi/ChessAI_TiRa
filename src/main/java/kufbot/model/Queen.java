@@ -95,7 +95,7 @@ public class Queen implements Piece {
     }
     @Override
     public void updateValue(Integer moves){
-        this.value = baseValue+(1.0*moves/150);
+        this.value = baseValue+(1.0*moves/200);
     }
     
     @Override

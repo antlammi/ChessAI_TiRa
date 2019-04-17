@@ -232,4 +232,34 @@ public class PlayerTest {
             }
         }
     }
+    @Test
+    public void doesNotThrowNullPointerExceptionFollowingCastling(){
+        Rook wr = (Rook) state[0][7].getPiece();
+        King wk = (King) state[0][4].getPiece();
+        King bk = (King) state[7][4].getPiece();
+        for (int r=0; r<8; r++){
+            for (int f=0; f<8; f++){
+                state[r][f].leave();
+            }
+        }
+        
+        state[0][7].enter(wr);
+        wr.setSquare(state[0][7]);
+        
+        state[0][4].enter(wk);
+        wk.setSquare(state[0][4]);
+        
+        state[7][4].enter(bk);
+        bk.setSquare(state[7][4]);
+        
+        Player white = new Player(Color.WHITE, state);
+        
+        Move move = new Move(state);
+        move.constructCastle(wk, wr, state[0][4], state[0][7]);
+        move.execute();
+        
+        white.getLegalMoves();
+        
+        assert(true);   //if reached, exception was not thrown
+    }
 }

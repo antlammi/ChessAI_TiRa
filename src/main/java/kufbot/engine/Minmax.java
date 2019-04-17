@@ -64,7 +64,7 @@ public class Minmax implements Engine {
 
         Move last;
         if (latestMove != null) {
-           
+
             last = latestMove.cloneMove(copyState);
             last.execute();
         } else {
@@ -72,7 +72,15 @@ public class Minmax implements Engine {
         }
 
         Player currentClone = currentPlayer.clonePlayer(copyState);
+
+        if (depth == maxdepth) {
+            currentClone.updatePlayer();
+            last.setPlayer(latestMove.getPlayer().clonePlayer(copyState));
+
+            return last;
+        }
         Move[] moves = currentClone.getLegalMoves();
+        //Technically I believe this should be before maxdepth to find mates or stalemates at the final depth but in practice it slows down the algo massively and means reduced depth being used
         if (moves.length == 0) {
             if (checkForMate(currentClone, copyState)) { //mate
                 latestMove.getPlayer().setScore(1000000.0); //Changed from max value to one million to ensure loop works properly, still far larger than any game state could otherwise produce.
@@ -82,14 +90,7 @@ public class Minmax implements Engine {
             }
             return latestMove;
         }
-        if (depth == maxdepth) {
-            currentClone.updatePlayer();
-            last.setPlayer(latestMove.getPlayer().clonePlayer(copyState));
 
-            return last;
-        }
-
-        
         Move[] bestMoves = new Move[moves.length];
         Integer bmcount = 0;
         if (currentPlayer.getColor() == maxplayer.getColor()) {
@@ -97,7 +98,7 @@ public class Minmax implements Engine {
             for (int i = 0; i < moves.length; i++) {
                 Player minimizing = opponent.clonePlayer(copyState);
                 Move currentMove = moves[i].cloneMove(copyState);
-               
+
                 currentMove.setPlayer(currentClone);
                 Double moveScore;
                 Move oMove = minimax(copyState, depth + 1, minimizing, currentMove);
@@ -106,7 +107,7 @@ public class Minmax implements Engine {
                     moveScore = oMove.getPlayer().getScore();
                 } else {
                     moveScore = oMove.getPlayer().getScore();
-                    
+
                 }
                 if (moveScore > maxScore) {
                     maxScore = moveScore;

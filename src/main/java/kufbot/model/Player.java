@@ -129,11 +129,6 @@ public class Player {
             //All the required variables are copied so the internal state stays in tact.
             Square[][] stateToCheck = Board.copyBoardstate(this.boardstate);
 
-            Integer cr = current.getCurrentSquare().getRank() - 1;
-            Integer cf = current.getCurrentSquare().getFile() - 1;
-            Integer dr = current.getDestinationSquare().getRank() - 1;
-            Integer df = current.getDestinationSquare().getFile() - 1;
-
             Move moveToCheck = current.cloneMove(stateToCheck);
 
             moveToCheck.execute();

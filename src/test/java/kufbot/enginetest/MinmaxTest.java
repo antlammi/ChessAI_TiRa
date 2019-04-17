@@ -290,7 +290,7 @@ public class MinmaxTest {
 
     }
     @Test
-    public void findsMateInOne(){
+    public void findsMateInOneScenario1(){
         /*
         24: 
 e8f8
@@ -333,6 +333,50 @@ g1e2
 
 Finding the move took 29272 milliseconds.
         */
+        
+    
+    }
+    @Test
+    public void findsHangingQueenScenario1(){
+     /*5: 
+d8h4
+| A  | B  | C  | D  | E  | F  | G  | H  |
+| BR | BKN|    |    | BK |    | BKN| BR | 8
+
+| BP | BP | BP |    |    | BP | BP | BP | 7
+
+|    |    |    |    |    |    |    |    | 6
+
+|    |    | BB | BP | WP | BB |    |    | 5
+
+|    |    |    |    |    | WB |    | BQ | 4
+
+|    |    | WKN|    |    | WKN|    |    | 3
+
+| WP | WP | WP |    | WP | WP | WP | WP | 2
+
+| WR |    |    | WQ | WK | WB |    | WR | 1
+
+Finding the move took 1018 milliseconds.
+6: 
+g2g4
+| A  | B  | C  | D  | E  | F  | G  | H  |
+| BR | BKN|    |    | BK |    | BKN| BR | 8
+
+| BP | BP | BP |    |    | BP | BP | BP | 7
+
+|    |    |    |    |    |    |    |    | 6
+
+|    |    | BB | BP | WP | BB |    |    | 5
+
+|    |    |    |    |    | WB | WP | BQ | 4
+
+|    |    | WKN|    |    | WKN|    |    | 3
+
+| WP | WP | WP |    | WP | WP |    | WP | 2
+
+| WR |    |    | WQ | WK | WB |    | WR | 1
+*/   
     }
     @Test
     public void findsCastlingMoveScenario1() { //Move with castling is mate in one so if the engine is capable of finding it, it will.
