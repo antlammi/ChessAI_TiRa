@@ -73,3 +73,6 @@
 |15.4.|3h      |More bug hunting for Minmax|
 |16.4.|2.5h    |Bug hunting and testing Minmax, adding possibility of dynamically changing maximum depth|
 |16.4.|3h      |(Finally) added castling, fixed a bug where updated piece values were not used in minmax, more tests|
+|17.4.|1h      |Tinkering with piece values to fix strange behavior|
+|17.4.|0.5h    |Found and fixed bug in Knight movement, added test for it|
+|17.4.|1.5h    |Implemented minmaxAB and added tests for it (mostly same scenarios as minmax and some performance tests)|
