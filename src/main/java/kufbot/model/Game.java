@@ -36,8 +36,8 @@ public class Game {
             this.playerW = new HighestScore(w, b, state);
         } else if (engineTypeW == "Minmax") {
             this.playerW = new Minmax(w, b, state, initialdepth, dynamicdepth);
-        } else if (engineTypeW == "MinmaxAB"){
-            this.playerW = new MinmaxAB(w,b,state,initialdepth,dynamicdepth);
+        } else if (engineTypeW == "MinmaxAB") {
+            this.playerW = new MinmaxAB(w, b, state, initialdepth, dynamicdepth);
         }
 
         if (engineTypeB == "Random") {
@@ -46,8 +46,8 @@ public class Game {
             this.playerB = new HighestScore(b, w, state);
         } else if (engineTypeB == "Minmax") {
             this.playerB = new Minmax(b, w, state, initialdepth, dynamicdepth);
-        } else if (engineTypeB == "MinmaxAB"){
-            this.playerB = new MinmaxAB(b,w,state,initialdepth,dynamicdepth);
+        } else if (engineTypeB == "MinmaxAB") {
+            this.playerB = new MinmaxAB(b, w, state, initialdepth, dynamicdepth);
         }
 
         this.fastSim = fastSim;
@@ -55,7 +55,6 @@ public class Game {
     }
 
     public void run() throws InterruptedException {
-
         outcome = "";
         Integer totalMoves = 0;
         for (int i = 0; i < 150; i++) {  //Chess game for 150 moves. No repetition draws, 50 move rule or insufficient material checks
