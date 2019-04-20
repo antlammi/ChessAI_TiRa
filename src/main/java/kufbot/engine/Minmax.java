@@ -120,12 +120,14 @@ public class Minmax implements Engine {
                     moveScore = oMove.getPlayer().getScore();
 
                 }
-                if (moveScore > maxScore) {
+                Double scoreDifferential = moveScore - maxScore;
+
+                if (moveScore > maxScore && scoreDifferential > 0.0025) {  //if the move is better by more than 0.005
                     maxScore = moveScore;
                     bmcount = 0;
                     bestMoves = new Move[moves.length];
                     bestMoves[bmcount] = currentMove;
-                } else if (moveScore == maxScore) {
+                } else if (scoreDifferential <= 0.0025 && scoreDifferential >= -0.0025) {//if the moves are practically equal
                     bmcount++;
                     bestMoves[bmcount] = currentMove;
                 }
@@ -155,13 +157,13 @@ public class Minmax implements Engine {
                     moveScore = -oMove.getPlayer().getScore();
                     oMove.rollback();
                 }
-
-                if (moveScore < minScore) {
+                Double scoreDifferential = moveScore - minScore;
+                if (moveScore < minScore && scoreDifferential < -0.0025) { //if the move is better by more than 0.0025
                     minScore = moveScore;
                     bmcount = 0;
                     bestMoves = new Move[moves.length];
                     bestMoves[bmcount] = currentMove;
-                } else if (moveScore == minScore) {
+                } else if (scoreDifferential >= -0.0025 && scoreDifferential <= 0.0025) {
                     bmcount++;
                     bestMoves[bmcount] = currentMove;
                 }

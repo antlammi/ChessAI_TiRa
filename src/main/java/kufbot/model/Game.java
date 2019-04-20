@@ -9,6 +9,7 @@ import kufbot.engine.Random;
 import java.util.concurrent.TimeUnit;
 import kufbot.engine.Engine;
 import kufbot.engine.HighestScore;
+import kufbot.engine.Human;
 import kufbot.engine.Minmax;
 import kufbot.engine.MinmaxAB;
 
@@ -30,24 +31,30 @@ public class Game {
 
         Player w = new Player(Color.WHITE, state);
         Player b = new Player(Color.BLACK, state);
-        if (engineTypeW == "Random") {
+        if (engineTypeW.equals("Random")) {
             this.playerW = new Random(w, state);
-        } else if (engineTypeW == "HighestScore") {
+        } else if (engineTypeW.equals("HighestScore")) {
             this.playerW = new HighestScore(w, b, state);
-        } else if (engineTypeW == "Minmax") {
+        } else if (engineTypeW.equals("Minmax")) {
             this.playerW = new Minmax(w, b, state, initialdepth, dynamicdepth);
-        } else if (engineTypeW == "MinmaxAB") {
+        } else if (engineTypeW.equals("MinmaxAB")) {
             this.playerW = new MinmaxAB(w, b, state, initialdepth, dynamicdepth);
+        } else if (engineTypeW.equals("Human")){
+            this.playerW = new Human(w, state);
+            Board.printStateGraphic(state);
         }
 
-        if (engineTypeB == "Random") {
+        if (engineTypeB.equals("Random")) {
             this.playerB = new Random(b, state);
-        } else if (engineTypeB == "HighestScore") {
+        } else if (engineTypeB.equals("HighestScore")) {
             this.playerB = new HighestScore(b, w, state);
-        } else if (engineTypeB == "Minmax") {
+        } else if (engineTypeB.equals("Minmax")) {
             this.playerB = new Minmax(b, w, state, initialdepth, dynamicdepth);
-        } else if (engineTypeB == "MinmaxAB") {
+        } else if (engineTypeB.equals("MinmaxAB")) {
             this.playerB = new MinmaxAB(b, w, state, initialdepth, dynamicdepth);
+        } else if (engineTypeB.equals("Human")){
+             this.playerB = new Human(b, state);
+             Board.printStateGraphic(state);
         }
 
         this.fastSim = fastSim;

@@ -5,10 +5,13 @@
  */
 package kufbot.connection;
 
+import kufbot.model.Move;
+
 /**
  *
  * @author antlammi
  */
-public class Output {
+public class Connection {
+
     
 }

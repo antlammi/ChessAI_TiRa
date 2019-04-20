@@ -121,7 +121,7 @@ public class MinmaxAB implements Engine {
                 }
                 Double scoreDifferential = moveScore - maxScore;
 
-                if (moveScore > maxScore && scoreDifferential > 0.0025) {  //if the move is better by more than 0.0025
+                if (moveScore > maxScore && scoreDifferential > 0.0025) {  //if the move is better by more than 0.01
                     maxScore = moveScore;
                     bmcount = 0;
                     bestMoves = new Move[moves.length];
@@ -163,7 +163,7 @@ public class MinmaxAB implements Engine {
                     oMove.rollback();
                 }
                 Double scoreDifferential = moveScore - minScore;
-                if (moveScore < minScore && scoreDifferential < -0.0025) { //if the move is better by more than 0.0025
+                if (moveScore < minScore && scoreDifferential < -0.0025) { //if the move is better by more than 0.025, increasing this number increases variance in moves
                     minScore = moveScore;
                     bmcount = 0;
                     bestMoves = new Move[moves.length];

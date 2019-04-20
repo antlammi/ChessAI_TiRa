@@ -203,7 +203,6 @@ public class MinmaxABTest {
         Player b = new Player(Color.BLACK, state);
 
         Minmax min = new Minmax(w, b, state, 1, false);
-        Board.printStateGraphic(state);
 
         String[] incorrectMoves = {"d2a5", "d2b4", "d2b5", "d2h6"};
         Boolean incorrectMoveMade = false;
@@ -218,6 +217,118 @@ public class MinmaxABTest {
 
         }
         assertTrue(incorrectMoveMade);
+    }
+
+    @Test
+    public void doesNotHangQueenScenario3Depth3() { //fringe scenario where queen was hang, did not re-occur. Lowered variance in minmaxAB should fix.
+        Piece p = state[1][6].getPiece();
+        state[1][6].leave();
+        p.setSquare(state[2][6]);
+        state[2][6].enter(p);
+
+        p = state[0][5].getPiece();
+        state[0][5].leave();
+        p.setSquare(state[1][6]);
+        state[1][6].enter(p);
+
+        p = state[1][3].getPiece();
+        state[1][3].leave();
+        p.setSquare(state[2][3]);
+        state[2][3].enter(p);
+
+        p = state[0][2].getPiece();
+        state[0][2].leave();
+        p.setSquare(state[1][3]);
+        state[1][3].enter(p);
+
+        p = state[0][1].getPiece();
+        state[0][1].leave();
+        p.setSquare(state[2][2]);
+        state[2][2].enter(p);
+
+        p = state[0][6].getPiece();
+        state[0][6].leave();
+        p.setSquare(state[1][4]);
+        state[1][4].enter(p);
+
+        p = state[0][4].getPiece();
+        state[0][4].leave();
+        p.setSquare(state[0][6]);
+        state[0][6].enter(p);
+
+        p = state[0][7].getPiece();
+        state[0][7].leave();
+        p.setSquare(state[0][5]);
+        state[0][5].enter(p);
+
+        p = state[7][6].getPiece();
+        state[7][6].leave();
+        p.setSquare(state[4][2]);
+        state[4][2].enter(p);
+
+        p = state[7][2].getPiece();
+        state[7][2].leave();
+        p.setSquare(state[3][6]);
+        state[3][6].enter(p);
+
+        p = state[7][3].getPiece();
+        state[7][3].leave();
+        p.setSquare(state[5][3]);
+        state[5][3].enter(p);
+
+        state[6][3].leave();
+        state[1][2].leave();
+
+        playerW.update();
+        playerB.update();
+        playerB.setMaxDepth(3);
+        for (int i = 0; i < 3; i++) {
+            Move move = playerB.getMove();
+            assertNotEquals("d6f4",move.toString());
+        }
+    }
+
+    @Test
+    public void doesNotHangQueenScenario2Depth4() {
+        /*Finding the move took 29395 milliseconds.
+7: 
+h1g1
+| A  | B  | C  | D  | E  | F  | G  | H  |
+| BR |    | BB |    | BK |    | BKN| BR | 8
+
+| BP | BP | BP | BP |    | BP | BP | BP | 7
+
+|    |    |    |    |    |    |    |    | 6
+
+|    |    | BB |    | BP |    |    |    | 5
+
+|    | BKN|    |    |    |    |    |    | 4
+
+|    |    |    |    | WP | BQ | WP | WP | 3
+
+| WP | WP | WP | WP | WKN| WP |    |    | 2
+
+| WR | WKN| WB | WQ | WK | WB | WR |    | 1
+
+Finding the move took 62053 milliseconds.
+7: 
+f3g4
+| A  | B  | C  | D  | E  | F  | G  | H  |
+| BR |    | BB |    | BK |    | BKN| BR | 8
+
+| BP | BP | BP | BP |    | BP | BP | BP | 7
+
+|    |    |    |    |    |    |    |    | 6
+
+|    |    | BB |    | BP |    |    |    | 5
+
+|    | BKN|    |    |    |    | BQ |    | 4
+
+|    |    |    |    | WP |    | WP | WP | 3
+
+| WP | WP | WP | WP | WKN| WP |    |    | 2
+
+| WR | WKN| WB | WQ | WK | WB | WR |    | 1*/
     }
 
     @Test
@@ -558,6 +669,29 @@ public class MinmaxABTest {
         assertEquals("b7a6", move.toString());
     }
 
+    /* @Test
+    public void findMateInOneScenario2(){
+Move made: 
+21: e2c4 
+I assume that the mate in one was not found because a forced mate was found as a followup to the move
+e2c4 -- does this even need to be fixed?
+| A  | B  | C  | D  | E  | F  | G  | H  |
+|    |    |    |    |    | BR | BK |    | 8
+
+|    |    |    |    |    |    |    | BP | 7
+
+|    |    |    |    |    |    |    |    | 6
+
+| BP |    |    |    | WQ | WKN| BP |    | 5
+
+|    | BP |    | WP |    |    |    |    | 4
+
+|    |    |    |    | WP |    |    |    | 3
+
+| WP | WP | WP |    | WB | WK | WP | WP | 2
+
+| WR |    |    |    |    |    |    | WR | 1
+}*/
     @Test
     public void doesNotFindMateInTwoScenario1Depth2() {
         Rook wr = (Rook) state[0][7].getPiece();
@@ -697,6 +831,7 @@ public class MinmaxABTest {
         assert (timeElapsedMinAB < timeElapsedMin);
 
     }
+
     /* Commented out by default as running it takes up to two minutes currently.
     @Test
     public void findsOpeningMoveFasterThanMinmaxDepth4() {
