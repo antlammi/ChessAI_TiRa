@@ -78,3 +78,4 @@
 |17.4.|1.5h    |Implemented minmaxAB and added tests for it (mostly same scenarios as minmax and some performance tests)|
 |17.4.|1h      |Changing minmax and minmaxAB to check for mates on final depth, more tests|
 |17.4.|1h      |New test scenario for minmaxAB|
+|20.4.|2h      |Human.java class added to make playing vs engine possible, new tests|
