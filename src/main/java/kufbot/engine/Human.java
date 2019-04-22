@@ -52,7 +52,7 @@ public class Human implements Engine {
     }
 
     private Move convertToMove(String input) {
-        if (input.length() > 5 || input.length() < 4) {
+        if (input.length() > 4 || input.length() < 4) {
             return null;
         }
         Integer[] movefiles = new Integer[2];

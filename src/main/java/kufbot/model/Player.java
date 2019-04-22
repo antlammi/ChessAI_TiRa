@@ -107,7 +107,11 @@ public class Player {
 
     public Move[] getLegalMoves() { //checks possible moves for king being in check after
         Move[] moves = getPossibleMoves();
-        Move[] legalMoves = new Move[moves.length];
+        Move[][] legalMoves = new Move[2][];
+        legalMoves[0] = new Move[moves.length]; //Low priority moves
+        legalMoves[1] = new Move[moves.length]; //High priority moves
+        Integer capturecount = 0;
+        Integer emptycount = 0;
         Integer legalcount = 0;
         for (int i = 0; i < moves.length; i++) {
             Integer kr = this.kingRank;
@@ -136,18 +140,24 @@ public class Player {
             King king = (King) stateToCheck[kr][kf].getPiece();
             if (!king.isInCheck(stateToCheck[kr][kf])) {
                 if (current.getDestinationSquare().isEmpty()) {
-                    legalMoves[legalcount] = moves[i];
+                    legalMoves[0][emptycount] = moves[i];
+                    emptycount++;
                     legalcount++;
                 } else if (!current.getDestinationSquare().getPiece().toString().contains("KING")) { //Kings are never captured in a game of chess.
-                    legalMoves[legalcount] = moves[i];
+                    legalMoves[1][capturecount] = moves[i];
+                    capturecount++;
                     legalcount++;
                 }
             }
 
         }
+        //Moves including captures are added to the front of array, improves performance of minmaxAB
         Move[] movesToReturn = new Move[legalcount];
-        for (int i = 0; i < legalcount; i++) {
-            movesToReturn[i] = legalMoves[i];
+        for (int i=0; i<capturecount; i++){
+            movesToReturn[i] = legalMoves[1][i];
+        }
+        for (int i = capturecount; i < legalcount; i++) {
+            movesToReturn[i] = legalMoves[0][i-capturecount];
         }
         return movesToReturn;
     }
