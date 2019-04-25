@@ -79,3 +79,4 @@
 |17.4.|1h      |Changing minmax and minmaxAB to check for mates on final depth, more tests|
 |17.4.|1h      |New test scenario for minmaxAB|
 |20.4.|2h      |Human.java class added to make playing vs engine possible, new tests|
+|22.4.|2H      |Basic move ordering implemented (moves with captures are looked at first)|
