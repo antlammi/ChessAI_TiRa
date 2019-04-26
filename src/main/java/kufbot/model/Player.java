@@ -107,10 +107,12 @@ public class Player {
 
     public Move[] getLegalMoves() { //checks possible moves for king being in check after
         Move[] moves = getPossibleMoves();
-        Move[][] legalMoves = new Move[2][];
+        Move[][] legalMoves = new Move[3][];
         legalMoves[0] = new Move[moves.length]; //Low priority moves
-        legalMoves[1] = new Move[moves.length]; //High priority moves
+        legalMoves[1] = new Move[moves.length]; //Medium priority moves
+        legalMoves[2] = new Move[moves.length]; //High priority moves
         Integer capturecount = 0;
+        Integer pawncapturecount = 0;
         Integer emptycount = 0;
         Integer legalcount = 0;
         for (int i = 0; i < moves.length; i++) {
@@ -143,21 +145,27 @@ public class Player {
                     legalMoves[0][emptycount] = moves[i];
                     emptycount++;
                     legalcount++;
+                } else if (current.getDestinationSquare().getPiece().toString().contains("PAWN")){
+                    legalMoves[1][pawncapturecount] = moves[i];
+                    pawncapturecount++;
+                    legalcount++;
                 } else if (!current.getDestinationSquare().getPiece().toString().contains("KING")) { //Kings are never captured in a game of chess.
-                    legalMoves[1][capturecount] = moves[i];
+                    legalMoves[2][capturecount] = moves[i];
                     capturecount++;
                     legalcount++;
                 }
             }
-
         }
-        //Moves including captures are added to the front of array, improves performance of minmaxAB
+        //Moves including captures are added to the front of array, pawn captures in middle improves performance of minmaxAB
         Move[] movesToReturn = new Move[legalcount];
         for (int i=0; i<capturecount; i++){
-            movesToReturn[i] = legalMoves[1][i];
+            movesToReturn[i] = legalMoves[2][i];
         }
-        for (int i = capturecount; i < legalcount; i++) {
-            movesToReturn[i] = legalMoves[0][i-capturecount];
+        for (int i= capturecount; i<(capturecount+pawncapturecount); i++){
+            movesToReturn[i] = legalMoves[1][i-capturecount];
+        }
+        for (int i = (capturecount+pawncapturecount); i < legalcount; i++) {
+            movesToReturn[i] = legalMoves[0][i-(pawncapturecount +capturecount)];
         }
         return movesToReturn;
     }

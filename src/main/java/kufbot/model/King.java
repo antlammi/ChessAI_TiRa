@@ -65,7 +65,7 @@ public class King implements Piece {
         }
     }
 
-    public Boolean isInCheck(Square toCheck) { //Split into two to allow other classes to use it but fixing a 
+    public Boolean isInCheck(Square toCheck) { 
         Square[][] copystate = Board.copyBoardstate(boardstate);
         Move copymove = new Move(copystate);
 
@@ -86,14 +86,14 @@ public class King implements Piece {
                             for (int i = -1; i <= 1; i++) {
                                 if (kingLocation.getRank() - 1 == r + i) {
                                     if (kingLocation.getFile() - 1 == f - 1 || kingLocation.getFile() - 1 == f
-                                            || kingLocation.getFile() - 1 == f + 1) { //not sure this actually works yet, to be tested
+                                            || kingLocation.getFile() - 1 == f + 1) {
                                         return true;
                                     }
                                 }
                             }
 
                         } else {
-                            Move[] moves = location.getPiece().getLegalMoves(); //list of legal moves for the piece
+                            Move[] moves = location.getPiece().getLegalMoves(); //list of legal moves for opponents piece that is being looked at
 
                             for (int i = 0; i < moves.length; i++) {
                                 if (moves[i] == null) {

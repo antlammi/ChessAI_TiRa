@@ -220,7 +220,7 @@ public class MinmaxABTest {
     }
 
     @Test
-    public void doesNotHangQueenScenario3Depth3() { //fringe scenario where queen was hang, did not re-occur. Lowered variance in minmaxAB should fix.
+    public void doesNotHangQueenScenario3Depth3() { //fringe scenario where queen was hung, did not re-occur. Lowered variance in minmaxAB should fix.
         Piece p = state[1][6].getPiece();
         state[1][6].leave();
         p.setSquare(state[2][6]);
@@ -832,7 +832,7 @@ e2c4 -- does this even need to be fixed?
 
     }
 
-    /* Commented out by default as running it takes up to two minutes currently.
+    /* Commented out by default as running it takes too long (around two minutes) currently.
     @Test
     public void findsOpeningMoveFasterThanMinmaxDepth4() {
         Player w = new Player(Color.WHITE, state);
