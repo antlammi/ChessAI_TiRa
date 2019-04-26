@@ -1,1 +1,12 @@
+Viidennen viikon jälkeen asetin pääsiäisen opetustauon myötä tavoitteeksi saada projektin päätoiminnallisuuden valmiiksi. Mielestäni onnistuin tässä. Shakkiengine on toteutettu hyödyntäen Minmaxia Alpha-Beta Pruningilla, ja sitä vastaan on myös mahdollista pelata. Toki vain kömpelöllä tekstikäyttöliittymällä, mutta mahdollista kuitenkin. Ainakaan suuria bugeja ei pitäisi enää löytyä, ja model on lähes täydellinen.
 
+Käytin heti alkuun aika paljon aikaa projektin parissa, kun toteutin eri algoritmit Engine luokkaan. Näiden perustoteutus vaati aika paljon työtä, mutta toisaalta Alpha-Beta pruning oli aika helppo tehdä siinä vaiheessa, kun Minmax oli valmis.
+
+Testaus eteni lähinnä engine-luokkien debuggauksen tarpeisiin. Käytännössä aina, kun tuli vastaan tilanne, jossa algoritmi valitsi oudon siirron, otin tilanteen talteen ja kirjoitin tilanteelle testin. Ongelmatilanteita riitti, joten uusia testejä tuli paljon. Suorituskykytestaus alkoi teoriassa myös. Osana MinmaxAB-luokan testejä vertaillaan sen toiminnan nopeutta naiviin Minmax-toteutukseen. Näitä tulee kuitenkin tehdä lisää, ja tulokset dokumentoida. 
+
+Sainkin jälleen palautetta dokumentaation niukkuudesta. Tämä on ihan totta, ja onkin tulevan viikon pääpainotteita. Ajattelin alunperin, että saisin jo tänään dokumentaatiota kuntoon, ja teinkin vähän dokumentaation eteen, mutta tämä siirtynee näillä näkymin tulevalle viikonlopulle.  
+
+Dokumentaation lisäksi projektissa riittää vielä tekemistä em. suorituskykytestauksen parissa, XBoard yhteyden toteutuksessa (joka itseasiassa pitäisi olla aika helppo toteuttaa, mahdollisesti tulossa jo viikonloppuna, luultavasti viimeistään ennen demoa), sekä toteutuksen optimoinnissa. Engine kyllä pelaa jo ihan kohtalaista shakkia, mutta itse pärjään sille vielä. Olisi mukavaa jos tämän saisi muutettua. Puute, jota en aio korjata on toiston tarkistusten puute (vaatisi jonkinlaisen siirtohistorian toteutuksen ja sen integroimisen algoritmeihin -- paljon työtä).
+
+### Kysymys
+Huomasin vertaisarvioitavan projektissa, että satunnaislukugenerointi oli toteutettu itse. Onko tämä suositeltavaa? Pääsääntöisesti tällä hetkellä kaikki tietorakenteet on itse toteutettu, mutta käytän Javan Random luokkaa yhtä hyvien siirtojen väliltä valitsemiseen (lähinnä, jotta enginen pelit itseään vastaan olisivat mielenkiintoisempia). Teoriassa tämä ei olisi hirveän suuri työ, mutta mielummin käyttäisin ajan muuhun, kun kyseessä on niin pieni osa sovelluksen toimintaa. Periaatteessa Engine jopa toimisi paremmin, jos tämän satunnaisuuden poistaisi kokonaan.
