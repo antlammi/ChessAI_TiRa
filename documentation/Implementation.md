@@ -2,14 +2,23 @@
 ### Model
 
 The model package is in charge of providing the engine with the rules of chess and providing it with a list of moves from which
-to choose the best ones. The classes contained within the package are mostly self explanatory, with different types of pieces 
-providing their own types of movement, the code for which is contained in the Move class. The board builds the playing field, 
-which is a two dimensional array of Squares, which in turn mainly provide their location and contain a Piece, and so on.
+to choose the best ones. 
 
+Board.java initiates the two dimensional array of *Squares*, which is the logic for the game board with the correct *Pieces* in their starting positions. It also contains methods for cloning and printing boardstates.
+
+Squares contain a Piece, and provide access to their location on the chess board. 
+
+Piece.java is an interface, which is implemented all the different types of Pieces, which have different rules for movement but are all located on a Square, have an individual value assigned to them, and provide an array of *Moves*. 
+
+Moves are the logic for a Move. All moves feature a starting Square (called current), a destination Square, and a Piece to move. When a Move is executed it also updates the Squares involved, and the Piece value for the Piece that was moved. Some Moves have special rules, that mean they function differently. The Move class also handles these.
+
+The Player.java class is in charge of one player in a chess game. It contains information about where the that Player's Pieces are located, and what Pieces remain. It also maintains the Score for the player, which is used by the Engine classes to determine which move is best. It's primary function, however is to provide an array of legal Moves to the Engine.
+
+The Game.java class handles an actual game of chess. This includes asking for Moves from Players and updating the Players statuses after each move. It also checks for mates after each move is made, and 
 ### Engine
 
 The engine package contains the logic for the chess engine itself, or how the engine chooses what it considers the best one 
-from a list of available moves. It has a few different classes, each of which is its own implementation of how to choose the best move. For now among these is the class enabling a human player to manually input moves.
+from a list of available moves. It contains the Engine.java interface, which is implemented by a few different classes, each of which is its own implementation of a chess engine. For now among these is the class enabling a human player to manually input moves.
 
 ### Connection
 
