@@ -54,13 +54,13 @@ public class MinmaxAB implements Engine {
         }
         long finalTime = System.currentTimeMillis();
         long timeTaken = finalTime - initialTime;
-        System.out.println("Finding the move took " + timeTaken + " milliseconds.");
+        //System.out.println("Finding the move took " + timeTaken + " milliseconds.");
         if (dynamicdepth == true) {
             if (timeTaken > 20000 && maxdepth < 7) {      //arbitrary cap
-                System.out.println("Decreasing maximum depth for " + maxplayer.getColor() + "...");
+                //System.out.println("Decreasing maximum depth for " + maxplayer.getColor() + "...");
                 this.maxdepth--;
             } else if (timeTaken < 1000 && maxdepth > 1) {
-                System.out.println("Increasing maximum depth for " + maxplayer.getColor() + "...");
+                //System.out.println("Increasing maximum depth for " + maxplayer.getColor() + "...");
                 this.maxdepth++;
             }
         }

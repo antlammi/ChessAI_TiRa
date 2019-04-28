@@ -116,7 +116,7 @@ public class MinmaxABTest {
     @Test
     public void doesNotHangQueenScenario1Depth2() { //Sees that by capturing pawn on a5 it will get captured by the rook
         Piece one = state[1][0].getPiece();
-        state[1][0].leave();
+        state[1][0  ].leave();
         state[3][0].enter(one);
         one.setSquare(state[3][0]);
 
