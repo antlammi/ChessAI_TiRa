@@ -81,5 +81,11 @@
 |20.4.|2h      |Human.java class added to make playing vs engine possible, new tests|
 |22.4.|2h      |Basic move ordering implemented (moves with captures are looked at first)|
 |26.4.|0.5h    |Additional level to move ordering|
-|26.4.|1.5h    |Documentation stuff|
-|Total|30h||
+|26.4.|2.5h    |Documentation stuff|
+|Total|31h||
+
+## Week 7
+|Date |Duration|Task|
+|-----|--------|----|
+|28.4 |4.5h    |Work on XBoard connection, not yet finished|
+
