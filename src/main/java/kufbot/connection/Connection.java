@@ -12,6 +12,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import kufbot.engine.MinmaxAB;
 import kufbot.model.Move;
 import kufbot.model.*;
@@ -32,12 +35,13 @@ public class Connection {
 
     public Connection() throws IOException {
         Board board = new Board();
-        state = board.getBoardState();
-        this.w = new Player(Color.WHITE, state);
-        this.b = new Player(Color.BLACK, state);
-        engine = new MinmaxAB(b, w, state, 2, true);
+        this.state = board.getBoardState();
+        this.w = new Player(Color.WHITE, this.state);
+        this.b = new Player(Color.BLACK, this.state);
+        engine = new MinmaxAB(b, w, this.state, 3, false);
         this.in = new BufferedReader(new InputStreamReader(System.in));
         this.response = new PrintWriter(System.out);
+
         runXBoard();
 
     }
@@ -62,91 +66,57 @@ public class Connection {
             }
 
         }
+        Move enginemove = null;
+        Integer i = 0;
+        String command = "";
         while (true) {
 
-            String command = "?";
+            command = input.nextLine();
             try {
-                command = this.in.readLine();
-           
-            } catch (Exception e) {
-            }
+                if (checkForMove(command)) {
+                    i++;
+                    if (i == 2 && command.length() == 4) {
+                        Move debug = convertToMove(command.substring(0,4), this.w);
+                        if (debug == null) {
+                            response.write("move d2d4\n");
+                            response.flush();
 
-            if (command.equals("quit")) {
-                break;
-            } else if (command.startsWith("sd")) {
-                //do nothing for now
-            } else if (command.startsWith("st")) {
-                //do nothing for now
-            } else if (command.startsWith("variant")) {
-                //do nothing for now
-            } else if (command.startsWith("force")) {
-                // do nothing for now
-            } else if (command.startsWith("go")) {
-                //do nothing for now
-            } else if (command.startsWith("level")) {
-                //do nothing for now
-            } else if (command.startsWith("time")) {
-                //do nothing for now
-            } else if (command.startsWith("otim")) {
-                //do nothing for now
-            } else if (command.startsWith("draw")) {
-                //do nothing for now
-            } else if (command.startsWith("result")) {
-                //do nothing for now
-            } else if (command.startsWith("hint")) {
-                //do nothing for now
-            } else if (command.startsWith("white")) {
-                //do nothing for now
-            } else if (command.startsWith("black")) {
-                //do nothing for now
-            } else if (command.startsWith("?")) {
-                //do nothing for now
-            } else if (command.startsWith("edit")) {
-                //do nothing for now
-            } else if (command.startsWith("bk")) {
-                //do nothing for now
-            } else if (command.startsWith("undo")) {
-                //do nothing for now
-            } else if (command.startsWith("remove")) {
-                //do nothing for now
-            } else if (command.startsWith("hard")) {
-                //do nothing for now
-            } else if (command.startsWith("easy")) {
-                //do nothing for now
-            } else if (command.startsWith("post")) {
-                //do nothing for now
-            } else if (command.startsWith("nopost")) {
-                //do nothing for now
-            } else if (command.startsWith("name")) {
-                //do nothing for now
-            } else if (command.startsWith("rating")) {
-                //do nothing for now
-            } else if (command.startsWith("computer")) {
-                //do nothing for now
-            } else if (command.startsWith("analyze")) {
+                        } else {
+                            response.write("move d2d3\n");
+                            response.flush();
+                        }
+                        
+                        
+                    }
+                    Move move = convertToMove(command.substring(0, 4), w);
+                    if (move != null) {
+                        move.execute();
+                        this.w.updatePlayer();
+                        engine.update();
+                        enginemove = engine.getMove();
+                        enginemove.execute();
+                        this.w.updatePlayer();
+                        engine.update();
 
-            } else {
-
-                Move move = convertToMove(command.substring(0, 4), w);
-                if (move != null) {
-                    move.execute();
-                    w.updatePlayer();
-                    b.updatePlayer();
-
-                    Move enginemove = engine.getMove();
-                    enginemove.execute();
-                    w.updatePlayer();
-                    b.updatePlayer();
-
-                    response.write("move " + enginemove + "\n");
-                    response.flush();
+                        response.write("move " + enginemove + "\n");
+                        response.flush();
+                    }
 
                 }
-
+            } catch (Exception e) {
             }
 
         }
 
+    }
+
+    private Boolean checkForMove(String command) {
+        Integer r1 = Integer.parseInt("" + command.charAt(1));
+        Integer r2 = Integer.parseInt("" + command.charAt(3));
+        if ((r1 > 0 && r1 < 9) && (r2 > 0 && r2 < 9)) {
+            return true;
+        }
+        return false;
     }
 
     private Move convertToMove(String input, Player player) {
@@ -159,7 +129,6 @@ public class Connection {
         Integer[] moveranks = new Integer[2];
         Integer rc = 0;
 
-        Boolean promoteToQueen = false;
         for (int i = 0; i < input.length() && i < 6; i++) {
             String c = input.substring(i, i + 1);
             if (i % 2 == 0) {
@@ -183,18 +152,17 @@ public class Connection {
                     return null;
                 }
             } else {
-                promoteToQueen = true;
             }
         }
-        Square current = state[moveranks[0]][movefiles[0]];
-        Square destination = state[moveranks[1]][movefiles[1]];
+        Square current = this.state[moveranks[0]][movefiles[0]];
+        Square destination = this.state[moveranks[1]][movefiles[1]];
         Piece piece;
         if (!current.isEmpty()) {
             piece = current.getPiece();
         } else {
             return null;
         }
-        Move move = new Move(state);
+        Move move = new Move(this.state);
         Move[] legalmoves = player.getLegalMoves();
 
         if (piece.toString().contains("KING")) {

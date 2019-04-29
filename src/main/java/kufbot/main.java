@@ -20,12 +20,16 @@ public class main {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws InterruptedException, IOException {
+       
+       
+        
         Scanner scanner = new Scanner(System.in);
         while(true){
             String input = scanner.nextLine();
             if (input.equals("xboard")){
                 System.out.append("\n");
                 System.out.flush();
+         
                 Connection xboard = new Connection();
                 break;
             } else if (input.equals("game")) {
