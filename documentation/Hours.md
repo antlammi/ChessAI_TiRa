@@ -87,5 +87,5 @@
 ## Week 7
 |Date |Duration|Task|
 |-----|--------|----|
-|28.4 |4.5h    |Work on XBoard connection, not yet finished|
-
+|28.4 |4.5h    |Work on XBoard connection|
+|29.4.|4h      |Debugging bizarre issues with XBoard|
