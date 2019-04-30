@@ -89,3 +89,4 @@
 |-----|--------|----|
 |28.4 |4.5h    |Work on XBoard connection|
 |29.4.|4h      |Debugging bizarre issues with XBoard|
+|30.4.|1h      |Close to locating problem, appears to be caused by something in Player.getLegalMoves() but more work to do still..|
