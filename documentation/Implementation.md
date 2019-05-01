@@ -69,5 +69,6 @@ variable called minscore)
 - if the score is > maxScore (or < minScore for the opponent's moves) minimax saves the move in a variable 
 - Next minmaxAB checks to see if moveScore > alpha, in which case the value of alpha is now moveScore, followed by a check to 
 see if alpha > beta the loop is broken and no further moves need to be investigated
-- The best move is returned by minimaxAB
+- The best move is returned by minimaxAB    
         
+(Teen tästä sekvenssidiagrammin tulevina päivinä)
