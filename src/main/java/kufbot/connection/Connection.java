@@ -37,7 +37,7 @@ public class Connection {
         this.state = board.getBoardState();
         this.w = new Player(Color.WHITE, this.state);
         this.b = new Player(Color.BLACK, this.state);
-        engine = new MinmaxAB(b, w, this.state, 2, false);
+        engine = new MinmaxAB(b, w, this.state, 4, false);
 
         this.response = new PrintWriter(System.out);
 
@@ -74,17 +74,23 @@ public class Connection {
 
             try {
                 if (checkForMove(command)) {
-                  
-                    Move[] moves = w.getLegalMoves(); //THIS IS THE LINE CAUSING THE PROBLEMS, POSSIBLY SOMETHING TO DO WITH CHANGES TO ORDERING?
-                    if (command.equals("d2d4")){
-                        response.write("move d2d4\n");
-                        response.flush();
+                    
+                    if (command.equals("e1g1")) {
+                        command = "e1h1";
+                    } else if (command.equals("e1c1")) {
+                        command = ("e1a1");
+                    } else if (command.equals("e8g8")) {
+                        command = "e8h8";
+                    } else if (command.equals("e8c8")) {
+                        command = "e8a8";
                     }
+                    
+                    if (command.length() == 5){
+                        command = command.substring(0,4);
+                    }
+                    Move[] moves = w.getLegalMoves();
                     Move move = convertToMove(command, moves);
-                    if (command.equals("d2d4")) {
-                        response.write("move a7a5\n");
-                        response.flush();
-                    }
+
                     if (move != null) {
                         move.execute();
                         this.w.updatePlayer();
@@ -96,10 +102,22 @@ public class Connection {
                         this.w.updatePlayer();
                         this.b.updatePlayer();
 
-                        response.write("move " + enginemove + "\n");
-                        response.flush();
+                        if (enginemove.getCastle()) {
+                            String output = adjustForCastlingSyntax(enginemove.toString());
+                            response.write("move " + output + "\n");
+                            response.flush();
+                        } else if (checkForPawnPromotion(enginemove)){
+                            String output = enginemove.toString();
+                            output = output + "q";
+                            response.write("move " + enginemove + "\n");
+                            response.flush();
+                            
+                        } else {
+                            response.write("move " + enginemove + "\n");
+                            response.flush();
+                        }
                     } else {
-                        response.write("move a7a5\n");
+                        response.write("Illegal move: " + command + "\n");
                         response.flush();
                     }
 
@@ -109,6 +127,24 @@ public class Connection {
 
         }
 
+    }
+    private Boolean checkForPawnPromotion(Move enginemove){
+        Boolean result =(enginemove.getPiece().toString().contains("PAWN") 
+                && (enginemove.getDestinationSquare().getRank() == 1||enginemove.getDestinationSquare().getRank() == 8));
+        return result;
+    }
+    private String adjustForCastlingSyntax(String enginemove) {
+        String output = "";
+        if (enginemove.equals("e1h1")) {
+            output = "e1g1";
+        } else if (enginemove.equals("e1a1")) {
+            output = "e1c1";
+        } else if (enginemove.equals("e8h8")) {
+            output = "e8g8";
+        } else if (enginemove.equals("e8a8")) {
+            output = "e8c8";
+        }
+        return output;
     }
 
     private Boolean checkForMove(String command) {
@@ -133,8 +169,6 @@ public class Connection {
 
     private Move convertToMove(String input, Move[] legalmoves) {
         if (input.length() > 4 || input.length() < 4) {
-            response.write("move " + input + "\n");
-            response.flush();
             return null;
         }
         Integer[] movefiles = new Integer[2];
@@ -154,8 +188,6 @@ public class Connection {
                     }
                 }
                 if (movefiles[fc] == null) {
-                    response.write("move " + input + "\n");
-                    response.flush();
                     return null;
                 }
                 fc++;
@@ -165,8 +197,6 @@ public class Connection {
                     moveranks[rc] = rank;
                     rc++;
                 } else {
-                    response.write("move " + input + "\n");
-                    response.flush();
                     return null;
                 }
             } else {
@@ -178,15 +208,11 @@ public class Connection {
         if (!current.isEmpty()) {
             piece = current.getPiece();
         } else {
-            response.write("move " + input + "\n");
-            response.flush();
             return null;
         }
 
         Move move = new Move(this.state);
 
-        response.write("move " + input + "\n");
-        response.flush();
         if (piece.toString().contains("KING")) {
             if (input.equals("e1h1") || input.equals("e8h8") || input.equals("e1a1") || input.equals("e8a8")) {
                 if (!destination.isEmpty()) {
@@ -205,13 +231,9 @@ public class Connection {
                             }
                         }
                     } else {
-                        response.write("move " + input + "\n");
-                        response.flush();
                         return null;
                     }
                 } else {
-                    response.write("move " + input + "\n");
-                    response.flush();
                     return null;
                 }
             }
@@ -221,8 +243,6 @@ public class Connection {
         for (int i = 0; i < legalmoves.length; i++) {
             if (legalmoves[i].toString().equals(move.toString())) {
                 if (legalmoves[i] == null) {
-                    response.write("move " + input + "\n");
-                    response.flush();
                     break;
                 }
                 return move;

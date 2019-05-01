@@ -5,7 +5,7 @@
  */
 package kufbot.model;
 
-import java.util.ArrayList;
+
 
 /**
  *
@@ -18,13 +18,13 @@ public class Bishop implements Piece {
     private Square[][] boardstate;
     private final Double baseValue;
     private Double value;
-    
     public Bishop(Color color, Square initial, Square[][] boardstate) {
         this.color = color;
         this.current = initial;
         this.boardstate = boardstate;
         this.baseValue = 3.0;
         this.value = baseValue; 
+        
     }
 
     @Override

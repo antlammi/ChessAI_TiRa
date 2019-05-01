@@ -5,6 +5,8 @@
  */
 package kufbot.model;
 
+import java.io.PrintWriter;
+
 /**
  *
  * @author antlammi
@@ -145,7 +147,7 @@ public class Player {
                     legalMoves[0][emptycount] = moves[i];
                     emptycount++;
                     legalcount++;
-                } else if (current.getDestinationSquare().getPiece().toString().contains("PAWN")){
+                } else if (current.getDestinationSquare().getPiece().toString().contains("PAWN")) {
                     legalMoves[1][pawncapturecount] = moves[i];
                     pawncapturecount++;
                     legalcount++;
@@ -156,16 +158,17 @@ public class Player {
                 }
             }
         }
+
         //Moves including captures are added to the front of array, pawn captures in middle improves performance of minmaxAB
         Move[] movesToReturn = new Move[legalcount];
-        for (int i=0; i<capturecount; i++){
+        for (int i = 0; i < capturecount; i++) {
             movesToReturn[i] = legalMoves[2][i];
         }
-        for (int i= capturecount; i<(capturecount+pawncapturecount); i++){
-            movesToReturn[i] = legalMoves[1][i-capturecount];
+        for (int i = capturecount; i < (capturecount + pawncapturecount); i++) {
+            movesToReturn[i] = legalMoves[1][i - capturecount];
         }
-        for (int i = (capturecount+pawncapturecount); i < legalcount; i++) {
-            movesToReturn[i] = legalMoves[0][i-(pawncapturecount +capturecount)];
+        for (int i = (capturecount + pawncapturecount); i < legalcount; i++) {
+            movesToReturn[i] = legalMoves[0][i - (pawncapturecount + capturecount)];
         }
         return movesToReturn;
     }

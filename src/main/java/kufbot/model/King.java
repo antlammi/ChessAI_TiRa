@@ -5,6 +5,7 @@
  */
 package kufbot.model;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /**
@@ -26,7 +27,7 @@ public class King implements Piece {
         this.moved = false;
         this.current = initial;
         this.boardstate = boardstate;
-        this.baseValue = 15.0; 
+        this.baseValue = 15.0;
         this.value = baseValue;
         this.castled = false;
     }
@@ -55,7 +56,7 @@ public class King implements Piece {
 
     public void setCastled(Boolean castled) {
         this.castled = castled;
-        
+
         if (castled) {
             this.baseValue = 16.0; //probably too high but if it is too low the engine will almost never castle
             updateValue(0);
@@ -65,7 +66,7 @@ public class King implements Piece {
         }
     }
 
-    public Boolean isInCheck(Square toCheck) { 
+    public Boolean isInCheck(Square toCheck) {
         Square[][] copystate = Board.copyBoardstate(boardstate);
         Move copymove = new Move(copystate);
 
@@ -115,6 +116,8 @@ public class King implements Piece {
         }
         return false;
     }
+
+    
 
     @Override
     public Move[] getMoves() {
@@ -205,9 +208,11 @@ public class King implements Piece {
         }
         return legalMoves;
     }
-    public Boolean getCastled(){
+
+    public Boolean getCastled() {
         return this.castled;
     }
+
     @Override
     public void updateValue(Integer moves) {
         this.value = (baseValue + (1.0 * moves / 100));

@@ -29,7 +29,10 @@ public class main {
             if (input.equals("xboard")){
                 System.out.append("\n");
                 System.out.flush();
-         
+                if (scanner.nextLine().startsWith("protover")){
+                    System.out.append("feature sigint=0 sigterm=0 reuse=0 myname=\"kufbot\" done=1\n");
+                    System.out.flush();
+                }
                 Connection xboard = new Connection();
                 break;
             } else if (input.equals("game")) {
