@@ -18,4 +18,5 @@ public interface Piece {
     public Double getValue();
     public void updateValue(Integer moves); //generates a new value based on a move that was made
     public void setValue(Double value);    //just enters a flat value, used when cloning pieces
+    
 }
