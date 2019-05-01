@@ -91,3 +91,4 @@
 |29.4.|4h      |Debugging bizarre issues with XBoard|
 |30.4.|1h      |Close to locating problem, appears to be caused by something in Player.getLegalMoves() but more work to do still..|
 |1.5. |2h      |Problem located and fixed, engine now works with XBoard|
+|1.5. |1.5h    |Engine can play as either side on XBoard, Javadoc added|
