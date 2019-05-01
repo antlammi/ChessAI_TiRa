@@ -18,23 +18,24 @@ import kufbot.model.*;
  */
 public class Connection {
 
-    private Player w;
-    private Player b;
+  
+    private Player p;
+    private Player o;
     private MinmaxAB engine;
     private Square[][] state;
     private PrintWriter response;
     private final String[] files = {"a", "b", "c", "d", "e", "f", "g", "h"};
 
     /**
-     *
+     * By default assumes it is to play as Black.
      * @throws IOException
      */
     public Connection() throws IOException {
         Board board = new Board();
         this.state = board.getBoardState();
-        this.w = new Player(Color.WHITE, this.state);
-        this.b = new Player(Color.BLACK, this.state);
-        engine = new MinmaxAB(b, w, this.state, 4, false);
+        this.o = new Player(Color.WHITE, this.state);
+        this.p = new Player(Color.BLACK, this.state);
+        engine = new MinmaxAB(p, o, this.state, 4, false);
 
         this.response = new PrintWriter(System.out);
 
@@ -53,16 +54,21 @@ public class Connection {
             String command = input.nextLine();
 
             if (command.startsWith("new")) {
-
-                if (engine.getPlayer().getColor().equals(Color.WHITE)) {
+                start = true;
+            }
+            if (command.startsWith("go")){
+                    Player pClone = this.p.clonePlayer(state);
+                    this.p = this.o;
+                    this.o = pClone;
+                    this.engine = new MinmaxAB(p,o,this.state, 4, false);
                     Move enginemove = engine.getMove();
                     enginemove.execute();
                     System.out.append("move " + enginemove + "\n");
                     System.out.flush();
-                    w.updatePlayer();
-                    b.updatePlayer();
-                }
-                start = true;
+                    o.updatePlayer();
+                    p.updatePlayer();
+                    start = true;
+              
             }
 
         }
@@ -89,19 +95,19 @@ public class Connection {
                     if (command.length() == 5){
                         command = command.substring(0,4);
                     }
-                    Move[] moves = w.getLegalMoves();
+                    Move[] moves = o.getLegalMoves();
                     Move move = convertToMove(command, moves);
 
                     if (move != null) {
                         move.execute();
-                        this.w.updatePlayer();
-                        this.b.updatePlayer();
+                        this.o.updatePlayer();
+                        this.p.updatePlayer();
 
                         enginemove = engine.getMove();
                         enginemove.execute();
 
-                        this.w.updatePlayer();
-                        this.b.updatePlayer();
+                        this.o.updatePlayer();
+                        this.p.updatePlayer();
 
                         if (enginemove.getCastle()) {
                             String output = adjustForCastlingSyntax(enginemove.toString());
