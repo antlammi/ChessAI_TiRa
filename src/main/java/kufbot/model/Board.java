@@ -14,6 +14,9 @@ public class Board {
     private Square[][] squares;
     private PieceFactory pf;
 
+    /**
+     * Generates a fresh board for a new game with all the correct pieces where they should be
+     */
     public Board() {
         squares = new Square[8][8];
         pf = new PieceFactory();
@@ -62,10 +65,18 @@ public class Board {
         }
     }
 
+    /**
+     * 
+     * @return
+     */
     public Square[][] getBoardState() {
         return this.squares;
     }
 
+    /**
+     * Prints current state of the board
+     * @param state
+     */
     public static void printStateGraphic(Square[][] state) {
 
         String[] files = {"A", "B", "C", "D", "E", "F", "G", "H"};
@@ -91,6 +102,12 @@ public class Board {
         }
     }
 
+    /**
+     * Compares if two boardstates are equal
+     * @param state1 
+     * @param state2
+     * @return
+     */
     public static Boolean compareStates(Square[][] state1, Square[][] state2) {
         Boolean equals = true;
         for (int r = 0; r < 8; r++) {
@@ -104,7 +121,12 @@ public class Board {
         return equals;
     }
 
-    public static Square[][] copyBoardstate(Square[][] currentstate) { //moved from Player. Required to prevent fringe case bug in King.
+    /**
+     * Provides a clone of a boardstate
+     * @param currentstate
+     * @return
+     */
+    public static Square[][] copyBoardstate(Square[][] currentstate) { 
         PieceFactory copyFactory = new PieceFactory();
         Square[][] copy = new Square[8][8];
         for (int r = 0; r < 8; r++) {

@@ -24,6 +24,14 @@ public class Minmax implements Engine {
     private java.util.Random random;
     private Boolean dynamicdepth;
 
+    /**
+     *
+     * @param player
+     * @param opponent
+     * @param state
+     * @param initialdepth
+     * @param dynamicdepth
+     */
     public Minmax(Player player, Player opponent, Square[][] state, Integer initialdepth, Boolean dynamicdepth) {
         this.state = state;
         this.maxplayer = player;
@@ -33,14 +41,26 @@ public class Minmax implements Engine {
         this.dynamicdepth = dynamicdepth;
     }
 
+    /**
+     *
+     * @param depth
+     */
     public void setMaxDepth(Integer depth) {
         this.maxdepth = depth;
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getMaxDepth() {
         return this.maxdepth;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Move getMove() {
         long initialTime = System.currentTimeMillis();
@@ -68,6 +88,15 @@ public class Minmax implements Engine {
         return finalmove;
     }
 
+    /**
+     * Uses minimax algorithm to find best move available, recursively calls itself
+     * until terminal node or maximum depth is reached
+     * @param nodestate current boardstate
+     * @param depth depth 
+     * @param currentPlayer Player whose turn it is at given depth
+     * @param latestMove Previous move that was made
+     * @return Best move in the position
+     */
     public Move minimax(Square[][] nodestate, Integer depth, Player currentPlayer, Move latestMove) {
         Square[][] copyState = Board.copyBoardstate(nodestate);
 
@@ -190,12 +219,19 @@ public class Minmax implements Engine {
         return false;
     }
 
+    /**
+     *
+     */
     @Override
     public void update() {
         this.maxplayer.updatePlayer();
 
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Player getPlayer() {
         return this.maxplayer;

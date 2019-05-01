@@ -22,6 +22,11 @@ public class Player {
     private Integer kingFile;
     private Double score;
 
+    /**
+     *
+     * @param color
+     * @param boardstate
+     */
     public Player(Color color, Square[][] boardstate) {
         this.color = color;
         this.piececount = 16;
@@ -32,10 +37,18 @@ public class Player {
         updatePlayer();
     }
 
+    /**
+     *
+     * @return
+     */
     public Square[][] getState() {
         return this.boardstate;
     }
 
+    /**
+     * Updates player's Score, King's location
+     * number of pieces remaining, and Squares occupied
+     */
     public void updatePlayer() {
         this.occupiedSquares = new Square[piececount];
         this.pieces = new Piece[piececount];
@@ -77,6 +90,10 @@ public class Player {
         }
     }
 
+    /**
+     * Provides an array with "legal" moves from all the pieces, does not check if King is left in check.
+     * @return Move[]
+     */
     public Move[] getPossibleMoves() {
         Move[][] moves = new Move[16][];
         int totalmoves = 0;
@@ -107,7 +124,12 @@ public class Player {
         return movesToReturn;
     }
 
-    public Move[] getLegalMoves() { //checks possible moves for king being in check after
+    /**
+     * Checks possible moves for King being in check after the move is made
+     * Sorts Array based on if a Move includes Capturing a minor piece, pawn, or no capture
+     * @return Move[]
+     */
+    public Move[] getLegalMoves() { 
         Move[] moves = getPossibleMoves();
         Move[][] legalMoves = new Move[3][];
         legalMoves[0] = new Move[moves.length]; //Low priority moves
@@ -173,30 +195,59 @@ public class Player {
         return movesToReturn;
     }
 
+    /**
+     *
+     * @param stateCopy
+     * @return
+     */
     public Player clonePlayer(Square[][] stateCopy) {
         return new Player(this.color, stateCopy);
     }
 
+    /**
+     *
+     * @return
+     */
     public Double getScore() {
         return this.score;
     }
 
+    /**
+     *
+     * @return
+     */
     public Color getColor() {
         return this.color;
     }
 
-    public void setScore(Double score) { //intended to be used only in case of mates
+    /**
+     * Used in case of a stalemate or mate, to override board state value
+     * @param score
+     */
+    public void setScore(Double score) { 
         this.score = score;
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getPieceCount() {
         return this.piececount;
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getKingRank() {
         return this.kingRank;
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getKingFile() {
         return this.kingFile;
     }

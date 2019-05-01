@@ -12,7 +12,7 @@ import kufbot.model.Player;
 import kufbot.model.Square;
 
 /**
- *
+ * Looks at own best move with 1 followup move from opponent considered. Was mostly used as a stepping stone to implementing Minimax. 
  * @author antlammi
  */
 public class HighestScore implements Engine {
@@ -22,9 +22,14 @@ public class HighestScore implements Engine {
     private Square[][] state;
     private java.util.Random random;
     
-    //Looks at own best move with 1 followup move from opponent considered.
-    //When playing vs itself leads to a lot of games where middle is locked up and neither side actually plays.
-    //Code is very messy for now, will be fixed if this is actually included in final project
+    
+
+    /**
+     *
+     * @param player
+     * @param opponent
+     * @param state
+     */
     
     public HighestScore(Player player, Player opponent, Square[][] state) {
         this.player = player;
@@ -33,6 +38,10 @@ public class HighestScore implements Engine {
         this.random = new java.util.Random(); //games were too predictable, allows for choosing random moves when equal outcomes are present
     }
 
+    /**
+     *
+     * @return Best move considering opponent's next move.
+     */
     @Override
     public Move getMove() {
         Move[] moves = player.getLegalMoves();
@@ -141,10 +150,17 @@ public class HighestScore implements Engine {
         return false;
     }
 
+    /**
+     *
+     */
     public void update() {
         player.updatePlayer();
     }
 
+    /**
+     *
+     * @return
+     */
     public Player getPlayer() {
         return this.player;
     }

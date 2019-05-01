@@ -23,8 +23,20 @@ public class Game {
     private Engine playerB;
     private Square[][] state;
     private Boolean fastSim;
+
+    /**
+     *
+     */
     public String outcome;
 
+    /**
+     * 
+     * @param engineTypeW The type of Engine used by White
+     * @param engineTypeB The type of Engine used by Black
+     * @param initialdepth Initial search depth for Minmax and MinmaxAB if used
+     * @param fastSim Only include prints for results
+     * @param dynamicdepth Adjust search depth in Engines dynamically based on search time
+     */
     public Game(String engineTypeW, String engineTypeB, Integer initialdepth, Boolean fastSim, Boolean dynamicdepth) {
         Board board = new Board();
         this.state = board.getBoardState();
@@ -61,10 +73,15 @@ public class Game {
 
     }
 
+    /**
+     * Runs a game of chess for 150 moves, checks for mates and stalemates.
+     * Does not include draw by repetition or insufficient material.
+     * @throws InterruptedException
+     */
     public void run() throws InterruptedException {
         outcome = "";
         Integer totalMoves = 0;
-        for (int i = 0; i < 150; i++) {  //Chess game for 150 moves. No repetition draws, 50 move rule or insufficient material checks
+        for (int i = 0; i < 150; i++) {  
             Player white = playerW.getPlayer();
             if (white.getLegalMoves().length == 0) {
                 int wkr = white.getKingRank();

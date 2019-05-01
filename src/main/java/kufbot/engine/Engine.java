@@ -7,7 +7,6 @@ package kufbot.engine;
 
 import kufbot.model.Move;
 import kufbot.model.Player;
-import kufbot.model.Square;
 
 /**
  *
@@ -15,9 +14,20 @@ import kufbot.model.Square;
  */
 public interface Engine {
     
+    /**
+     *
+     * @return Move made by the engine
+     */
     public Move getMove();
 
+    /**
+     * Updates the status of Engine's maximizing player
+     */
     public void update();
 
+    /**
+     * 
+     * @return Maximizing Player
+     */
     public Player getPlayer();
 }

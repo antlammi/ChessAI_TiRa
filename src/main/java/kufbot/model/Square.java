@@ -13,36 +13,71 @@ public class Square {
     private Piece piece;
     private int rank;
     private int file;
+
+    /**
+     *
+     * @param rank
+     * @param file
+     */
     public Square(int rank, int file){
         this.piece = null;
         this.rank = rank;
         this.file = file;
     }
     
+    /**
+     *
+     */
     public void leave(){
         this.piece = null;
     }
-    //mutulla sanoisin että myöhemmin hyödyllistä olla kaksi seuraavaa erillisinä funktioina,
-    //mikäli materiaalista pidetään jossakin kirjaa. Tällä hetkellä toki identtiset.
+    
+
+    /**
+     * New piece enters the Square
+     * @param piece
+     */
     public void enter(Piece piece){
         this.piece = piece;
     }
+
+    /**
+     * Identical to enter but improves code readability.
+     * @param piece
+     */
     public void capture(Piece piece){
         this.piece = piece;
     }
     
+    /**
+     *
+     * @return
+     */
     public Piece getPiece(){
         return this.piece;
     }
-    //Luultavasti helpottaa koodin luettavuutta muualla.
+   
+
+    /**
+     *
+     * @return
+     */
     public Boolean isEmpty(){
         return this.piece == null;
     }
     
+    /**
+     *
+     * @return
+     */
     public Integer getRank(){
         return this.rank;
     }
     
+    /**
+     *
+     * @return
+     */
     public Integer getFile(){
         return this.file;
     }

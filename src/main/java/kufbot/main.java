@@ -17,7 +17,10 @@ import kufbot.model.*;
 public class main {
 
     /**
+     * Based on initial input determines whether to run in XBoard or with own text-based UI
      * @param args the command line arguments
+     * @throws java.lang.InterruptedException
+     * @throws java.io.IOException
      */
     public static void main(String[] args) throws InterruptedException, IOException {
        

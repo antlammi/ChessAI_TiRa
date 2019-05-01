@@ -24,6 +24,14 @@ public class MinmaxAB implements Engine {
     private java.util.Random random;
     private Boolean dynamicdepth;
 
+    /**
+     *
+     * @param player
+     * @param opponent
+     * @param state
+     * @param initialdepth
+     * @param dynamicdepth
+     */
     public MinmaxAB(Player player, Player opponent, Square[][] state, Integer initialdepth, Boolean dynamicdepth) {
         this.state = state;
         this.maxplayer = player;
@@ -33,14 +41,26 @@ public class MinmaxAB implements Engine {
         this.dynamicdepth = dynamicdepth;
     }
 
+    /**
+     *
+     * @param depth
+     */
     public void setMaxDepth(Integer depth) {
         this.maxdepth = depth;
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getMaxDepth() {
         return this.maxdepth;
     }
 
+    /**
+     *
+     * @return Move chosen by the Engine
+     */
     @Override
     public Move getMove() {
         long initialTime = System.currentTimeMillis();
@@ -68,6 +88,17 @@ public class MinmaxAB implements Engine {
         return finalmove;
     }
 
+    /**
+     * Uses minimax algorithm with Alpha-Beta pruning to find best move available, recursively calls itself
+     * until terminal node or maximum depth is reached
+     * @param nodestate current boardstate
+     * @param depth depth 
+     * @param currentPlayer Player whose turn it is at given depth
+     * @param latestMove Previous move that was made
+     * @param alpha Score that maximizing player is assured of in a given line
+     * @param beta Score that minimizing player is assured of in a given line
+     * @return Best move in current line
+     */
     public Move minimaxAB(Square[][] nodestate, Integer depth, Player currentPlayer, Move latestMove, Double alpha, Double beta) {
         Square[][] copyState = Board.copyBoardstate(nodestate);
        
@@ -201,11 +232,18 @@ public class MinmaxAB implements Engine {
         return false;
     }
 
+    /**
+     *
+     */
     @Override
     public void update() {
         this.maxplayer.updatePlayer();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Player getPlayer() {
         return this.maxplayer;

@@ -11,12 +11,47 @@ import java.util.ArrayList;
  * @author antlammi
  */
 public interface Piece {
+
+    /**
+     * Returns all possible moves by Piece in question without checks for legality.
+     * @return Move[]
+     */
     public Move[] getMoves();
+
+    /**
+     * Checks for legality
+     * @return Move[]
+     */
     public Move[] getLegalMoves();
+
+    /**
+     * 
+     * @param square
+     */
     public void setSquare(Square square);
+
+    /**
+     *
+     * @return
+     */
     public Color getColor();
+
+    /**
+     * 
+     * @return Value of the piece
+     */
     public Double getValue();
-    public void updateValue(Integer moves); //generates a new value based on a move that was made
-    public void setValue(Double value);    //just enters a flat value, used when cloning pieces
+
+    /**
+     * Updates value of the piece based on position.
+     * @param moves
+     */
+    public void updateValue(Integer moves); 
+
+    /**
+     * Sets a value for the piece, used when cloning pieces.
+     * @param value
+     */
+    public void setValue(Double value);    
     
 }

@@ -24,12 +24,21 @@ public class Human implements Engine {
     private Player player;
     private Square[][] state;
 
+    /**
+     *
+     * @param player Player object representing the side being played for
+     * @param state Boardstate at time of creation
+     */
     public Human(Player player, Square[][] state) {
         this.scanner = new Scanner(System.in);
         this.state = state;
         this.player = player;
     }
 
+    /**
+     * Asks for a move from the User, and converts it to a Move class object
+     * @return Move chosen
+     */
     @Override
     public Move getMove() {
         Move move = null;
@@ -135,11 +144,18 @@ public class Human implements Engine {
         return null;
     }
 
+    /**
+     * Update state of player object
+     */
     @Override
     public void update() {
         this.player.updatePlayer();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Player getPlayer() {
         return this.player;

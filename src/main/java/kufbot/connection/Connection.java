@@ -5,22 +5,15 @@
  */
 package kufbot.connection;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import kufbot.engine.MinmaxAB;
 import kufbot.model.Move;
 import kufbot.model.*;
 
-/**
- *
+/** 
+ * Class handles XBoard connection
  * @author antlammi
  */
 public class Connection {
@@ -32,6 +25,10 @@ public class Connection {
     private PrintWriter response;
     private final String[] files = {"a", "b", "c", "d", "e", "f", "g", "h"};
 
+    /**
+     *
+     * @throws IOException
+     */
     public Connection() throws IOException {
         Board board = new Board();
         this.state = board.getBoardState();
@@ -45,6 +42,10 @@ public class Connection {
 
     }
 
+    /**
+     * Loop that receives inputs from XBoard app via System.in and sends outputs to XBoard via System.out
+     * Also handles updating internal AI state
+     */
     public void runXBoard() {
         Scanner input = new Scanner(System.in);
         Boolean start = false;
@@ -128,11 +129,14 @@ public class Connection {
         }
 
     }
+    //Checks if engine move is a pawn promotion, which requires an adjusted syntax for XBoard
     private Boolean checkForPawnPromotion(Move enginemove){
         Boolean result =(enginemove.getPiece().toString().contains("PAWN") 
                 && (enginemove.getDestinationSquare().getRank() == 1||enginemove.getDestinationSquare().getRank() == 8));
         return result;
     }
+    
+    //Makes engine's syntax for castling compatible with XBoard
     private String adjustForCastlingSyntax(String enginemove) {
         String output = "";
         if (enginemove.equals("e1h1")) {
@@ -146,7 +150,8 @@ public class Connection {
         }
         return output;
     }
-
+    
+    //Checks if received command was a move
     private Boolean checkForMove(String command) {
         Integer r1 = -1;
         Integer r2 = -1;
@@ -166,7 +171,7 @@ public class Connection {
         }
         return false;
     }
-
+    //Converts command received from XBoard to a Move class object
     private Move convertToMove(String input, Move[] legalmoves) {
         if (input.length() > 4 || input.length() < 4) {
             return null;

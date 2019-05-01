@@ -12,11 +12,22 @@ import java.util.ArrayList;
  * @author antlammi
  */
 public class Knight implements Piece {
+
+    /**
+     *
+     */
     public final Color color;
     private Square current;
     private Square[][] boardstate;
     private final Double baseValue;
     private Double value;
+
+    /**
+     *
+     * @param color
+     * @param initial
+     * @param boardstate
+     */
     public Knight(Color color, Square initial, Square[][] boardstate) {
         this.color = color;
         this.current = initial;
@@ -31,11 +42,19 @@ public class Knight implements Piece {
         return color + " KNIGHT"; 
     }
 
+    /**
+     *
+     * @param newSquare
+     */
     @Override
     public void setSquare(Square newSquare){
         this.current = newSquare;
     }
 
+    /**
+     * Provides an array of possible moves based on Knight's movement rules in the position.
+     * @return
+     */
     @Override
     public Move[] getMoves() {
         Integer rank = current.getRank() - 1;
@@ -74,6 +93,12 @@ public class Knight implements Piece {
         return possibleMoves;
     }
 
+    /**
+     * Checks for legality in array of moves provided by getMoves 
+     * If a Square is unreachable (blocked), or contains a Piece of the same color,
+     * a move is considered illegal.
+     * @return
+     */
     @Override
     public Move[] getLegalMoves() {
         Move[] movesToCheck = getMoves();
@@ -96,21 +121,38 @@ public class Knight implements Piece {
         }
         return legalMoves;
     }
+
+    /**
+     * Updates piece value based on available moves in the position
+     * @param moves
+     */
     @Override
     public void updateValue(Integer moves){
         this.value = this.baseValue + (1.0*moves/100);
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public Color getColor() {
         return this.color;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Double getValue() {
         return this.value;
     }
 
+    /**
+     *
+     * @param value
+     */
     @Override
     public void setValue(Double value) {
         this.value = value;

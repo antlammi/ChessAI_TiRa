@@ -5,7 +5,7 @@
  */
 package kufbot.model;
 
-import java.util.ArrayList;
+
 
 /**
  *
@@ -13,6 +13,9 @@ import java.util.ArrayList;
  */
 public class Rook implements Piece {
 
+    /**
+     *
+     */
     public final Color color;
     private int legalcount;
     private Move[] legalMoves;
@@ -22,6 +25,12 @@ public class Rook implements Piece {
     private Double baseValue;
     private Double value;
     
+    /**
+     *
+     * @param color
+     * @param initial
+     * @param boardstate
+     */
     public Rook(Color color, Square initial, Square[][] boardstate) {
         this.color = color;
         this.current = initial;
@@ -30,16 +39,36 @@ public class Rook implements Piece {
         this.baseValue = 5.0;
         this.value = baseValue;
     }
+
+    /**
+     * 
+     * @return true if Rook has been moved, false if not.
+     */
     public Boolean getMoved(){
         return this.moved;
     }
+
+    /**
+     *
+     * @param moved
+     */
     public void setMoved(Boolean moved){
           this.moved = moved;
     }
+
+    /**
+     *
+     * @param newSquare
+     */
     @Override
     public void setSquare(Square newSquare){
         this.current = newSquare;
     }
+
+    /**
+     * Provides an array of possible moves based on Queen's movement rules in the position
+     * @return Move[]
+     */
     @Override
     public Move[] getMoves() {
         Integer rank = current.getRank();
@@ -70,6 +99,10 @@ public class Rook implements Piece {
         return color + " ROOK";
     }
 
+    /**
+     * Checks legality for moves on the same rank.
+     * @param movesToCheck
+     */
     public void findLegalMovesOnSameRank(Move[] movesToCheck) {
         for (int i = 0; i < movesToCheck.length / 2 ; i++) {
             Square destination = movesToCheck[i].getDestinationSquare();
@@ -117,6 +150,10 @@ public class Rook implements Piece {
 
     }
 
+    /**
+     * Checks legality for moves on same file
+     * @param movesToCheck candidate moves to check
+     */
     public void findLegalMovesOnSameFile(Move[] movesToCheck) {
         
         for (int i = movesToCheck.length / 2; i < movesToCheck.length; i++) {
@@ -162,6 +199,13 @@ public class Rook implements Piece {
         }
     }
   
+    /**
+     ** Checks for legality in array of moves provided by getMoves.
+     * If a Square is unreachable (blocked), or contains a Piece of the same color,
+     * a move is considered illegal. Calls findLegalMovesOnSameRank() and 
+     * findLegalMovesONSameFile()
+     * @return Move[]
+     */
     @Override
     public Move[] getLegalMoves() {
         Move[] movesToCheck = this.getMoves();
@@ -171,21 +215,39 @@ public class Rook implements Piece {
         findLegalMovesOnSameFile(movesToCheck);
         return legalMoves;
     }
+
+    /**
+     *
+     * @param moves
+     */
     @Override
     public void updateValue(Integer moves){    
         this.value = (baseValue+(1.0*moves/500));
        
     }
+
+    /**
+     *
+     * @return
+     */
     @Override
     public Color getColor() {
         return this.color;
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public Double getValue() {
         return this.value;
     }
 
+    /**
+     *
+     * @param value
+     */
     @Override
     public void setValue(Double value) {
         this.value = value;

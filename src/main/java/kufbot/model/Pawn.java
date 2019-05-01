@@ -5,7 +5,6 @@
  */
 package kufbot.model;
 
-import java.util.ArrayList;
 
 /**
  *
@@ -13,12 +12,21 @@ import java.util.ArrayList;
  */
 public class Pawn implements Piece {
 
+    /**
+     *
+     */
     public final Color color;
     private Square current;
     private Square[][] boardstate;
     private final Double baseValue;
     private Double value;
 
+    /**
+     *
+     * @param color
+     * @param initial
+     * @param boardstate
+     */
     public Pawn(Color color, Square initial, Square[][] boardstate) {
         this.color = color;
         this.current = initial;
@@ -32,11 +40,20 @@ public class Pawn implements Piece {
         return color + " PAWN";
     }
 
+    /**
+     *
+     * @param newSquare
+     */
     @Override
     public void setSquare(Square newSquare) {
         this.current = newSquare;
     }
 
+    /**
+     * Provides an array of possible moves based on Pawn's movement rules in the position
+     * Calls either getMovesWhite() or getMovesBlack() to provide moves for correct color only
+     * @return
+     */
     @Override
     public Move[] getMoves() {
         Move[] possibleMoves;
@@ -48,6 +65,10 @@ public class Pawn implements Piece {
         return possibleMoves;
     }
 
+    /**
+     * Provides an array of possible moves based on Pawn's movement rules in the position for a white pawn
+     * @return
+     */
     public Move[] getMovesWhite() {
         Integer rank = current.getRank();
         Integer file = current.getFile();
@@ -71,6 +92,10 @@ public class Pawn implements Piece {
         return possibleMovesWhite;
     }
 
+    /**
+     * Provides an array of possible moves based on Pawn's movement rules in the position for a black pawn
+     * @return
+     */
     public Move[] getMovesBlack() {
         Integer rank = current.getRank();
         Integer file = current.getFile();
@@ -94,6 +119,12 @@ public class Pawn implements Piece {
         return possibleMovesBlack;
     }
 
+    /**
+     * Checks for legality in array of moves provided by getMoves 
+     * If a Square is unreachable (blocked), or contains a Piece of the same color,
+     * a move is considered illegal. Accounts for pawns only being able to move diagonally in a capture.
+     * @return
+     */
     @Override
     public Move[] getLegalMoves() {
         Move[] movesToCheck = getMoves();
@@ -141,6 +172,11 @@ public class Pawn implements Piece {
         return legalMoves;
     }
 
+    /**
+     * Updates value of a pawn based on its rank and file, closer to Queening/Central
+     * is considered more valuable.
+     * @param rank
+     */
     @Override   //finetuning later
     public void updateValue(Integer rank) {
 
@@ -171,16 +207,28 @@ public class Pawn implements Piece {
 
 }
 
-@Override
+    /**
+     *
+     * @return
+     */
+    @Override
         public Color getColor() {
         return this.color;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
         public Double getValue() {
         return this.value;
     }
 
+    /**
+     *
+     * @param value
+     */
     @Override
         public void setValue(Double value) {
         this.value = value;

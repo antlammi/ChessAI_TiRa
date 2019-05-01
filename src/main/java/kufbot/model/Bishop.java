@@ -18,6 +18,13 @@ public class Bishop implements Piece {
     private Square[][] boardstate;
     private final Double baseValue;
     private Double value;
+
+    /**
+     *
+     * @param color 
+     * @param initial Square at time of creation
+     * @param boardstate
+     */
     public Bishop(Color color, Square initial, Square[][] boardstate) {
         this.color = color;
         this.current = initial;
@@ -31,10 +38,20 @@ public class Bishop implements Piece {
     public String toString() {
         return color + " BISHOP";
     }
+
+    /**
+     * 
+     * @param newSquare
+     */
     @Override
     public void setSquare(Square newSquare){
         this.current = newSquare;
     }
+
+    /**
+     * Provides an array of possible moves based on Bishop's movement rules in the position
+     * @return Move[] 
+     */
     @Override
     public Move[] getMoves() {
         Integer rank = current.getRank() - 1;
@@ -69,6 +86,12 @@ public class Bishop implements Piece {
         return possibleMoves;
     }
    
+    /**
+     * Checks for legality in array of moves provided by getMoves. 
+     * If a Square is unreachable (blocked), or contains a Piece of the same color,
+     * a move is considered illegal.
+     * @return Move[] 
+     */
     @Override
     public Move[] getLegalMoves() {
         Move[] movesToCheck = getMoves();
@@ -111,6 +134,15 @@ public class Bishop implements Piece {
         return legalMoves;
     }
 
+    /**
+     * Checks top right diagonal for blocked Squares, on route to destination Square
+     * @param boardstate
+     * @param cr Current Rank
+     * @param cf Current File
+     * @param dr Destination Rank
+     * @param df Destination File
+     * @return
+     */
     public Boolean checkTopRightDiagonal(Square[][] boardstate, Integer cr, Integer cf, Integer dr, Integer df) {
 
         for (int d = 1; d <= 7; d++) {
@@ -131,6 +163,15 @@ public class Bishop implements Piece {
         return false;
     }
 
+    /**
+     * Checks bottom right diagonal for blocked Squares, on route to destination Square
+     * @param boardstate
+     * @param cr Current Rank
+     * @param cf Current File
+     * @param dr Destination Rank
+     * @param df Destination File
+     * @return
+     */
     public Boolean checkBottomRightDiagonal(Square[][] boardstate, Integer cr, Integer cf, Integer dr, Integer df) {
         for (int d = 1; d <= 7; d++) {
             if (cr - d == dr && cf + d == df) {        //destination square reached
@@ -150,6 +191,15 @@ public class Bishop implements Piece {
         return false;
     }
 
+    /**
+     * Checks top left diagonal for blocked Squares, on route to destination Square
+     * @param boardstate
+     * @param cr Current Rank
+     * @param cf Current File
+     * @param dr Destination Rank
+     * @param df Destination File
+     * @return
+     */
     public Boolean checkTopLeftDiagonal(Square[][] boardstate, Integer cr, Integer cf, Integer dr, Integer df) {
         for (int d = 1; d <= 7; d++) {
             if (cr + d == dr && cf - d == df) {        //destination square reached
@@ -169,6 +219,15 @@ public class Bishop implements Piece {
         return false;
     }
 
+    /**
+     * Checks bottom left diagonal for blocked Squares, on route to destination Square
+     * @param boardstate
+     * @param cr
+     * @param cf
+     * @param dr
+     * @param df
+     * @return
+     */
     public Boolean checkBottomLeftDiagonal(Square[][] boardstate, Integer cr, Integer cf, Integer dr, Integer df) {
         for (int d = 1; d <= 7; d++) {
             if (cr - d == dr && cf - d == df) {        //destination square reached
@@ -187,20 +246,38 @@ public class Bishop implements Piece {
         }
         return false;
     }
+
+    /**
+     * Updates the value of the piece based on its location
+     * @param moves
+     */
     @Override
-    public void updateValue(Integer moves){//palasen arvoa hienosäädetään, jotta hyvin sijoittuneita palasia pidetään arvokkaampina vaikka välitöntä materiaalivoittoa ei löydy
+    public void updateValue(Integer moves){
         this.value = this.baseValue + (1.0*moves/100);
     }
+
+    /**
+     *
+     * @return
+     */
     @Override
     public Color getColor() {
         return this.color;
     }
    
+    /**
+     *
+     * @return
+     */
     @Override
     public Double getValue() {
         return this.value;
     }
 
+    /**
+     *
+     * @param value
+     */
     @Override
     public void setValue(Double value) {
         this.value = value;

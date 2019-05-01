@@ -25,6 +25,10 @@ public class Move {
     private Boolean castle;
     private Boolean previouslyMoved;
 
+    /**
+     *
+     * @param boardstate
+     */
     public Move(Square[][] boardstate) {
         this.boardstate = boardstate;
         this.pf = new PieceFactory();
@@ -33,6 +37,12 @@ public class Move {
         this.previouslyMoved = false;
     }
 
+    /**
+     * Pseudoconstructor for most moves
+     * @param piece Piece that is to be moved
+     * @param current Square the piece starts on
+     * @param destination Square the piece is moving to
+     */
     public void constructMove(Piece piece, Square current, Square destination) {
         this.piece = piece;
         this.current = current;
@@ -40,18 +50,34 @@ public class Move {
 
     }
 
+    /**
+     *
+     */
     public void setPawnCapture() {
         this.pawnCapture = true;
     }
 
+    /**
+     *
+     * @param player
+     */
     public void setPlayer(Player player) {
         this.player = player;
     }
 
+    /**
+     *
+     * @return
+     */
     public Player getPlayer() {
         return this.player;
     }
 
+    /**
+     *
+     * @param piece
+     * @param pieceType
+     */
     public void promotePawn(Piece piece, String pieceType) {
         Piece promotedPiece = pf.getPiece(pieceType, piece.getColor(), this.current, this.boardstate);
         current.leave();
@@ -59,6 +85,13 @@ public class Move {
         this.piece = promotedPiece;
     }
 
+    /**
+     * Pseudoconstructor for castling move
+     * @param king King that is to be moved
+     * @param rookH Rook that is to be moved
+     * @param current Square the king starts on
+     * @param destination Square the Rook starts on
+     */
     public void constructCastle(Piece king, Rook rookH, Square current, Square destination) {
         this.piece = king;
         this.rook = rookH;
@@ -89,10 +122,17 @@ public class Move {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public Boolean getCastle() {
         return this.castle;
     }
 
+    /**
+     * Executes the move, checks for pawn promotion and updates Squares affected.
+     */
     public void execute() {
         if (current.getPiece().toString().contains("ROOK")) {
 
@@ -152,6 +192,9 @@ public class Move {
         }
     }
 
+    /**
+     * Rolls a move back, returning the state to how it was before the move was executed. 
+     */
     public void rollback() {
 
         if (castle) {
@@ -195,7 +238,13 @@ public class Move {
         }
     }
 
-    //Tämä koodinpätkä alkoi esiintyä monessa paikkaa, tämä tuntui loogiselta paikalta sille.
+    
+
+    /**
+     * Clones a move to use the boardstate given as a parameter
+     * @param boardstatecopy
+     * @return
+     */
     public Move cloneMove(Square[][] boardstatecopy) {
         Move clone = new Move(boardstatecopy);
         Square curSQCopy = boardstatecopy[current.getRank() - 1][current.getFile() - 1];
@@ -211,22 +260,42 @@ public class Move {
         return clone;
     }
 
+    /**
+     *
+     * @return
+     */
     public Square[][] getState() {
         return this.boardstate;
     }
 
+    /**
+     *
+     * @return
+     */
     public Piece getPiece() {
         return piece;
     }
 
+    /**
+     *
+     * @return
+     */
     public Square getCurrentSquare() {
         return current;
     }
 
+    /**
+     *
+     * @return
+     */
     public Square getDestinationSquare() {
         return destination;
     }
 
+    /**
+     *
+     * @return
+     */
     public Boolean getPawnCapture() {
         return this.pawnCapture;
     }

@@ -11,6 +11,14 @@ package kufbot.model;
  */
 public class PieceFactory {
 
+    /**
+     * Used when building new Pieces throughout app.
+     * @param pieceType
+     * @param color
+     * @param current
+     * @param boardstate
+     * @return
+     */
     public Piece getPiece(String pieceType, Color color, Square current, Square[][] boardstate) {
         switch (pieceType) {
             case "KING":

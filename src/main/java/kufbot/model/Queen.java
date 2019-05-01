@@ -5,7 +5,6 @@
  */
 package kufbot.model;
 
-import java.util.ArrayList;
 
 /**
  *
@@ -13,11 +12,21 @@ import java.util.ArrayList;
  */
 public class Queen implements Piece {
 
+    /**
+     *
+     */
     public final Color color;
     private Square current;
     private Square[][] boardstate;
     private Double value;
     private final Double baseValue;
+
+    /**
+     *
+     * @param color
+     * @param initial
+     * @param boardstate
+     */
     public Queen(Color color, Square initial, Square[][] boardstate) {
         this.color = color;
         this.current = initial;
@@ -26,6 +35,11 @@ public class Queen implements Piece {
         this.value = baseValue;
         
     }
+
+    /**
+     *
+     * @param newSquare
+     */
     @Override
     public void setSquare(Square newSquare){
         this.current = newSquare;
@@ -35,6 +49,10 @@ public class Queen implements Piece {
         return color + " QUEEN";
     }
 
+    /**
+     * Provides an array of possible moves based on Queen's movement rules in the position
+     * @return
+     */
     @Override
     public Move[] getMoves() {
         Rook rook = new Rook(this.color, current, boardstate);
@@ -61,6 +79,12 @@ public class Queen implements Piece {
         return possibleMoves;
     }
 
+    /**
+     * Checks for legality in array of moves provided by getMoves.
+     * If a Square is unreachable (blocked), or contains a Piece of the same color,
+     * a move is considered illegal.
+     * @return Move[]
+     */
     @Override
     public Move[] getLegalMoves() {
         Rook rook = new Rook(this.color, current, boardstate);
@@ -93,21 +117,38 @@ public class Queen implements Piece {
        
         return legalMoves;
     }
+
+    /**
+     * Updates piece value based on location.
+     * @param moves
+     */
     @Override
     public void updateValue(Integer moves){
         this.value = baseValue+(1.0*moves/200);
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public Color getColor() {
         return this.color;
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public Double getValue() {
         return this.value;
     }
 
+    /**
+     *
+     * @param value
+     */
     @Override
     public void setValue(Double value) {
         this.value = value;

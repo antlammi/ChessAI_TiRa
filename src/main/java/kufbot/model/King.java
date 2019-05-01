@@ -5,8 +5,6 @@
  */
 package kufbot.model;
 
-import java.io.PrintWriter;
-import java.util.ArrayList;
 
 /**
  *
@@ -14,6 +12,9 @@ import java.util.ArrayList;
  */
 public class King implements Piece {
 
+    /**
+     *
+     */
     public final Color color;
     private Boolean moved;
     private Square current;
@@ -22,6 +23,12 @@ public class King implements Piece {
     private Double value;
     private Boolean castled;
 
+    /**
+     *
+     * @param color
+     * @param initial
+     * @param boardstate
+     */
     public King(Color color, Square initial, Square[][] boardstate) {
         this.color = color;
         this.moved = false;
@@ -32,6 +39,10 @@ public class King implements Piece {
         this.castled = false;
     }
 
+    /**
+     *
+     * @param newSquare
+     */
     @Override
     public void setSquare(Square newSquare) {
         this.current = newSquare;
@@ -42,10 +53,18 @@ public class King implements Piece {
         return color + " KING";
     }
 
+    /**
+     *
+     * @return
+     */
     public Boolean getMoved() {
         return this.moved;
     }
 
+    /**
+     *
+     * @param moved
+     */
     public void setMoved(Boolean moved) {
         if (!this.castled) {
             this.baseValue = 14.5;
@@ -54,6 +73,10 @@ public class King implements Piece {
         this.moved = moved;
     }
 
+    /**
+     *
+     * @param castled
+     */
     public void setCastled(Boolean castled) {
         this.castled = castled;
 
@@ -66,6 +89,11 @@ public class King implements Piece {
         }
     }
 
+    /**
+     * Checks if the King is in check in a given position
+     * @param toCheck Square king is in checked scenario, typically the same as current but for King's it may be different
+     * @return true if King is in check, otherwise false
+     */
     public Boolean isInCheck(Square toCheck) {
         Square[][] copystate = Board.copyBoardstate(boardstate);
         Move copymove = new Move(copystate);
@@ -117,8 +145,10 @@ public class King implements Piece {
         return false;
     }
 
-    
-
+    /**
+     * Provides an array of possible moves based on Bishop's movement rules in the position
+     * @return Move[]
+     */
     @Override
     public Move[] getMoves() {
         Move[] possibleMoves = new Move[10];
@@ -157,6 +187,12 @@ public class King implements Piece {
         return possibleMoves;
     }
 
+    /**
+     * Checks for legality in array of moves provided by getMoves.
+     * If a Square is unreachable (blocked), or contains a Piece of the same color,
+     * a move is considered illegal.
+     * @return
+     */
     @Override
     public Move[] getLegalMoves() {
         Move[] movesToCheck = getMoves();
@@ -209,25 +245,45 @@ public class King implements Piece {
         return legalMoves;
     }
 
+    /**
+     * 
+     * @return
+     */
     public Boolean getCastled() {
         return this.castled;
     }
 
+    /**
+     * Updates value based on number of Squares available, currently a poor implementation
+     * @param moves
+     */
     @Override
     public void updateValue(Integer moves) {
         this.value = (baseValue + (1.0 * moves / 100));
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Color getColor() {
         return this.color;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Double getValue() {
         return this.value;
     }
 
+    /**
+     *
+     * @param value
+     */
     @Override
     public void setValue(Double value) {
         this.value = value;

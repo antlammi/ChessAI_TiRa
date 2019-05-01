@@ -10,5 +10,14 @@ package kufbot.model;
  * @author antlammi
  */
 public enum Color {
-    WHITE, BLACK
+
+    /**
+     *
+     */
+    WHITE,
+
+    /**
+     *
+     */
+    BLACK
 }
