@@ -93,3 +93,4 @@
 |1.5. |2h      |Problem located and fixed, engine now works with XBoard|
 |1.5. |1.5h    |Engine can play as either side on XBoard, Javadoc added|
 |3.5. |5h      |Work on optimizing engine performance. Many bugs remain.|
+|3.5. |2h      |Attempted to fix bugs, but just kept discovering more. Resetting to last stable build and working from there|
