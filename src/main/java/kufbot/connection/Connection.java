@@ -35,7 +35,7 @@ public class Connection {
         this.state = board.getBoardState();
         this.o = new Player(Color.WHITE, this.state);
         this.p = new Player(Color.BLACK, this.state);
-        engine = new MinmaxAB(p, o, this.state, 4, false);
+        engine = new MinmaxAB(p, o, this.state, 4, true);
 
         this.response = new PrintWriter(System.out);
 
@@ -60,7 +60,7 @@ public class Connection {
                     Player pClone = this.p.clonePlayer(state);
                     this.p = this.o;
                     this.o = pClone;
-                    this.engine = new MinmaxAB(p,o,this.state, 4, false);
+                    this.engine = new MinmaxAB(p,o,this.state, 4, true);
                     Move enginemove = engine.getMove();
                     enginemove.execute();
                     System.out.append("move " + enginemove + "\n");

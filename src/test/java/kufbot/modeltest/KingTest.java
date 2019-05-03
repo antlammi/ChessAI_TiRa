@@ -283,4 +283,33 @@ public class KingTest {
         }
         assert (containsCastle);
     }
+    @Test
+    public void kingCanCastleQueensideWithPiecesInPlay() {
+        King wKing = (King) state[0][4].getPiece();
+        Rook rookA1 = (Rook) state[0][0].getPiece();
+
+        for (int r = 0; r < 6; r++) {
+            for (int f = 0; f < 6; f++) {
+                state[r][f].leave();
+            }
+        }
+
+        state[0][4].enter(wKing);
+        state[0][0].enter(rookA1);
+
+        Boolean containsCastle = false;
+        Board.printStateGraphic(state);
+        Move[] kingmoves = wKing.getLegalMoves();
+
+        for (int i = 0; i < kingmoves.length; i++) {
+            System.out.println(kingmoves[i]);
+            if (kingmoves[i] == null) {
+                break;
+            }
+            if (kingmoves[i].toString().equals("e1a1")) {
+                containsCastle = true;
+            }
+        }
+        assert (containsCastle);
+    }
 }

@@ -23,9 +23,7 @@ public class main {
      * @throws java.io.IOException
      */
     public static void main(String[] args) throws InterruptedException, IOException {
-       
-       
-        
+    
         Scanner scanner = new Scanner(System.in);
         while(true){
             String input = scanner.nextLine();
@@ -45,7 +43,7 @@ public class main {
             }
         }
         
-       
+      
          
     }
 

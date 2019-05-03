@@ -177,6 +177,7 @@ public class King implements Piece {
                         if (!rook.getMoved()) {
                             possibleMoves[movecount] = new Move(boardstate);
                             possibleMoves[movecount].constructCastle(this, rook, current, rookLocation);
+                            movecount++;
                         }
                     }
                 }
