@@ -5,7 +5,6 @@
  */
 package enginetest;
 
-import kufbot.engine.Engine;
 import kufbot.engine.Minmax;
 import kufbot.model.Bishop;
 import kufbot.model.Board;

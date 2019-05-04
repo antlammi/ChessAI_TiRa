@@ -46,19 +46,6 @@ public class BishopTest {
     }
 
     @Test
-    public void bishopHasCorrectPossibleMovesInitially() {
-        Move[] movesForBishopF1 = state[0][5].getPiece().getMoves();
-        String[] correctInitialMoves = {"f1e2", "f1g2", "f1d3", "f1h3", "f1c4", "f1b5", "f1a6"};
-        for (int i = 0; i < 7; i++) {
-            assertEquals(correctInitialMoves[i], movesForBishopF1[i].toString());
-
-        }
-        for (int i = 7; i < movesForBishopF1.length; i++) {
-            assertEquals(movesForBishopF1[i], null);
-        }
-    }
-
-    @Test
     public void bishopHasNoLegalMovesInitially() {
         Move[] legalMovesForBishopF1 = state[0][5].getPiece().getLegalMoves();
         for (int i = 0; i < legalMovesForBishopF1.length; i++) {

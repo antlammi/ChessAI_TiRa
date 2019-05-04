@@ -5,8 +5,6 @@
  */
 package kufbot.model;
 
-
-
 /**
  *
  * @author antlammi
@@ -21,7 +19,7 @@ public class Bishop implements Piece {
 
     /**
      *
-     * @param color 
+     * @param color
      * @param initial Square at time of creation
      * @param boardstate
      */
@@ -30,8 +28,8 @@ public class Bishop implements Piece {
         this.current = initial;
         this.boardstate = boardstate;
         this.baseValue = 3.0;
-        this.value = baseValue; 
-        
+        this.value = baseValue;
+
     }
 
     @Override
@@ -40,220 +38,122 @@ public class Bishop implements Piece {
     }
 
     /**
-     * 
+     *
      * @param newSquare
      */
     @Override
-    public void setSquare(Square newSquare){
+    public void setSquare(Square newSquare) {
         this.current = newSquare;
     }
 
     /**
-     * Provides an array of possible moves based on Bishop's movement rules in the position
-     * @return Move[] 
+     * Provides an array of possible moves based on Bishop's movement rules in
+     * the position, also checks for legality
+     *
+     * @return Move[]
      */
     @Override
     public Move[] getMoves() {
         Integer rank = current.getRank() - 1;
         Integer file = current.getFile() - 1;
         Move[] possibleMoves = new Move[13];
+
+        Boolean topleft = true;
+        Boolean bottomleft = true;
+        Boolean topright = true;
+        Boolean bottomright = true;
+
         Integer moveCount = 0;
         for (int d = 1; d <= 7; d++) {
-            if ((rank - d >= 0 && rank - d <= 7) && (file - d >= 0 && file - d <= 7)) { //vasemmalle ja alas d askelta on pöydän rajojen sisällä
-                possibleMoves[moveCount] = new Move(boardstate);
-                possibleMoves[moveCount].constructMove(this, current, boardstate[rank - d][file - d]);
-                moveCount++;
-
+            if (bottomleft) {
+                if ((rank - d >= 0 && rank - d <= 7) && (file - d >= 0 && file - d <= 7)) { //vasemmalle ja alas d askelta on pöydän rajojen sisällä
+                    if (boardstate[rank - d][file - d].isEmpty()) {
+                        possibleMoves[moveCount] = new Move(boardstate);
+                        possibleMoves[moveCount].constructMove(this, current, boardstate[rank - d][file - d]);
+                        moveCount++;
+                    } else if (boardstate[rank - d][file - d].getPiece().getColor() != this.color) {
+                        possibleMoves[moveCount] = new Move(boardstate);
+                        possibleMoves[moveCount].constructMove(this, current, boardstate[rank - d][file - d]);
+                        moveCount++;
+                        bottomleft = false;
+                    } else {
+                        bottomleft = false;
+                    }
+                }
             }
-            if ((rank + d >= 0 && rank + d <= 7) && (file - d >= 0 && file - d <= 7)) { //vasemmalle ja ylös d askelta on pöydän rajojen sisällä
-                possibleMoves[moveCount] = new Move(boardstate);
-                possibleMoves[moveCount].constructMove(this, current, boardstate[rank + d][file - d]);
-                moveCount++;
-
+            if (topleft) {
+                if ((rank + d >= 0 && rank + d <= 7) && (file - d >= 0 && file - d <= 7)) { //vasemmalle ja ylös d askelta on pöydän rajojen sisällä
+                    if (boardstate[rank + d][file - d].isEmpty()) {
+                        possibleMoves[moveCount] = new Move(boardstate);
+                        possibleMoves[moveCount].constructMove(this, current, boardstate[rank + d][file - d]);
+                        moveCount++;
+                    } else if (boardstate[rank + d][file - d].getPiece().getColor() != this.color) {
+                        possibleMoves[moveCount] = new Move(boardstate);
+                        possibleMoves[moveCount].constructMove(this, current, boardstate[rank + d][file - d]);
+                        moveCount++;
+                        topleft = false;
+                    } else {
+                        topleft = false;
+                    }
+                }
             }
-            if ((rank - d >= 0 && rank - d <= 7) && (file + d >= 0 && file + d <= 7)) { //oikealle ja alas d askelta on pöydän rajojen sisällä
-                possibleMoves[moveCount] = new Move(boardstate);
-                possibleMoves[moveCount].constructMove(this, current, boardstate[rank - d][file + d]);
-                moveCount++;
+            if (bottomright) {
+                if ((rank - d >= 0 && rank - d <= 7) && (file + d >= 0 && file + d <= 7)) { //oikealle ja alas d askelta on pöydän rajojen sisällä
+                    if (boardstate[rank - d][file + d].isEmpty()) {
+                        possibleMoves[moveCount] = new Move(boardstate);
+                        possibleMoves[moveCount].constructMove(this, current, boardstate[rank - d][file + d]);
+                        moveCount++;
+                    } else if (boardstate[rank - d][file + d].getPiece().getColor() != this.color) {
+                        possibleMoves[moveCount] = new Move(boardstate);
+                        possibleMoves[moveCount].constructMove(this, current, boardstate[rank - d][file + d]);
+                        moveCount++;
+                        bottomright = false;
+                    } else {
+                        bottomright = false;
+                    }
+                }
             }
-            if ((rank + d >= 0 && rank + d <= 7) && (file + d >= 0 && file + d <= 7)) { //oikealle ja ylös d askelta on pöydän rajojen sisällä
-                possibleMoves[moveCount] = new Move(boardstate);
-                possibleMoves[moveCount].constructMove(this, current, boardstate[rank + d][file + d]);
-                moveCount++;
+            if (topright) {
+                if ((rank + d >= 0 && rank + d <= 7) && (file + d >= 0 && file + d <= 7)) { //oikealle ja ylös d askelta on pöydän rajojen sisällä
+                    if (boardstate[rank + d][file + d].isEmpty()) {
+                        possibleMoves[moveCount] = new Move(boardstate);
+                        possibleMoves[moveCount].constructMove(this, current, boardstate[rank + d][file + d]);
+                        moveCount++;
+                    } else if (boardstate[rank + d][file + d].getPiece().getColor() != this.color) {
+                        possibleMoves[moveCount] = new Move(boardstate);
+                        possibleMoves[moveCount].constructMove(this, current, boardstate[rank + d][file + d]);
+                        moveCount++;
+                        topright = false;
+                    } else {
+                        topright = false;
+                    }
+                }
             }
 
         }
         return possibleMoves;
     }
-   
+
     /**
-     * Checks for legality in array of moves provided by getMoves. 
-     * If a Square is unreachable (blocked), or contains a Piece of the same color,
-     * a move is considered illegal.
-     * @return Move[] 
+     * Used to check for legality, functionality was moved to getMoves for efficiency. 
+     * This simply exists for other classes to call now.
+     * @return Move[]
      */
     @Override
     public Move[] getLegalMoves() {
-        Move[] movesToCheck = getMoves();
-        Move[] legalMoves = new Move[movesToCheck.length];
-        int legalcount = 0;
-
-        int cr = current.getRank()-1;
-        int cf = current.getFile()-1;
-        for (int i = 0; i < movesToCheck.length; i++) {
-            Move currentMove = movesToCheck[i];
-            if (currentMove == null){
-                return legalMoves;
-            }
-            Square destination = currentMove.getDestinationSquare();
-            int dr = destination.getRank()-1;
-            int df = destination.getFile()-1;
-            if (dr > cr && df > cf) {
-                if (checkTopRightDiagonal(boardstate, cr, cf, dr, df) == true) {
-                    legalMoves[legalcount] = currentMove;
-                    legalcount++;
-                }
-            } else if (dr < cr && df > cf) {
-                if (checkBottomRightDiagonal(boardstate, cr, cf, dr, df) == true) {
-                    legalMoves[legalcount] = currentMove;
-                    legalcount++;
-                }
-            } else if (dr > cr && df < cf) {
-                if (checkTopLeftDiagonal(boardstate, cr, cf, dr, df) == true) {
-                    legalMoves[legalcount] = currentMove;
-                    legalcount++;
-                }
-            } else if (dr < cr && df < cf) {
-                if (checkBottomLeftDiagonal(boardstate, cr, cf, dr, df) == true) {
-                    legalMoves[legalcount] = currentMove;
-                    legalcount++;
-                }
-            }
-
-        }
+        Move[] legalMoves = getMoves();
         return legalMoves;
     }
 
-    /**
-     * Checks top right diagonal for blocked Squares, on route to destination Square
-     * @param boardstate
-     * @param cr Current Rank
-     * @param cf Current File
-     * @param dr Destination Rank
-     * @param df Destination File
-     * @return
-     */
-    public Boolean checkTopRightDiagonal(Square[][] boardstate, Integer cr, Integer cf, Integer dr, Integer df) {
-
-        for (int d = 1; d <= 7; d++) {
-            if (cr + d == dr && cf + d == df) {        //destination square reached
-                Square destination = boardstate[dr][df];
-                if (destination.isEmpty()) {
-                    return true;
-                } else if (destination.getPiece().getColor() != this.color) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-            if (!boardstate[cr + d][cf + d].isEmpty()) {
-                return false;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Checks bottom right diagonal for blocked Squares, on route to destination Square
-     * @param boardstate
-     * @param cr Current Rank
-     * @param cf Current File
-     * @param dr Destination Rank
-     * @param df Destination File
-     * @return
-     */
-    public Boolean checkBottomRightDiagonal(Square[][] boardstate, Integer cr, Integer cf, Integer dr, Integer df) {
-        for (int d = 1; d <= 7; d++) {
-            if (cr - d == dr && cf + d == df) {        //destination square reached
-                Square destination = boardstate[dr][df];
-                if (destination.isEmpty()) {
-                    return true;
-                } else if (destination.getPiece().getColor() != this.color) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-            if (!boardstate[cr - d][cf + d].isEmpty()) {
-                return false;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Checks top left diagonal for blocked Squares, on route to destination Square
-     * @param boardstate
-     * @param cr Current Rank
-     * @param cf Current File
-     * @param dr Destination Rank
-     * @param df Destination File
-     * @return
-     */
-    public Boolean checkTopLeftDiagonal(Square[][] boardstate, Integer cr, Integer cf, Integer dr, Integer df) {
-        for (int d = 1; d <= 7; d++) {
-            if (cr + d == dr && cf - d == df) {        //destination square reached
-                Square destination = boardstate[dr][df];
-                if (destination.isEmpty()) {
-                    return true;
-                } else if (destination.getPiece().getColor() != this.color) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-            if (!boardstate[cr + d][cf - d].isEmpty()) {
-                return false;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Checks bottom left diagonal for blocked Squares, on route to destination Square
-     * @param boardstate
-     * @param cr
-     * @param cf
-     * @param dr
-     * @param df
-     * @return
-     */
-    public Boolean checkBottomLeftDiagonal(Square[][] boardstate, Integer cr, Integer cf, Integer dr, Integer df) {
-        for (int d = 1; d <= 7; d++) {
-            if (cr - d == dr && cf - d == df) {        //destination square reached
-                Square destination = boardstate[dr][df];
-                if (destination.isEmpty()) {
-                    return true;
-                } else if (destination.getPiece().getColor() != this.color) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-            if (!boardstate[cr - d][cf - d].isEmpty()) {
-                return false;
-            }
-        }
-        return false;
-    }
-
+   
     /**
      * Updates the value of the piece based on its location
+     *
      * @param moves
      */
     @Override
-    public void updateValue(Integer moves){
-        this.value = this.baseValue + (1.0*moves/100);
+    public void updateValue(Integer moves) {
+        this.value = this.baseValue + (1.0 * moves / 100);
     }
 
     /**
@@ -264,7 +164,7 @@ public class Bishop implements Piece {
     public Color getColor() {
         return this.color;
     }
-   
+
     /**
      *
      * @return

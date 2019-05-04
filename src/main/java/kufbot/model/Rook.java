@@ -5,8 +5,6 @@
  */
 package kufbot.model;
 
-
-
 /**
  *
  * @author antlammi
@@ -20,11 +18,11 @@ public class Rook implements Piece {
     private int legalcount;
     private Move[] legalMoves;
     private Boolean moved;
-    private Square current; 
+    private Square current;
     private Square[][] boardstate;
     private Double baseValue;
     private Double value;
-    
+
     /**
      *
      * @param color
@@ -41,10 +39,10 @@ public class Rook implements Piece {
     }
 
     /**
-     * 
+     *
      * @return true if Rook has been moved, false if not.
      */
-    public Boolean getMoved(){
+    public Boolean getMoved() {
         return this.moved;
     }
 
@@ -52,8 +50,8 @@ public class Rook implements Piece {
      *
      * @param moved
      */
-    public void setMoved(Boolean moved){
-          this.moved = moved;
+    public void setMoved(Boolean moved) {
+        this.moved = moved;
     }
 
     /**
@@ -61,36 +59,96 @@ public class Rook implements Piece {
      * @param newSquare
      */
     @Override
-    public void setSquare(Square newSquare){
+    public void setSquare(Square newSquare) {
         this.current = newSquare;
     }
 
+    
     /**
-     * Provides an array of possible moves based on Queen's movement rules in the position
+     * Provides an array of possible moves based on Rook's movement rules in
+     * the position, checks for legality
+     *
      * @return Move[]
      */
     @Override
     public Move[] getMoves() {
-        Integer rank = current.getRank();
-        Integer file = current.getFile();
+        Integer rank = current.getRank() - 1;
+        Integer file = current.getFile() - 1;
         Move[] possibleMoves = new Move[14];
+
+        Boolean top = true;
+        Boolean bottom = true;
+        Boolean left = true;
+        Boolean right = true;
+
         Integer moveCount = 0;
-        for (int f = 0; f <= 7; f++) {
-            if (f != file - 1) {
-                possibleMoves[moveCount] = new Move(boardstate);
-                possibleMoves[moveCount].constructMove(this, current, boardstate[rank - 1][f]);
-                moveCount++;
+        for (int d = 1; d <= 7; d++) {
+            if (top) {
+                if ((rank + d <= 7)) { //ylös d askelta on pöydän rajojen sisällä
+                    if (boardstate[rank+d][file].isEmpty()) {
+                        possibleMoves[moveCount] = new Move(boardstate);
+                        possibleMoves[moveCount].constructMove(this, current, boardstate[rank+d][file]);
+                        moveCount++;
+                    } else if (boardstate[rank+d][file].getPiece().getColor() != this.color) {
+                        possibleMoves[moveCount] = new Move(boardstate);
+                        possibleMoves[moveCount].constructMove(this, current, boardstate[rank+d][file]);
+                        moveCount++;
+                        top = false;
+                    } else {
+                        top = false;
+                    }
+                }
             }
-        }
-
-        for (int r = 0; r <= 7; r++) {
-            if (r != rank - 1) {
-                possibleMoves[moveCount] = new Move(boardstate);
-                possibleMoves[moveCount].constructMove(this, current, boardstate[r][file - 1]);
-                moveCount++;
+            if (bottom) {
+                if ((rank - d >= 0)) { //alas d askelta on pöydän rajojen sisällä
+                    if (boardstate[rank-d][file].isEmpty()) {
+                        possibleMoves[moveCount] = new Move(boardstate);
+                        possibleMoves[moveCount].constructMove(this, current, boardstate[rank-d][file]);
+                        moveCount++;
+                    } else if (boardstate[rank-d][file].getPiece().getColor() != this.color) {
+                        possibleMoves[moveCount] = new Move(boardstate);
+                        possibleMoves[moveCount].constructMove(this, current, boardstate[rank-d][file]);
+                        moveCount++;
+                        bottom = false;
+                    } else {
+                        bottom = false;
+                    }
+                }
             }
-        }
+            if (left) {
+                if (file - d >= 0) { //vasemmalle d askelta on pöydän rajojen sisällä
+                    if (boardstate[rank][file-d].isEmpty()) {
+                        possibleMoves[moveCount] = new Move(boardstate);
+                        possibleMoves[moveCount].constructMove(this, current, boardstate[rank][file-d]);
+                        moveCount++;
+                    } else if (boardstate[rank][file-d].getPiece().getColor() != this.color) {
+                        possibleMoves[moveCount] = new Move(boardstate);
+                        possibleMoves[moveCount].constructMove(this, current, boardstate[rank][file-d]);
+                        moveCount++;
+                        left = false;
+                    } else {
+                        left = false;
+                    }
+                }
+            }
+             if (right) {
+                if (file+d <= 7) { //oikealle d askelta on pöydän rajojen sisällä
+                    if (boardstate[rank][file+d].isEmpty()) {
+                        possibleMoves[moveCount] = new Move(boardstate);
+                        possibleMoves[moveCount].constructMove(this, current, boardstate[rank][file+d]);
+                        moveCount++;
+                    } else if (boardstate[rank][file+d].getPiece().getColor() != this.color) {
+                        possibleMoves[moveCount] = new Move(boardstate);
+                        possibleMoves[moveCount].constructMove(this, current, boardstate[rank][file+d]);
+                        moveCount++;
+                        right = false;
+                    } else {
+                        right = false;
+                    }
+                }
+            }
 
+        }
         return possibleMoves;
     }
 
@@ -100,119 +158,13 @@ public class Rook implements Piece {
     }
 
     /**
-     * Checks legality for moves on the same rank.
-     * @param movesToCheck
-     */
-    public void findLegalMovesOnSameRank(Move[] movesToCheck) {
-        for (int i = 0; i < movesToCheck.length / 2 ; i++) {
-            Square destination = movesToCheck[i].getDestinationSquare();
-
-            int rank = current.getRank() - 1;
-            int cf = current.getFile() - 1;
-            int df = destination.getFile() - 1;
-           
-            if (cf > df) {  //jos alkuruudun sarake on suurempi kuin määränpään
-                for (int f = cf-1; f >= df; f--) { //lähestytään määränpäätä
-                    if (!boardstate[rank][f].isEmpty()) { //jos tämänhetkisellä ruudulla on palanen
-                        if (f == df) {  //jos nykyinen sarake on vastaa määränpäätä
-                            if (this.color != destination.getPiece().getColor()) { //jos palaset ovat eri värisiä, voidaan se syödä ja siirtyä ruudulle
-                                legalMoves[legalcount] = movesToCheck[i];
-                                legalcount++;
-                            }
-                        } else { //tiellä on jokin palanen, jonka yli ei voida siirtyä
-                            break;
-                        }
-                    } else if (f == df) {  //jos ruutu on tyhjä ja vastaa saraketta, voidaan ruudulle siirtyä
-                        legalMoves[legalcount] = movesToCheck[i];
-                        legalcount++;
-                    }
-                }
-
-            } else {
-                for (int f = cf + 1; f <= df; f++) {
-                    if (!boardstate[rank][f].isEmpty()) {
-                        if (f == df) {
-                            if (this.color != destination.getPiece().getColor()) {
-                                legalMoves[legalcount] = movesToCheck[i];
-                                legalcount++;
-                            }
-                        } else {
-                            break;
-                        }
-                    } else if (f == df) {
-                        legalMoves[legalcount] = movesToCheck[i];
-                        legalcount++;
-                    }
-                }
-            }
-
-        }
-
-    }
-
-    /**
-     * Checks legality for moves on same file
-     * @param movesToCheck candidate moves to check
-     */
-    public void findLegalMovesOnSameFile(Move[] movesToCheck) {
-        
-        for (int i = movesToCheck.length / 2; i < movesToCheck.length; i++) {
-            Square destination = movesToCheck[i].getDestinationSquare();
-            int file = current.getFile() - 1;
-            int cr = current.getRank() - 1;
-            int dr = destination.getRank() - 1;
-            if (cr > dr) {
-                for (int r = cr-1; r >= dr; r--) {
-                    if (!boardstate[r][file].isEmpty()) {
-                        if (r == dr) {
-                            if (this.color != destination.getPiece().getColor()) {
-                                legalMoves[legalcount] = movesToCheck[i];
-                                legalcount++;
-                            }
-                        } else {
-                            break;
-                        }
-                    } else if (r == dr) {
-                        legalMoves[legalcount] = movesToCheck[i];
-                        legalcount++;
-                    }
-                }
-
-            } else {
-                for (int r = cr + 1; r <= dr; r++) {
-                    if (!boardstate[r][file].isEmpty()) {
-                        if (r == dr) {
-                            if (this.color != destination.getPiece().getColor()) {
-                                legalMoves[legalcount] = movesToCheck[i];
-                                legalcount++;
-
-                            }
-                        } else {
-                            break;
-                        }
-                    } else if (r == dr) {
-                        legalMoves[legalcount] = movesToCheck[i];
-                        legalcount++;
-                    }
-                }
-            }
-        }
-    }
-  
-    /**
-     ** Checks for legality in array of moves provided by getMoves.
-     * If a Square is unreachable (blocked), or contains a Piece of the same color,
-     * a move is considered illegal. Calls findLegalMovesOnSameRank() and 
-     * findLegalMovesONSameFile()
+     * Used to check for legality, but that functionality was moved to getMoves
+     * for efficiency. Only exists to be called by other classes.
      * @return Move[]
      */
     @Override
     public Move[] getLegalMoves() {
-        Move[] movesToCheck = this.getMoves();
-        this.legalMoves = new Move[movesToCheck.length];
-        this.legalcount = 0;
-        findLegalMovesOnSameRank(movesToCheck);
-        findLegalMovesOnSameFile(movesToCheck);
+        this.legalMoves = getMoves();
         return legalMoves;
     }
 
@@ -221,9 +173,9 @@ public class Rook implements Piece {
      * @param moves
      */
     @Override
-    public void updateValue(Integer moves){    
-        this.value = (baseValue+(1.0*moves/500));
-       
+    public void updateValue(Integer moves) {
+        this.value = (baseValue + (1.0 * moves / 500));
+
     }
 
     /**
@@ -234,7 +186,7 @@ public class Rook implements Piece {
     public Color getColor() {
         return this.color;
     }
-    
+
     /**
      *
      * @return

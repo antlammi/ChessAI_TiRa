@@ -50,7 +50,7 @@ public class Game {
         } else if (engineTypeW.equals("Minmax")) {
             this.playerW = new Minmax(w, b, state, initialdepth, dynamicdepth);
         } else if (engineTypeW.equals("MinmaxAB")) {
-            this.playerW = new MinmaxAB(w, b, state, initialdepth, dynamicdepth);
+            this.playerW = new MinmaxAB(w, b, state, initialdepth, dynamicdepth, true);
         } else if (engineTypeW.equals("Human")){
             this.playerW = new Human(w, state);
             Board.printStateGraphic(state);
@@ -63,7 +63,7 @@ public class Game {
         } else if (engineTypeB.equals("Minmax")) {
             this.playerB = new Minmax(b, w, state, initialdepth, dynamicdepth);
         } else if (engineTypeB.equals("MinmaxAB")) {
-            this.playerB = new MinmaxAB(b, w, state, initialdepth, dynamicdepth);
+            this.playerB = new MinmaxAB(b, w, state, initialdepth, dynamicdepth, true);
         } else if (engineTypeB.equals("Human")){
              this.playerB = new Human(b, state);
              Board.printStateGraphic(state);

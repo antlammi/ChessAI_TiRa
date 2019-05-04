@@ -44,34 +44,6 @@ public class QueenTest {
     }
 
     @Test
-    public void queenHasAllRookMovesAvailable() {
-        Queen queen = (Queen) state[0][3].getPiece();
-        Rook rook = new Rook(queen.getColor(), state[0][3], state);
-        
-        Move[] rookmoves = rook.getMoves();
-        Move[] queenmoves = queen.getMoves();
-
-        for (int i = 0; i < rookmoves.length; i++) {
-            assertEquals(rookmoves[i].toString(), queenmoves[i].toString());
-        }
-    }
-
-    @Test
-    public void queenHasAllBishopMovesAvailable() {
-        Queen queen = (Queen) state[0][3].getPiece();
-        Bishop bishop = new Bishop(queen.getColor(), state[0][3], state);
-
-        Move[] bishopmoves = bishop.getMoves();
-        Move[] queenmoves = queen.getMoves();
-
-        for (int i = 0; i < bishopmoves.length; i++) {
-            if (bishopmoves[i] != null || queenmoves[i + 14] != null) {
-                assertEquals(bishopmoves[i].toString(), queenmoves[i + 14].toString());
-            }
-        }
-    }
-
-    @Test
     public void queenHasNoLegalMovesInitially() {
         Queen queen = (Queen) state[0][3].getPiece();
         Move[] queenLegalMoves = queen.getLegalMoves();

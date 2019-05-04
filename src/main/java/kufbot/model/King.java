@@ -22,7 +22,7 @@ public class King implements Piece {
     private Double baseValue;
     private Double value;
     private Boolean castled;
-
+    
     /**
      *
      * @param color

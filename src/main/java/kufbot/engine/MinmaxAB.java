@@ -23,6 +23,7 @@ public class MinmaxAB implements Engine {
     private Integer maxdepth;
     private java.util.Random random;
     private Boolean dynamicdepth;
+    private Boolean prints;
 
     /**
      *
@@ -32,13 +33,14 @@ public class MinmaxAB implements Engine {
      * @param initialdepth
      * @param dynamicdepth
      */
-    public MinmaxAB(Player player, Player opponent, Square[][] state, Integer initialdepth, Boolean dynamicdepth) {
+    public MinmaxAB(Player player, Player opponent, Square[][] state, Integer initialdepth, Boolean dynamicdepth, Boolean prints) {
         this.state = state;
         this.maxplayer = player;
         this.opponent = opponent;
         this.maxdepth = initialdepth;
         this.random = new java.util.Random();
         this.dynamicdepth = dynamicdepth;
+        this.prints = prints;
     }
 
     /**
@@ -74,13 +76,20 @@ public class MinmaxAB implements Engine {
         }
         long finalTime = System.currentTimeMillis();
         long timeTaken = finalTime - initialTime;
-        //System.out.println("Finding the move took " + timeTaken + " milliseconds.");
+        if (prints) {
+            System.out.println("Finding the move took " + timeTaken + " milliseconds.");
+        }
         if (dynamicdepth == true) {
             if (timeTaken > 20000 && maxdepth < 7) {      //arbitrary cap
-                //System.out.println("Decreasing maximum depth for " + maxplayer.getColor() + "...");
+                if (prints) {
+                    System.out.println("Decreasing maximum depth for " + maxplayer.getColor() + "...");
+                }
+
                 this.maxdepth--;
             } else if (timeTaken < 1000 && maxdepth > 1) {
-                //System.out.println("Increasing maximum depth for " + maxplayer.getColor() + "...");
+                if (prints) {
+                    System.out.println("Increasing maximum depth for " + maxplayer.getColor() + "...");
+                }
                 this.maxdepth++;
             }
         }
@@ -89,10 +98,12 @@ public class MinmaxAB implements Engine {
     }
 
     /**
-     * Uses minimax algorithm with Alpha-Beta pruning to find best move available, recursively calls itself
-     * until terminal node or maximum depth is reached
+     * Uses minimax algorithm with Alpha-Beta pruning to find best move
+     * available, recursively calls itself until terminal node or maximum depth
+     * is reached
+     *
      * @param nodestate current boardstate
-     * @param depth depth 
+     * @param depth depth
      * @param currentPlayer Player whose turn it is at given depth
      * @param latestMove Previous move that was made
      * @param alpha Score that maximizing player is assured of in a given line
@@ -101,7 +112,7 @@ public class MinmaxAB implements Engine {
      */
     public Move minimaxAB(Square[][] nodestate, Integer depth, Player currentPlayer, Move latestMove, Double alpha, Double beta) {
         Square[][] copyState = Board.copyBoardstate(nodestate);
-       
+
         Move last;
         if (latestMove != null) {
 
@@ -140,7 +151,7 @@ public class MinmaxAB implements Engine {
             for (int i = 0; i < moves.length; i++) {
                 Player minimizing = opponent.clonePlayer(copyState);
                 Move currentMove = moves[i].cloneMove(copyState);
-              
+
                 currentMove.setPlayer(currentClone);
                 Double moveScore;
                 Move oMove = minimaxAB(copyState, depth + 1, minimizing, currentMove, alpha, beta);

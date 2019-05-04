@@ -52,8 +52,8 @@ public class MinmaxABTest {
         this.state = board.getBoardState();
         Player w = new Player(Color.WHITE, state);
         Player b = new Player(Color.BLACK, state);
-        this.playerW = new MinmaxAB(w, b, state, 2, false);
-        this.playerB = new MinmaxAB(b, w, state, 2, false);
+        this.playerW = new MinmaxAB(w, b, state, 2, false, false);
+        this.playerB = new MinmaxAB(b, w, state, 2, false, false);
 
     }
 
