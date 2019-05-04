@@ -179,27 +179,28 @@ public class Pawn implements Piece {
      */
     @Override   
     public void updateValue() {
-        
+        Integer r = current.getRank()-1;
         Integer f = current.getFile() - 1;
         Double rankValue;
         Double filefactor;
+        
         if (f == 3 | f == 4) {
-            filefactor = 40.0; //makes the engine prefer pushing pawns in the middle, especially early on. Leads to better openings at least.
+            filefactor = 20.0; //makes the engine prefer pushing pawns in the middle, especially early on. Leads to better openings at least.
             if (this.color == Color.WHITE) {
-                rankValue = 1.0 * current.getRank() - 1;
+                rankValue = 1.0 * r-1;
                 this.value = (rankValue / filefactor) + this.baseValue;
             } else {
-                rankValue = -1.0 * (current.getRank() - 1 - 6);
+                rankValue = -1.0 * (r - 6);
                 this.value = (rankValue / filefactor) + this.baseValue;
             }
         } else {
-            filefactor=120.0;
+            filefactor=60.0;
             if (this.color == Color.WHITE) {
 
-                rankValue = 1.0 * current.getRank() - 1;
+                rankValue = 1.0 * r-1;
                 this.value = (rankValue / filefactor) + this.baseValue;
             } else {
-                rankValue = -1.0 * (current.getRank() - 1 - 6);
+                rankValue = -1.0 * (r-6);
                 this.value = (rankValue / filefactor) + this.baseValue;
             }
     }

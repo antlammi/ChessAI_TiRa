@@ -130,16 +130,16 @@ public class Knight implements Piece {
     public void updateValue() {
         if (current.getRank() > 2 && current.getRank() < 7) {       
             if (current.getFile() > 2 && current.getFile() < 7) {
-                this.value = this.baseValue + (1.0 * 15 / 100);
+                this.value = this.baseValue + (1.0 * 12 / 100);
             } else if (current.getFile() > 1 && current.getFile() < 8) {
-                this.value = this.baseValue + (1.0 * 10 / 100);
+                this.value = this.baseValue + (1.0 * 8 / 100);
             } else {
-                this.value = this.baseValue + (1.0 * 5 / 100);
+                this.value = this.baseValue + (1.0 * 4 / 100);
             }
         } else if (current.getFile() > 2 && current.getFile() < 7) {
-            this.value = this.baseValue + (1.0 * 10 / 100);
+            this.value = this.baseValue + (1.0 * 8 / 100);
         } else if (current.getFile() > 1 && current.getFile() < 8) {
-            this.value = this.baseValue + (1.0 * 5 / 100);
+            this.value = this.baseValue + (1.0 * 4 / 100);
         } else {
             this.value = this.baseValue;
         }
