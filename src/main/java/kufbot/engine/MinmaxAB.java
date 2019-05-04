@@ -130,7 +130,7 @@ public class MinmaxAB implements Engine {
                 return null;
             }
             if (checkForMate(currentClone, copyState)) { //mate
-                latestMove.getPlayer().setScore(1000000.0); //Changed from max value to one million to ensure loop works properly, still far larger than any game state could otherwise produce.
+                latestMove.getPlayer().setScore(1000000.0 - depth); //Changed from max value to one million to ensure loop works properly, still far larger than any game state could otherwise produce.
             } else { //Stalemate
                 latestMove.getPlayer().setScore(0.0);
                 currentPlayer.setScore(0.0);

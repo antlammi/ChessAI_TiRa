@@ -5,7 +5,6 @@
  */
 package kufbot.model;
 
-
 /**
  *
  * @author antlammi
@@ -34,7 +33,7 @@ public class Pawn implements Piece {
         this.baseValue = 1.0;
         this.value = baseValue;
     }
-    
+
     @Override
     public String toString() {
         return color + " PAWN";
@@ -50,8 +49,10 @@ public class Pawn implements Piece {
     }
 
     /**
-     * Provides an array of possible moves based on Pawn's movement rules in the position
-     * Calls either getMovesWhite() or getMovesBlack() to provide moves for correct color only
+     * Provides an array of possible moves based on Pawn's movement rules in the
+     * position Calls either getMovesWhite() or getMovesBlack() to provide moves
+     * for correct color only
+     *
      * @return
      */
     @Override
@@ -66,7 +67,9 @@ public class Pawn implements Piece {
     }
 
     /**
-     * Provides an array of possible moves based on Pawn's movement rules in the position for a white pawn
+     * Provides an array of possible moves based on Pawn's movement rules in the
+     * position for a white pawn
+     *
      * @return
      */
     public Move[] getMovesWhite() {
@@ -93,7 +96,9 @@ public class Pawn implements Piece {
     }
 
     /**
-     * Provides an array of possible moves based on Pawn's movement rules in the position for a black pawn
+     * Provides an array of possible moves based on Pawn's movement rules in the
+     * position for a black pawn
+     *
      * @return
      */
     public Move[] getMovesBlack() {
@@ -120,9 +125,11 @@ public class Pawn implements Piece {
     }
 
     /**
-     * Checks for legality in array of moves provided by getMoves 
-     * If a Square is unreachable (blocked), or contains a Piece of the same color,
-     * a move is considered illegal. Accounts for pawns only being able to move diagonally in a capture.
+     * Checks for legality in array of moves provided by getMoves If a Square is
+     * unreachable (blocked), or contains a Piece of the same color, a move is
+     * considered illegal. Accounts for pawns only being able to move diagonally
+     * in a capture.
+     *
      * @return
      */
     @Override
@@ -173,46 +180,64 @@ public class Pawn implements Piece {
     }
 
     /**
-     * Updates value of a pawn based on its rank and file, closer to Queening/Central
-     * is considered more valuable.
+     * Updates value of a pawn based on its rank and file, closer to
+     * Queening/Central is considered more valuable.
+     *
      * @param rank
      */
-    @Override   
+    @Override
     public void updateValue() {
-        Integer r = current.getRank()-1;
+        Integer r = current.getRank() - 1;
         Integer f = current.getFile() - 1;
         Double rankValue;
         Double filefactor;
-        
-        if (f == 3 | f == 4) {
+
+        if (f == 3 || f == 4) {
             filefactor = 20.0; //makes the engine prefer pushing pawns in the middle, especially early on. Leads to better openings at least.
             if (this.color == Color.WHITE) {
-                rankValue = 1.0 * r-1;
+                rankValue = 1.0 * r - 1;
                 this.value = (rankValue / filefactor) + this.baseValue;
             } else {
                 rankValue = -1.0 * (r - 6);
                 this.value = (rankValue / filefactor) + this.baseValue;
             }
+        } else if (f == 5 || f == 6 || f == 7) { //Engine isn't given extra incentive to push these pawns early on to keep kingside castle safe
+            if (r < 5 && this.color == Color.WHITE || r > 2 && this.color == Color.BLACK) {
+                this.value = this.baseValue;
+            } else {
+                filefactor = 20.0;
+                if (this.color == Color.WHITE) {
+                    rankValue = 1.0 * r - 1;
+                    this.value = (rankValue / filefactor) + this.baseValue;
+                } else {
+                    rankValue = -1.0 * (r - 6);
+                    this.value = (rankValue / filefactor) + this.baseValue;
+                }
+            }
         } else {
-            filefactor=60.0;
-            if (this.color == Color.WHITE) {
+            if (r < 5 && this.color == Color.WHITE || r > 2 && this.color == Color.BLACK) { //Queenside pawns can be pushed early but not given a lot of incentive to do so.
+                filefactor = 130.0;
+            } else {
+                filefactor = 20.0;
 
-                rankValue = 1.0 * r-1;
+            }
+            if (this.color == Color.WHITE) {
+                rankValue = 1.0 * r - 1;
                 this.value = (rankValue / filefactor) + this.baseValue;
             } else {
-                rankValue = -1.0 * (r-6);
+                rankValue = -1.0 * (r - 6);
                 this.value = (rankValue / filefactor) + this.baseValue;
             }
-    }
+        }
 
-}
+    }
 
     /**
      *
      * @return
      */
     @Override
-        public Color getColor() {
+    public Color getColor() {
         return this.color;
     }
 
@@ -221,7 +246,7 @@ public class Pawn implements Piece {
      * @return
      */
     @Override
-        public Double getValue() {
+    public Double getValue() {
         return this.value;
     }
 
@@ -230,7 +255,8 @@ public class Pawn implements Piece {
      * @param value
      */
     @Override
-        public void setValue(Double value) {
+    public void setValue(Double value
+    ) {
         this.value = value;
     }
 }
