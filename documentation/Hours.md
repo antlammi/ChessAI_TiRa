@@ -94,3 +94,5 @@
 |1.5. |1.5h    |Engine can play as either side on XBoard, Javadoc added|
 |3.5. |5h      |Work on optimizing engine performance. Many bugs remain.|
 |3.5. |2h      |Attempted to fix bugs, but just kept discovering more. Resetting to last stable build and working from there|
+|4.5. |2.5h    |Reworked move generation in Bishop and Rook for slight increase in efficiency|
+|4.5. |1.5h    |Adjusting piece values throughout app, made engine prefer faster mates|
