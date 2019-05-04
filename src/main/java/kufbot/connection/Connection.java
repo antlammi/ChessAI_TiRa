@@ -12,13 +12,13 @@ import kufbot.engine.MinmaxAB;
 import kufbot.model.Move;
 import kufbot.model.*;
 
-/** 
+/**
  * Class handles XBoard connection
+ *
  * @author antlammi
  */
 public class Connection {
 
-  
     private Player p;
     private Player o;
     private MinmaxAB engine;
@@ -28,6 +28,7 @@ public class Connection {
 
     /**
      * By default assumes it is to play as Black.
+     *
      * @throws IOException
      */
     public Connection() throws IOException {
@@ -35,7 +36,7 @@ public class Connection {
         this.state = board.getBoardState();
         this.o = new Player(Color.WHITE, this.state);
         this.p = new Player(Color.BLACK, this.state);
-        engine = new MinmaxAB(p, o, this.state, 4, true, false);
+        engine = new MinmaxAB(p, o, this.state, 4, false, false);
 
         this.response = new PrintWriter(System.out);
 
@@ -44,8 +45,8 @@ public class Connection {
     }
 
     /**
-     * Loop that receives inputs from XBoard app via System.in and sends outputs to XBoard via System.out
-     * Also handles updating internal AI state
+     * Loop that receives inputs from XBoard app via System.in and sends outputs
+     * to XBoard via System.out Also handles updating internal AI state
      */
     public void runXBoard() {
         Scanner input = new Scanner(System.in);
@@ -56,19 +57,19 @@ public class Connection {
             if (command.startsWith("new")) {
                 start = true;
             }
-            if (command.startsWith("go")){
-                    Player pClone = this.p.clonePlayer(state);
-                    this.p = this.o;
-                    this.o = pClone;
-                    this.engine = new MinmaxAB(p,o,this.state, 4, true, false);
-                    Move enginemove = engine.getMove();
-                    enginemove.execute();
-                    System.out.append("move " + enginemove + "\n");
-                    System.out.flush();
-                    o.updatePlayer();
-                    p.updatePlayer();
-                    start = true;
-              
+            if (command.startsWith("go")) {
+                Player pClone = this.p.clonePlayer(state);
+                this.p = this.o;
+                this.o = pClone;
+                this.engine = new MinmaxAB(p, o, this.state, 4, false, false);
+                Move enginemove = engine.getMove();
+                enginemove.execute();
+                System.out.append("move " + enginemove + "\n");
+                System.out.flush();
+                o.updatePlayer();
+                p.updatePlayer();
+                start = true;
+
             }
 
         }
@@ -81,19 +82,29 @@ public class Connection {
 
             try {
                 if (checkForMove(command)) {
-                    
+
                     if (command.equals("e1g1")) {
-                        command = "e1h1";
+                        if (state[0][4].getPiece().toString().equals("WHITE KING")) {
+                            command = "e1h1";
+                        }
+
                     } else if (command.equals("e1c1")) {
-                        command = ("e1a1");
+                        if (state[0][4].getPiece().toString().equals("WHITE KING")) {
+                            command = ("e1a1");
+                        }
                     } else if (command.equals("e8g8")) {
+                        if (state[7][4].getPiece().toString().equals("BLACK KING")) {
+                            command = ("e1a1");
+                        }
                         command = "e8h8";
                     } else if (command.equals("e8c8")) {
-                        command = "e8a8";
+                        if (state[7][4].getPiece().toString().equals("BLACK KING")) {
+                            command = "e8a8";
+                        }
                     }
-                    
-                    if (command.length() == 5){
-                        command = command.substring(0,4);
+
+                    if (command.length() == 5) {
+                        command = command.substring(0, 4);
                     }
                     Move[] moves = o.getLegalMoves();
                     Move move = convertToMove(command, moves);
@@ -113,12 +124,12 @@ public class Connection {
                             String output = adjustForCastlingSyntax(enginemove.toString());
                             response.write("move " + output + "\n");
                             response.flush();
-                        } else if (checkForPawnPromotion(enginemove)){
+                        } else if (checkForPawnPromotion(enginemove)) {
                             String output = enginemove.toString();
                             output = output + "q";
                             response.write("move " + enginemove + "\n");
                             response.flush();
-                            
+
                         } else {
                             response.write("move " + enginemove + "\n");
                             response.flush();
@@ -135,13 +146,14 @@ public class Connection {
         }
 
     }
+
     //Checks if engine move is a pawn promotion, which requires an adjusted syntax for XBoard
-    private Boolean checkForPawnPromotion(Move enginemove){
-        Boolean result =(enginemove.getPiece().toString().contains("PAWN") 
-                && (enginemove.getDestinationSquare().getRank() == 1||enginemove.getDestinationSquare().getRank() == 8));
+    private Boolean checkForPawnPromotion(Move enginemove) {
+        Boolean result = (enginemove.getPiece().toString().contains("PAWN")
+                && (enginemove.getDestinationSquare().getRank() == 1 || enginemove.getDestinationSquare().getRank() == 8));
         return result;
     }
-    
+
     //Makes engine's syntax for castling compatible with XBoard
     private String adjustForCastlingSyntax(String enginemove) {
         String output = "";
@@ -156,7 +168,7 @@ public class Connection {
         }
         return output;
     }
-    
+
     //Checks if received command was a move
     private Boolean checkForMove(String command) {
         Integer r1 = -1;
@@ -177,6 +189,7 @@ public class Connection {
         }
         return false;
     }
+
     //Converts command received from XBoard to a Move class object
     private Move convertToMove(String input, Move[] legalmoves) {
         if (input.length() > 4 || input.length() < 4) {

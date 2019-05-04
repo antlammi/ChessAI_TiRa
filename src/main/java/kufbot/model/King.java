@@ -67,8 +67,8 @@ public class King implements Piece {
      */
     public void setMoved(Boolean moved) {
         if (!this.castled) {
-            this.baseValue = 14.5;
-            updateValue(0);
+            this.baseValue = 14.0; //If King has not yet castled, makes engine not want to move the King.
+            updateValue();
         }
         this.moved = moved;
     }
@@ -81,11 +81,11 @@ public class King implements Piece {
         this.castled = castled;
 
         if (castled) {
-            this.baseValue = 16.0; //probably too high but if it is too low the engine will almost never castle
-            updateValue(0);
+            this.baseValue = 16.0; //Higher basevalue makes engine utilize castling more
+            updateValue();
         } else {
             this.baseValue = 15.0;
-            updateValue(0);
+            updateValue();
         }
     }
 
@@ -255,12 +255,13 @@ public class King implements Piece {
     }
 
     /**
-     * Updates value based on number of Squares available, currently a poor implementation
+     * Just leaves value as it is to not generally make king moves desired. 
+     * Would be nice for lategame scenarios, though.
      * @param moves
      */
     @Override
-    public void updateValue(Integer moves) {
-        this.value = (baseValue + (1.0 * moves / 100));
+    public void updateValue() {
+        this.value = baseValue;
     }
 
     /**

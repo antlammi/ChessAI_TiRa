@@ -119,12 +119,12 @@ public class Queen implements Piece {
     }
 
     /**
-     * Updates piece value based on location.
+     * Updates piece value based on number of moves available.
      * @param moves
      */
     @Override
-    public void updateValue(Integer moves){
-        this.value = baseValue+(1.0*moves/200);
+    public void updateValue(){
+        this.value = baseValue+(1.0*getLegalMoves().length/200);
     }
     
     /**

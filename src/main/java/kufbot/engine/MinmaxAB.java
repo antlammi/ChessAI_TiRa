@@ -24,7 +24,7 @@ public class MinmaxAB implements Engine {
     private java.util.Random random;
     private Boolean dynamicdepth;
     private Boolean prints;
-
+    private Double variance;
     /**
      *
      * @param player
@@ -41,6 +41,7 @@ public class MinmaxAB implements Engine {
         this.random = new java.util.Random();
         this.dynamicdepth = dynamicdepth;
         this.prints = prints;
+        this.variance = 0.01; //determines how large difference in evaluation can be for moves to be considered equal
     }
 
     /**
@@ -163,12 +164,12 @@ public class MinmaxAB implements Engine {
                 }
                 Double scoreDifferential = moveScore - maxScore;
 
-                if (moveScore > maxScore && scoreDifferential > 0.0025) {  //if the move is better by more than 0.0025
+                if (moveScore > maxScore && scoreDifferential > variance) {  //if the move score is better by more than variance 
                     maxScore = moveScore;
                     bmcount = 0;
                     bestMoves = new Move[moves.length];
                     bestMoves[bmcount] = currentMove;
-                } else if (scoreDifferential <= 0.0025 && scoreDifferential >= -0.0025) {//if the moves are practically equal
+                } else if (scoreDifferential <= variance && scoreDifferential >= -variance) {//if the moves are practically equal
                     bmcount++;
                     bestMoves[bmcount] = currentMove;
                 }
@@ -198,19 +199,19 @@ public class MinmaxAB implements Engine {
                 if (oMove.getPlayer().getColor() == maximizing.getColor()) {
                     oMove.execute();
                     moveScore = oMove.getPlayer().getScore();
-                    oMove.rollback();
+                    
 
                 } else {
                     moveScore = -oMove.getPlayer().getScore();
-                    oMove.rollback();
+                   
                 }
                 Double scoreDifferential = moveScore - minScore;
-                if (moveScore < minScore && scoreDifferential < -0.0025) { //if the move is better by more than 0.0025, increasing this number increases variance in moves
+                if (moveScore < minScore && scoreDifferential < -variance) { 
                     minScore = moveScore;
                     bmcount = 0;
                     bestMoves = new Move[moves.length];
                     bestMoves[bmcount] = currentMove;
-                } else if (scoreDifferential >= -0.0025 && scoreDifferential <= 0.0025) {
+                } else if (scoreDifferential >= -variance && scoreDifferential <= variance) {
                     bmcount++;
                     bestMoves[bmcount] = currentMove;
                 }

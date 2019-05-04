@@ -39,6 +39,7 @@ public class Move {
 
     /**
      * Pseudoconstructor for most moves
+     *
      * @param piece Piece that is to be moved
      * @param current Square the piece starts on
      * @param destination Square the piece is moving to
@@ -87,6 +88,7 @@ public class Move {
 
     /**
      * Pseudoconstructor for castling move
+     *
      * @param king King that is to be moved
      * @param rookH Rook that is to be moved
      * @param current Square the king starts on
@@ -131,7 +133,8 @@ public class Move {
     }
 
     /**
-     * Executes the move, checks for pawn promotion and updates Squares affected.
+     * Executes the move, checks for pawn promotion and updates Squares
+     * affected.
      */
     public void execute() {
         if (current.getPiece().toString().contains("ROOK")) {
@@ -168,9 +171,9 @@ public class Move {
             destination.capture(piece);
             piece.setSquare(destination);
         }
-        if (!isKing) {
-            finetunePieceValue();
-        }
+
+        this.piece.updateValue();
+
     }
 
     private void rollbackCastle() {
@@ -193,7 +196,8 @@ public class Move {
     }
 
     /**
-     * Rolls a move back, returning the state to how it was before the move was executed. 
+     * Rolls a move back, returning the state to how it was before the move was
+     * executed.
      */
     public void rollback() {
 
@@ -221,27 +225,11 @@ public class Move {
 
     }
 
-    private void finetunePieceValue() {
-        if (this.piece.toString().contains("PAWN")) {
-            this.piece.updateValue(destination.getRank());
-        } else {
-            Integer movecount = 0;
-            Move[] moves = this.piece.getLegalMoves();
-            for (int i = 0; i < moves.length; i++) {
-                if (moves[i] != null) {
-                    movecount++;
-                } else {
-                    break;
-                }
-            }
-            this.piece.updateValue(movecount);
-        }
-    }
-
-    
+  
 
     /**
      * Clones a move to use the boardstate given as a parameter
+     *
      * @param boardstatecopy
      * @return
      */

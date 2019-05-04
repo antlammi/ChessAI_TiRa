@@ -147,13 +147,14 @@ public class Bishop implements Piece {
 
    
     /**
-     * Updates the value of the piece based on its location
+     * Updates the value of the piece based on how many moves it has available
      *
      * @param moves
      */
     @Override
-    public void updateValue(Integer moves) {
-        this.value = this.baseValue + (1.0 * moves / 100);
+    public void updateValue() {
+       
+        this.value = this.baseValue + (1.0 * getLegalMoves().length / 100);
     }
 
     /**

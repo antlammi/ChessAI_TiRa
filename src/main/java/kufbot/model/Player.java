@@ -5,7 +5,6 @@
  */
 package kufbot.model;
 
-import java.io.PrintWriter;
 
 /**
  *

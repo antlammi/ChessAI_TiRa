@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package kufbot.model;
-import java.util.ArrayList;
 
 /**
  *
@@ -46,7 +45,7 @@ public interface Piece {
      * Updates value of the piece based on position.
      * @param moves
      */
-    public void updateValue(Integer moves); 
+    public void updateValue(); 
 
     /**
      * Sets a value for the piece, used when cloning pieces.

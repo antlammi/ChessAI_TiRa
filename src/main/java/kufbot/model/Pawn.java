@@ -34,7 +34,7 @@ public class Pawn implements Piece {
         this.baseValue = 1.0;
         this.value = baseValue;
     }
-
+    
     @Override
     public String toString() {
         return color + " PAWN";
@@ -177,27 +177,26 @@ public class Pawn implements Piece {
      * is considered more valuable.
      * @param rank
      */
-    @Override   //finetuning later
-    public void updateValue(Integer rank) {
-
+    @Override   
+    public void updateValue() {
+        
         Integer f = current.getFile() - 1;
         Double rankValue;
-        Integer filefactor;
+        Double filefactor;
         if (f == 3 | f == 4) {
-            filefactor = 40; //makes the engine prefer pushing pawns in the middle, especially early on. Leads to better openings at least.
+            filefactor = 40.0; //makes the engine prefer pushing pawns in the middle, especially early on. Leads to better openings at least.
             if (this.color == Color.WHITE) {
-
-                rankValue = 1.0 * current.getRank() - 2;
+                rankValue = 1.0 * current.getRank() - 1;
                 this.value = (rankValue / filefactor) + this.baseValue;
             } else {
                 rankValue = -1.0 * (current.getRank() - 1 - 6);
                 this.value = (rankValue / filefactor) + this.baseValue;
             }
         } else {
-            filefactor=80;
+            filefactor=120.0;
             if (this.color == Color.WHITE) {
 
-                rankValue = 1.0 * current.getRank() - 2;
+                rankValue = 1.0 * current.getRank() - 1;
                 this.value = (rankValue / filefactor) + this.baseValue;
             } else {
                 rankValue = -1.0 * (current.getRank() - 1 - 6);
