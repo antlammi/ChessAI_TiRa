@@ -41,7 +41,7 @@ public class MinmaxAB implements Engine {
         this.random = new java.util.Random();
         this.dynamicdepth = dynamicdepth;
         this.prints = prints;
-        this.variance = 0.0; //determines how large difference in evaluation can be for moves to be considered equal
+        this.variance = 0.005; //determines how large difference in evaluation can be for moves to be considered equal
     }
 
     /**
