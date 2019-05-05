@@ -70,9 +70,10 @@ public class PlayerTest {
         Player black = new Player(Color.BLACK, state);
         Move[] openingMoves = black.getLegalMoves();
         String[] correctMoves = {
+            "b8a6", "b8c6", "g8f6", "g8h6",
             "a7a6", "a7a5", "b7b6", "b7b5", "c7c6", "c7c5", "d7d6", "d7d5",
             "e7e6", "e7e5", "f7f6", "f7f5", "g7g6", "g7g5", "h7h6", "h7h5",
-            "b8a6", "b8c6", "g8f6", "g8h6"
+            
         };
         for (int i = 0; i < openingMoves.length; i++) {
             assertEquals(correctMoves[i], openingMoves[i].toString());

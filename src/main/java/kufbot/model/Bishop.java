@@ -154,7 +154,7 @@ public class Bishop implements Piece {
     @Override
     public void updateValue() {
        
-        this.value = this.baseValue + (1.0 * getLegalMoves().length / 60);
+        this.value = this.baseValue + (1.0 * getLegalMoves().length / 67.5);
     }
 
     /**

@@ -5,7 +5,6 @@
  */
 package kufbot.model;
 
-
 /**
  *
  * @author antlammi
@@ -45,8 +44,8 @@ public class Player {
     }
 
     /**
-     * Updates player's Score, King's location
-     * number of pieces remaining, and Squares occupied
+     * Updates player's Score, King's location number of pieces remaining, and
+     * Squares occupied
      */
     public void updatePlayer() {
         this.occupiedSquares = new Square[piececount];
@@ -90,7 +89,9 @@ public class Player {
     }
 
     /**
-     * Provides an array with "legal" moves from all the pieces, does not check if King is left in check.
+     * Provides an array with "legal" moves from all the pieces, does not check
+     * if King is left in check.
+     *
      * @return Move[]
      */
     public Move[] getPossibleMoves() {
@@ -125,17 +126,23 @@ public class Player {
 
     /**
      * Checks possible moves for King being in check after the move is made
-     * Sorts Array based on if a Move includes Capturing a minor piece, pawn, or no capture
+     * Sorts Array based on if a Move includes Capturing a minor piece, pawn, or
+     * no capture
+     *
      * @return Move[]
      */
-    public Move[] getLegalMoves() { 
+    public Move[] getLegalMoves() {
         Move[] moves = getPossibleMoves();
-        Move[][] legalMoves = new Move[3][];
-        legalMoves[0] = new Move[moves.length]; //Low priority moves
-        legalMoves[1] = new Move[moves.length]; //Medium priority moves
-        legalMoves[2] = new Move[moves.length]; //High priority moves
+        Move[][] legalMoves = new Move[5][];
+        legalMoves[0] = new Move[moves.length]; //Pawn moves without a capture
+        legalMoves[1] = new Move[moves.length]; //Moves involving Minor pieces without a capture
+        legalMoves[2] = new Move[moves.length]; //Moves involving Major pieces without a capture
+        legalMoves[3] = new Move[moves.length]; //Moves with Pawns captured
+        legalMoves[4] = new Move[moves.length]; //Moves with Minor/Major pieces captured
         Integer capturecount = 0;
         Integer pawncapturecount = 0;
+        Integer emptymajorcount = 0;
+        Integer emptyminorcount = 0;
         Integer emptycount = 0;
         Integer legalcount = 0;
         for (int i = 0; i < moves.length; i++) {
@@ -165,15 +172,26 @@ public class Player {
             King king = (King) stateToCheck[kr][kf].getPiece();
             if (!king.isInCheck(stateToCheck[kr][kf])) {
                 if (current.getDestinationSquare().isEmpty()) {
-                    legalMoves[0][emptycount] = moves[i];
-                    emptycount++;
-                    legalcount++;
+                    String cps = current.getCurrentSquare().getPiece().toString();
+                    if (cps.contains("PAWN")) {
+                        legalMoves[0][emptycount] = moves[i];
+                        emptycount++;
+                        legalcount++;
+                    } else if (cps.contains("QUEEN") || cps.contains("ROOK")) {
+                        legalMoves[2][emptymajorcount] = moves[i];
+                        emptymajorcount++;
+                        legalcount++;
+                    } else {
+                        legalMoves[1][emptyminorcount] = moves[i];
+                        emptyminorcount++;
+                        legalcount++;
+                    }
                 } else if (current.getDestinationSquare().getPiece().toString().contains("PAWN")) {
-                    legalMoves[1][pawncapturecount] = moves[i];
+                    legalMoves[3][pawncapturecount] = moves[i];
                     pawncapturecount++;
                     legalcount++;
                 } else if (!current.getDestinationSquare().getPiece().toString().contains("KING")) { //Kings are never captured in a game of chess.
-                    legalMoves[2][capturecount] = moves[i];
+                    legalMoves[4][capturecount] = moves[i];
                     capturecount++;
                     legalcount++;
                 }
@@ -183,13 +201,35 @@ public class Player {
         //Moves including captures are added to the front of array, pawn captures in middle improves performance of minmaxAB
         Move[] movesToReturn = new Move[legalcount];
         for (int i = 0; i < capturecount; i++) {
-            movesToReturn[i] = legalMoves[2][i];
+            movesToReturn[i] = legalMoves[4][i];
         }
-        for (int i = capturecount; i < (capturecount + pawncapturecount); i++) {
-            movesToReturn[i] = legalMoves[1][i - capturecount];
+        
+        int start_i = capturecount;
+        int end_i = capturecount+pawncapturecount;
+        
+        for (int i = start_i; i < (end_i); i++) {
+            movesToReturn[i] = legalMoves[3][i - start_i];
         }
-        for (int i = (capturecount + pawncapturecount); i < legalcount; i++) {
-            movesToReturn[i] = legalMoves[0][i - (pawncapturecount + capturecount)];
+        
+        start_i = end_i;
+        end_i += emptymajorcount;
+        
+        for (int i = start_i; i < end_i; i++) {
+             movesToReturn[i] = legalMoves[2][i - start_i];
+        }
+        
+        start_i = end_i;
+        end_i += emptyminorcount;
+        
+        for (int i = start_i; i < end_i; i++) {
+            movesToReturn[i] = legalMoves[1][i - start_i];
+        }
+        
+        start_i = end_i;
+        end_i += emptycount;
+        
+        for (int i = start_i; i < end_i; i++) {
+            movesToReturn[i] = legalMoves[0][i - start_i];
         }
         return movesToReturn;
     }
@@ -221,9 +261,10 @@ public class Player {
 
     /**
      * Used in case of a stalemate or mate, to override board state value
+     *
      * @param score
      */
-    public void setScore(Double score) { 
+    public void setScore(Double score) {
         this.score = score;
     }
 

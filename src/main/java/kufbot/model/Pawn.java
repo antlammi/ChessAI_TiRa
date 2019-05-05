@@ -193,7 +193,7 @@ public class Pawn implements Piece {
         Double filefactor;
 
         if (f == 3 || f == 4) {
-            filefactor = 20.0; //makes the engine prefer pushing pawns in the middle, especially early on. Leads to better openings at least.
+            filefactor = 10.0; //makes the engine prefer pushing pawns in the middle, especially early on. Leads to better openings at least.
             if (this.color == Color.WHITE) {
                 rankValue = 1.0 * r - 1;
                 this.value = (rankValue / filefactor) + this.baseValue;
@@ -205,7 +205,7 @@ public class Pawn implements Piece {
             if (r < 5 && this.color == Color.WHITE || r > 2 && this.color == Color.BLACK) {
                 this.value = this.baseValue;
             } else {
-                filefactor = 20.0;
+                filefactor = 10.0;
                 if (this.color == Color.WHITE) {
                     rankValue = 1.0 * r - 1;
                     this.value = (rankValue / filefactor) + this.baseValue;
@@ -216,9 +216,9 @@ public class Pawn implements Piece {
             }
         } else {
             if (r < 5 && this.color == Color.WHITE || r > 2 && this.color == Color.BLACK) { //Queenside pawns can be pushed early but not given a lot of incentive to do so.
-                filefactor = 130.0;
+                filefactor = 100.0;
             } else {
-                filefactor = 20.0;
+                filefactor = 10.0;
 
             }
             if (this.color == Color.WHITE) {
