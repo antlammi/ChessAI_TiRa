@@ -15,7 +15,7 @@ The Player.java class is in charge of one player in a chess game. It contains in
 
 The Game.java class handles an actual game of chess. This includes asking for Moves from Players and updating the Players statuses after each move. It also checks for mates after each move is made.
 
-Below is a diagram showing roughly the relationships of the classes in the kufbot.model package. In actuality the Board class is only initially used to create a two dimensional array of Squares, which is then used by the classes in question. The relationship between Pieces and Squares is actually 0..1 - 1.
+Below is a diagram showing roughly the relationships of the classes in the kufbot.model package. In actuality the Board class is only initially used to create a two dimensional array of Squares, which is then used by the classes in question. 
   
 ![Class Diagram](https://github.com/antlammi/ChessAI_TiRa/blob/master/documentation/Chess%20Engine%20Diagram.png)   
     
@@ -46,16 +46,34 @@ Using alpha and beta some subtrees can be completely ignored, as a better move i
 Below is a sequence diagram of how MinmaxAB generates a move for the engine. Note that it at every other depth the player, whose move is being considered changes. This is not made very clear by the diagram.
 ![Sequence Diagram](https://github.com/antlammi/ChessAI_TiRa/blob/master/documentation/Sequence%20Diagram%20MinmaxAB.png)
 
-### Achieved performance 
-#### MinmaxAB
+## Achieved performance 
+### MinmaxAB
 Currently the MinmaxAB implementation is actually decent. Some additional time is spent copying boardstates for moves (which strictly speaking is not necessary, but was rather difficult to get rid of without causing issues with the implementation of the model). Outside of getting rid of this this, the main way to improve performance for the algorithm itself would be actually building and sustaining a tree during the initial search. After this, the executed move would be turned into the root of the tree, and other subtrees would be disregarded. Then only the nodes at maximum depth would need to be searched, providing a significant improvement to performance. This was mostly not done due to time constraints with the project. As the Minmax algorithm logically already works like a tree, this would not be too difficult to implement.
  
-#### Model
+### Model
 The Model implementation could be improved a lot in terms of performance. Mainly the issues lie in Moves and Boardstates being redundantly copied and each call of King isInCheck() (required for possible move) requiring every possible move by the opponent to be generated. There likely is a way to subvert this by only only generating new moves for Pieces that had their moves affected by the previous move. This is non-trivial to implement and would require some work in several areas of the application. If somehow implemented however, it would likely be useable to only generate Moves for Pieces that were affected in Player.getLegalMoves() as well. All in all with realistic changes, without a complete rewrite of the code, move generation could probably be made to be faster by a factor of 100, with the mentioned changes and more efficient data structures. Of course, this number is just a guess really.
 
 Of course the best Chess engines typically use a Bitboard to handle their internal states efficiently, and that would be preferable for this as well and provide an even greater improvement for processing speed. I deemed this to be unnecessary for the goals of the course, and require too much research to implement. If I ever build another engine, I will likely try to utilize this from the beginning, however.
 
+### Performance Tests
 
--- Actual numbers on performance to be included here --
-
+|Scenario|Depth|Time Elapsed (ms)|
+|--------|-----|-----------------|
+|Opening Move (White)|1|6|
+|Opening Move (White)|2|66|
+|Opening Move (White)|3|583|
+|Opening Move (White)|4|3953|
+|Opening Move (White)|5|35959|
+||||
+|Opening Move (Black)|1|16|
+|Opening Move (Black)|2|96|
+|Opening Move (Black)|3|498|
+|Opening Move (Black)|4|4866|
+|Opening Move (Black)|5|31034|
+||||
+|Midgame|1|30|
+|Midgame|2|136|
+|Midgame|3|2509|
+|Midgame|4|10800|
+|Midgame|5|117652|
 
