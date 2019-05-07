@@ -51,7 +51,6 @@ public class QueenTest {
         for (int i = 0; i < queenLegalMoves.length; i++) {
             assertNull(queenLegalMoves[i]);
         }
-
     }
 
     @Test
@@ -99,6 +98,5 @@ public class QueenTest {
                 assertEquals(correctQueenMoves[i].toString(), queenMoves[i].toString());
             }
         }
-
     }
 }

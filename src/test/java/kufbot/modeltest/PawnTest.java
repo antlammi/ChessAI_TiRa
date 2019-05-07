@@ -25,7 +25,6 @@ public class PawnTest {
 
     private Board board;
     private Square[][] state;
-    private String[] files;
 
     public PawnTest() {
     }
@@ -42,7 +41,7 @@ public class PawnTest {
     public void setUp() {
         this.board = new Board();
         this.state = board.getBoardState();
-        this.files = new String[]{"a", "b", "c", "d", "e", "f", "g", "h"};
+       
     }
 
     @After

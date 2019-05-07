@@ -114,7 +114,7 @@ public class MinmaxTest {
         assert (true); //Only purpose of the test is to see if an exception is thrown, if this line is reached it was not.
 
     }
-
+    
     @Test
     public void doesNotHangQueenScenario1Depth2() { //Sees that by capturing pawn on a5 it will get captured by the rook
         Piece one = state[1][0].getPiece();
@@ -287,53 +287,6 @@ public class MinmaxTest {
         playerB.getMove();
         assert (true); //if reached, no exception was thrown
 
-    }
-    @Test
-    public void findsMateInOneScenario1(){
-        /*
-        24: 
-e8f8
-| A  | B  | C  | D  | E  | F  | G  | H  |
-|    |    | WR | BKN|    | BK |    | WB | 8
-
-|    |    |    |    | WR |    |    |    | 7
-
-|    |    |    |    |    | WP |    |    | 6
-
-|    | BP | BP | BP |    |    |    |    | 5
-
-|    |    |    |    |    |    |    |    | 4
-
-|    |    | WP | BP | WP |    | BP |    | 3
-
-|    |    |    | WP |    |    |    |    | 2
-
-|    | WKN|    |    | WK |    | WKN|    | 1
-
-Finding the move took 4701 milliseconds.
-25: 
-g1e2
-| A  | B  | C  | D  | E  | F  | G  | H  |
-|    |    | WR | BKN|    | BK |    | WB | 8
-
-|    |    |    |    | WR |    |    |    | 7
-
-|    |    |    |    |    | WP |    |    | 6
-
-|    | BP | BP | BP |    |    |    |    | 5
-
-|    |    |    |    |    |    |    |    | 4
-
-|    |    | WP | BP | WP |    | BP |    | 3
-
-|    |    |    | WP | WKN|    |    |    | 2
-
-|    | WKN|    |    | WK |    |    |    | 1
-
-Finding the move took 29272 milliseconds.
-        */
-        
-    
     }
     
     @Test

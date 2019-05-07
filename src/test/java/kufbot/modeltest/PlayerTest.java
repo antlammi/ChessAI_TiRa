@@ -177,6 +177,7 @@ public class PlayerTest {
             assertNotEquals(move, legalMoves[i]);
         }
     }
+    
     @Test
     public void whitePawnCannotCaptureKingOnSameFileThroughPlayerClassScenario1() {
         Pawn wp = (Pawn) state[1][4].getPiece();
@@ -203,6 +204,7 @@ public class PlayerTest {
             }
         }
     }
+    
     @Test
     public void whitePawnCannotCaptureKingOnSameFileThroughPlayerClassScenario2() {
         Pawn wp = (Pawn) state[1][4].getPiece();

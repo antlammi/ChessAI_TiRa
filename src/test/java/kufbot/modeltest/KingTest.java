@@ -6,12 +6,10 @@
 package modeltest;
 
 import kufbot.model.Board;
-import kufbot.model.Color;
 import kufbot.model.King;
 import kufbot.model.Knight;
 import kufbot.model.Move;
 import kufbot.model.Pawn;
-import kufbot.model.PieceFactory;
 import kufbot.model.Queen;
 import kufbot.model.Rook;
 import kufbot.model.Square;

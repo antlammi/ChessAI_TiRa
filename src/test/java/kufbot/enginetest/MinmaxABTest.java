@@ -48,12 +48,12 @@ public class MinmaxABTest {
 
     @Before
     public void setUp() {
-        Board board = new Board();
-        this.state = board.getBoardState();
-        Player w = new Player(Color.WHITE, state);
-        Player b = new Player(Color.BLACK, state);
-        this.playerW = new MinmaxAB(w, b, state, 2, false, false);
-        this.playerB = new MinmaxAB(b, w, state, 2, false, false);
+            Board board = new Board();
+            this.state = board.getBoardState();
+            Player w = new Player(Color.WHITE, state);
+            Player b = new Player(Color.BLACK, state);
+            this.playerW = new MinmaxAB(w, b, state, 2, false, false);
+            this.playerB = new MinmaxAB(b, w, state, 2, false, false);
 
     }
 
@@ -218,7 +218,6 @@ public class MinmaxABTest {
         }
         assertTrue(incorrectMoveMade);
     }
-
     @Test
     public void doesNotHangQueenScenario3Depth3() { //fringe scenario where queen was hung, did not re-occur. Lowered variance in minmaxAB should fix.
         Piece p = state[1][6].getPiece();

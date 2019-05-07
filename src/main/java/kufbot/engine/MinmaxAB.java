@@ -195,7 +195,7 @@ public class MinmaxAB implements Engine {
                 Move currentMove = moves[i].cloneMove(copyState);
                 currentMove.setPlayer(currentPlayer);
                 Move oMove = minimaxAB(copyState, depth + 1, maximizing, currentMove, alpha, beta);
-                Double moveScore;
+                Double moveScore; 
                 if (oMove.getPlayer().getColor() == maximizing.getColor()) {
                     oMove.execute();
                     moveScore = oMove.getPlayer().getScore();

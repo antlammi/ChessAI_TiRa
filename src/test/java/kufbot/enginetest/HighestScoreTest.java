@@ -37,7 +37,6 @@ public class HighestScoreTest {
     private Square[][] state;
 
     public HighestScoreTest() {
-
     }
 
     @BeforeClass

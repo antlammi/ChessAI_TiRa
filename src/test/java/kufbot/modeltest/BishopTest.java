@@ -23,7 +23,6 @@ public class BishopTest {
 
     private Board board;
     private Square[][] state;
-
     public BishopTest() {
     }
 

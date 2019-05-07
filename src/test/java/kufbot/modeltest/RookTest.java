@@ -21,7 +21,6 @@ public class RookTest {
 
     private Board board;
     private Square[][] state;
-    private String[] files;
 
     public RookTest() {
     }
@@ -38,7 +37,6 @@ public class RookTest {
     public void setUp() {
         this.board = new Board();
         this.state = board.getBoardState();
-        this.files = new String[]{"a", "b", "c", "d", "e", "f", "g", "h"};
     }
 
     @After
