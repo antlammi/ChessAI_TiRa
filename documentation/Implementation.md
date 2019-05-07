@@ -34,27 +34,13 @@ Variable minScore refers to the best score available to the opposing player, aga
 Variable alpha is the best score the player initiating the search is assured of based on moves already looked at.
 Variable beta is the best score the opponent is assured of based on moves already looked at.    
 
-Using alpha and beta some subtrees can be completely ignored, as a better move is guaranteed to exist.    
-
-### Achieved performance 
-#### MinmaxAB
-Currently the MinmaxAB implementation is actually decent. Some additional time is spent copying boardstates for moves (which strictly speaking is not necessary, but was rather difficult to get rid of without causing issues with the implementation of the model). Outside of getting rid of this this, the main way to improve performance for the algorithm itself would be actually building and sustaining a tree during the initial search. After this, the executed node would be turned into the root of the tree, and other subtrees would be disregarded. Then only the nodes at maximum depth would need to be searched, providing a significant improvement to performance. This was mostly not done due to time constraints with the project. As the Minmax algorithm logically already works like a tree, this would not be too difficult to implement.
- 
-#### Model
-The Model implementation could be improved a lot in terms of performance. Mainly the issues lie in Moves and Boardstates being redundantly copied and each call of King isInCheck() (required for possible move) requiring every possible move by the opponent to be generated. There likely is a way to subvert this by only only generating new moves for Pieces that had their moves affected by the previous move. This is non-trivial to implement and would require some work in several areas of the application. If somehow implemented however, it would likely be useable to only generate Moves for Pieces that were affected in Player.getLegalMoves() as well. All in all with realistic changes, without a complete rewrite of the code, move generation could probably be made to be faster by a factor of 100, with the mentioned changes and more efficient data structures. Of course, this number is just a guess really.
-
-Of course the best Chess engines typically use a Bitboard to handle their internal states efficiently, and that would be preferable for this as well and provide an even greater improvement for processing speed. I deemed this to be unnecessary for the goals of the course, and require too much research to implement. If I ever build another engine, I will likely try to utilize this from the beginning, however.
-
-
--- Actual numbers on performance to be included here --
+Using alpha and beta some subtrees can be completely ignored, as a better move is guaranteed to exist.  
 
 ## Example
 
 Here I will provide a slightly simplified example of how the Engine (specifically MinmaxAB) chooses the best move. 
 On to the example:    
 - the Game.java class calls getMove() in MinmaxAB  
-
-
 - minimaxAB(this.state, 0, this.maxplayer, null, -Double.MAX_VALUE, Double.MAX_VALUE) is called in MinmaxAB to start the algorithm  
 - If the previous move was not null (initial call) the previous move is executed
 - minimaxAB calls getLegalMoves() in Player to receive an array with the available moves in the current position
@@ -81,3 +67,17 @@ see if alpha > beta the loop is broken and no further moves need to be investiga
 - The best move is returned by minimaxAB    
         
 (Teen tästä sekvenssidiagrammin tulevina päivinä)
+
+### Achieved performance 
+#### MinmaxAB
+Currently the MinmaxAB implementation is actually decent. Some additional time is spent copying boardstates for moves (which strictly speaking is not necessary, but was rather difficult to get rid of without causing issues with the implementation of the model). Outside of getting rid of this this, the main way to improve performance for the algorithm itself would be actually building and sustaining a tree during the initial search. After this, the executed node would be turned into the root of the tree, and other subtrees would be disregarded. Then only the nodes at maximum depth would need to be searched, providing a significant improvement to performance. This was mostly not done due to time constraints with the project. As the Minmax algorithm logically already works like a tree, this would not be too difficult to implement.
+ 
+#### Model
+The Model implementation could be improved a lot in terms of performance. Mainly the issues lie in Moves and Boardstates being redundantly copied and each call of King isInCheck() (required for possible move) requiring every possible move by the opponent to be generated. There likely is a way to subvert this by only only generating new moves for Pieces that had their moves affected by the previous move. This is non-trivial to implement and would require some work in several areas of the application. If somehow implemented however, it would likely be useable to only generate Moves for Pieces that were affected in Player.getLegalMoves() as well. All in all with realistic changes, without a complete rewrite of the code, move generation could probably be made to be faster by a factor of 100, with the mentioned changes and more efficient data structures. Of course, this number is just a guess really.
+
+Of course the best Chess engines typically use a Bitboard to handle their internal states efficiently, and that would be preferable for this as well and provide an even greater improvement for processing speed. I deemed this to be unnecessary for the goals of the course, and require too much research to implement. If I ever build another engine, I will likely try to utilize this from the beginning, however.
+
+
+-- Actual numbers on performance to be included here --
+
+
