@@ -1,14 +1,14 @@
 ## Unit Testing
 ### Overall Test Coverage
 
-![Image](https://github.com/antlammi/ChessAI_TiRa/blob/master/documentation/Test%20Coverage%206.png)
+![Image](https://github.com/antlammi/ChessAI_TiRa/blob/master/documentation/Test%20Coverage%207.png)
 
 ### Model
 Currently unit test coverage is around 87% (for branches, 92% for instructions) with most of the classes in the model package being thoroughly tested.
 
 The tests for all the Pieces follow the same basic pattern. Either the opening position or a specifically setup boardstate is prepared, followed by comparing the results of the getLegalMoves() method to a correct list of string representations of moves. Where the color of the piece is relevant (mainly the Pawn class) symmetrical tests are done for both white and black pieces.     
 #### Coverage for Model
-![Image](https://github.com/antlammi/ChessAI_TiRa/blob/master/documentation/Test%20Coverage%203.png)
+![Image](https://github.com/antlammi/ChessAI_TiRa/blob/master/documentation/Test%20Coverage%208.png)
 
 ### Engine
 Currently unit test coverage is around 57% (for branches, 69% for instructions). This number is however, not very representative. Minmax and MinmaxAB are tested very thoroughly, as is HighestScore. The coverage is low mostly due to the lack of tests for the Human class. While some tests for the class might make sense, there is a chance it will be made completely obsolete by the time the project is complete, so testing it now seems of questionable value.
@@ -21,7 +21,7 @@ Finally, there are some tests in MinmaxAB that compare the speed of finding move
 
 
 #### Coverage for Engine
-![Image](https://github.com/antlammi/ChessAI_TiRa/blob/master/documentation/Test%20Coverage%205.png)
+![Image](https://github.com/antlammi/ChessAI_TiRa/blob/master/documentation/Test%20Coverage%209.png)
 
 More or less the only instructions not covered in Minmax and MinmaxAB are to do with the section of code that dynamically changes the depth based on how long it took to find the move. Pictured below.
 ![Image](https://github.com/antlammi/ChessAI_TiRa/blob/master/documentation/Test%20Coverage%204.png)
