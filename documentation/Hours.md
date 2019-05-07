@@ -1,3 +1,5 @@
+**Total time spent on the project: 108 hours**    
+
 ## Week 1
 |Date |Duration|Task|
 |-----|--------|----|
@@ -96,3 +98,5 @@
 |3.5. |2h      |Attempted to fix bugs, but just kept discovering more. Resetting to last stable build and working from there|
 |4.5. |2.5h    |Reworked move generation in Bishop and Rook for slight increase in efficiency|
 |4.5. |1.5h    |Adjusting piece values throughout app, made engine prefer faster mates|
+|7.5. |4h      |Documentation, Performance tests and final release|
+|Total|28h     || 
