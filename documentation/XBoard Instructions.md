@@ -8,3 +8,5 @@
   ```
   5. Select "Engine/Load New 1st Engine..." and choose the engine.
   6. You're all set. If you want to play as White, just make an opening move. If you want to play as Black, select "File/New Game" and "Mode/Engine White"
+
+The implementation of the XBoard connection is very basic, so it is recommended you repeat steps 5 or 6 each time you want to play a game.
