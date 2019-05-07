@@ -55,7 +55,25 @@ The Model implementation could be improved a lot in terms of performance. Mainly
 
 Of course the best Chess engines typically use a Bitboard to handle their internal states efficiently, and that would be preferable for this as well and provide an even greater improvement for processing speed. I deemed this to be unnecessary for the goals of the course, and require too much research to implement. If I ever build another engine, I will likely try to utilize this from the beginning, however.
 
+##### Performance Tests
 
--- Actual numbers on performance to be included here --
-
+|Scenario|Depth|Time Elapsed (ms)|
+|--------|-----|-----------------|
+|Opening Move (White)|1|6|
+|Opening Move (White)|2|66|
+|Opening Move (White)|3|583|
+|Opening Move (White)|4|3953|
+|Opening Move (White)|5|35959|
+||||
+|Opening Move (Black)|1|16|
+|Opening Move (Black)|2|96|
+|Opening Move (Black)|3|498|
+|Opening Move (Black)|4|4866|
+|Opening Move (Black)|5|31034|
+||||
+|Midgame|1|30|
+|Midgame|2|136|
+|Midgame|3|2509|
+|Midgame|4|10800|
+|Midgame|5|117652|
 
