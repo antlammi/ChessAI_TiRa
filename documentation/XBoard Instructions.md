@@ -1,5 +1,5 @@
 1. Download and install [XBoard](https://www.gnu.org/software/xboard/) for Unix systems or [WinBoard](https://www.gnu.org/software/xboard/#tag-A1) for Windows    
-2. Download Jar file of the latest release
+2. Download the [latest version](https://github.com/antlammi/ChessAI_TiRa/releases/download/1.0/kufbot.jar)
 3. Open XBoard app
 4. Select "Engine/Edit Engine List..." and add the following line
   ```
