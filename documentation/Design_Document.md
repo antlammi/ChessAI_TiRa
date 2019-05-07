@@ -11,3 +11,6 @@ The AI searches through a minimax game tree using an Alpha-Beta pruning implemen
 *Best-case:O(√b<sup>d</sup>)*
 
 Where b is the average number of moves per level in the tree and d is its depth.
+
+Thanks to move ordering being implemented, the average performance for the algorithm should be slightly closer to best-case than worst-case, but an exact estimate is difficult to provide. 
+

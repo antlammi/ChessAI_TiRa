@@ -25,3 +25,7 @@ Finally, there are some tests in MinmaxAB that compare the speed of finding move
 
 More or less the only instructions not covered in Minmax and MinmaxAB are to do with the section of code that dynamically changes the depth based on how long it took to find the move. Pictured below.
 ![Image](https://github.com/antlammi/ChessAI_TiRa/blob/master/documentation/Test%20Coverage%204.png)
+
+### Connection
+
+The connection package does not have any automated tests, but has been sufficiently tested manually. Most of the functionality is rather trivial, and should not require much change under any circumstances, making the value of automated testing somewhat questionable.
