@@ -14,6 +14,12 @@ Moves are the logic for a Move. All moves feature a starting Square (called curr
 The Player.java class is in charge of one player in a chess game. It contains information about where the that Player's Pieces are located, and what Pieces remain. It also maintains the Score for the player, which is used by the Engine classes to determine which move is best. It's primary function, however is to provide an array of legal Moves to the Engine.
 
 The Game.java class handles an actual game of chess. This includes asking for Moves from Players and updating the Players statuses after each move. It also checks for mates after each move is made.
+
+Below is a diagram showing roughly the relationships of the classes in the kufbot.model package. In actuality the Board class is only initially used to create a two dimensional array of Squares, which is then used by the classes in question. The relationship between Pieces and Squares is actually 0..1 - 1.
+  
+![Class Diagram](https://github.com/antlammi/ChessAI_TiRa/blob/master/documentation/Chess%20Engine%20Diagram.png)   
+    
+    
 ### Engine
 
 The engine package contains the logic for the chess engine itself, or how the engine chooses what it considers the best one 
@@ -37,40 +43,12 @@ Variable beta is the best score the opponent is assured of based on moves alread
 Using alpha and beta some subtrees can be completely ignored, as a better move is guaranteed to exist.  
 
 ## Example
-
-Here I will provide a slightly simplified example of how the Engine (specifically MinmaxAB) chooses the best move. 
-On to the example:    
-- the Game.java class calls getMove() in MinmaxAB  
-- minimaxAB(this.state, 0, this.maxplayer, null, -Double.MAX_VALUE, Double.MAX_VALUE) is called in MinmaxAB to start the algorithm  
-- If the previous move was not null (initial call) the previous move is executed
-- minimaxAB calls getLegalMoves() in Player to receive an array with the available moves in the current position
-  - getLegalMoves() in Player calls getLegalMoves() for all of its pieces and combines the results into an array
-    - Each of the moves in the pieces are first constructed (a call to the Move class) and compiled into an array by getMoves()
-    - Then the legality of these moves is evaluated for the current position and non-legal moves are removed based on the movement of         the given piece by getLegalMoves in the piece
-  - getLegalMoves() in Player further evaluates the moves, removing moves that would leave the king in check
-  - getLegalMoves() in Player sorts the moves based on whether the moves include a capture of a minor/major piece, a pawn, or no
-  capture and then returns the array
-- if the array is empty, minimaxAB checks to see if the king is checked in the current position using checkForMate()
-- if checkForMate() is true, the previous player's score is set to 1000000 to signify a mate in the position and the previous 
-move is returned 
-- If it is false, the previous player's score is set to 0.0 and the previous move is returned
-- if current depth equals maxdepth the latest move is returned
-- minimaxAB now iterates on the array of moves provided by getLegalMoves()
-- minimaxAB(copystate, depth + 1, minimizing, currentMove, alpha, beta) is called for each move in the array (minimizing 
-refers to the opponent and copystate is a copy of the current boardstate, the minimizing player's movescore is a separate 
-variable called minscore)
-- the previous steps are repeated until maximum depth is reached or the game ends(mate or stalemate)
-- for the move returned by minimaxAB.getPlayer().getScore() is called to determine the score of the move
-- if the score is > maxScore (or < minScore for the opponent's moves) minimax saves the move in a variable 
-- Next minmaxAB checks to see if moveScore > alpha, in which case the value of alpha is now moveScore, followed by a check to 
-see if alpha > beta the loop is broken and no further moves need to be investigated
-- The best move is returned by minimaxAB    
-        
-(Teen tästä sekvenssidiagrammin tulevina päivinä)
+Below is a sequence diagram of how MinmaxAB generates a move for the engine. Note that it at every other depth the player, whose move is being considered changes. This is not made very clear by the diagram.
+![Sequence Diagram](https://github.com/antlammi/ChessAI_TiRa/blob/master/documentation/Sequence%20Diagram%20MinmaxAB.png)
 
 ### Achieved performance 
 #### MinmaxAB
-Currently the MinmaxAB implementation is actually decent. Some additional time is spent copying boardstates for moves (which strictly speaking is not necessary, but was rather difficult to get rid of without causing issues with the implementation of the model). Outside of getting rid of this this, the main way to improve performance for the algorithm itself would be actually building and sustaining a tree during the initial search. After this, the executed node would be turned into the root of the tree, and other subtrees would be disregarded. Then only the nodes at maximum depth would need to be searched, providing a significant improvement to performance. This was mostly not done due to time constraints with the project. As the Minmax algorithm logically already works like a tree, this would not be too difficult to implement.
+Currently the MinmaxAB implementation is actually decent. Some additional time is spent copying boardstates for moves (which strictly speaking is not necessary, but was rather difficult to get rid of without causing issues with the implementation of the model). Outside of getting rid of this this, the main way to improve performance for the algorithm itself would be actually building and sustaining a tree during the initial search. After this, the executed move would be turned into the root of the tree, and other subtrees would be disregarded. Then only the nodes at maximum depth would need to be searched, providing a significant improvement to performance. This was mostly not done due to time constraints with the project. As the Minmax algorithm logically already works like a tree, this would not be too difficult to implement.
  
 #### Model
 The Model implementation could be improved a lot in terms of performance. Mainly the issues lie in Moves and Boardstates being redundantly copied and each call of King isInCheck() (required for possible move) requiring every possible move by the opponent to be generated. There likely is a way to subvert this by only only generating new moves for Pieces that had their moves affected by the previous move. This is non-trivial to implement and would require some work in several areas of the application. If somehow implemented however, it would likely be useable to only generate Moves for Pieces that were affected in Player.getLegalMoves() as well. All in all with realistic changes, without a complete rewrite of the code, move generation could probably be made to be faster by a factor of 100, with the mentioned changes and more efficient data structures. Of course, this number is just a guess really.
