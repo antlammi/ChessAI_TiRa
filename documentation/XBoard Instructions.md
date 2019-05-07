@@ -7,5 +7,4 @@
 
   ```
   5. Select "Engine/Load New 1st Engine..." and choose the engine.
-  6. Select "File/New Game"
-  7. You're all set. If you want to play as White, just make an opening move. If you want to play as Black select "Mode/Machine white"  
+  6. You're all set. If you want to play as White, just make an opening move. If you want to play as Black, select "File/New Game" and "Mode/Engine White"
