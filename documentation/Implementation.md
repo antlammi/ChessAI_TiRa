@@ -15,7 +15,7 @@ The Player.java class is in charge of one player in a chess game. It contains in
 
 The Game.java class handles an actual game of chess. This includes asking for Moves from Players and updating the Players statuses after each move. It also checks for mates after each move is made.
 
-Below is a diagram showing roughly the relationships of the classes in the kufbot.model package. In actuality the Board class is only initially used to create a two dimensional array of Squares, which is then used by the classes in question. The relationship between Pieces and Squares is actually 0..1 - 1.
+Below is a diagram showing roughly the relationships of the classes in the kufbot.model package. In actuality the Board class is only initially used to create a two dimensional array of Squares, which is then used by the classes in question. 
   
 ![Class Diagram](https://github.com/antlammi/ChessAI_TiRa/blob/master/documentation/Chess%20Engine%20Diagram.png)   
     
