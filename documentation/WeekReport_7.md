@@ -7,3 +7,12 @@ Lähdin loppuviikosta koittamaan optimoida sovelluksen toimintaa, mutta lähdin 
 On monia pieniä asioita, joilla voisin saada siirtojen etsimistä nopeutettua *vähän*, mutta käytännössä tällä ei ole mitään merkitystä kokonaisuuden kannalta. Koitan ehkä hieman muuttaa palasten pistearvoja ja tämän avulla saada enginen vähän paremmaksi. 
 
 Nyt ennen loppupalautusta, koitan vain lähinnä hioa dokumentaation kuntoon ja ehkä tekemään pieniä muutoksia siellä sun täällä.
+
+
+### Osa 2
+
+Projektin viimeisellä viikoilla tein paria pieniä muutoksia vielä suorituskyvyn parantamiseksi. Lähetin ja tornin siirrot generoidaan hieman tehokkaammin kuin aiemmin. Lisäsin myös siirtojen järjestämiseen uusia tasoja. Kokonaisuutena näiden myötä siirtojen löytäminen nopeutui ehkä noin 30%.
+
+Demotilaisuuden jälkeen tein vielä jonkin verran työtä projektin parissa, kun lisäsin muutaman automatisoidun suorituskykytestin projektille, ja kirjoitin lisää dokumentaatiota. Design dokumentti jäi ehkä vähän tyngäksi vieläkin, mutta siinä on aika lailla kaikki oleellinen. Testaus ja implementaatiodokumentit ovat kuitenkin mielestäni ihan kattavat. Lisäsin myös ohjeet sovelluksen käyttämiseen XBoardin kanssa.
+
+Eli ei mitään dramaattisia muutoksia enää projektin loppuhetkillä. Saatan tosin työskennellä projektin parissa vielä kurssin jälkeenkin!
