@@ -43,7 +43,7 @@ Variable beta is the best score the opponent is assured of based on moves alread
 Using alpha and beta some subtrees can be completely ignored, as a better move is guaranteed to exist.  
 
 ## Example
-Below is a sequence diagram of how MinmaxAB generates a move for the engine. Note that it at every other depth the player, whose move is being considered changes. This is not made very clear by the diagram.
+Below is a sequence diagram of how MinmaxAB generates a move for the engine. Note that at every other depth the player, whose move is being considered changes. This is not made very clear by the diagram.
 ![Sequence Diagram](https://github.com/antlammi/ChessAI_TiRa/blob/master/documentation/Sequence%20Diagram%20MinmaxAB.png)
 
 ## Achieved performance 
