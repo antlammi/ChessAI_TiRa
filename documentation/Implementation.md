@@ -82,5 +82,5 @@ Of course the best Chess engines typically use a Bitboard to handle their intern
 
 Almost everything is implemented as a simple Array, but the following Java utilities are utilized by the project.
 
-**Java.util.Random** MinmaxAB and Minmax both use Java's own random utilization to decide between moves deemed roughly equal by the engine.   
+**Java.util.Random** MinmaxAB and Minmax both use Java's own random utility to decide between moves deemed roughly equal by the engine.   
 **Java.io.PrintWriter** and **Java.util.Scanner** PrintWriter is used by the XBoard class to write inputs to the application. Technically simple System.out calls might do the same but there might be fringe scenarios where this does not work. Java.util.Scanner is used by main.java to determine if XBoard is calling the application or if its a user wanting to use the text UI provided by the engine. Scanner is also used by Connection to read inputs from XBoard and Human.java to read inputs from the user.
